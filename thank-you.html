@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — Celures</title>
+<link rel="stylesheet" href="css/style.css">
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1517308272696814');
+fbq('track', 'PageView');
+</script>
+</head>
+<body>
+
+<nav class="primary-nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo">CELURES</a>
+    <div></div>
+    <div></div>
+  </div>
+</nav>
+
+<section class="section">
+  <div class="container" style="max-width:600px;">
+    <div class="ty-hero">
+      <div class="ty-check">✓</div>
+      <h1 class="t-heading-xl">অর্ডার সম্পন্ন হয়েছে!</h1>
+      <p class="t-body" style="color:var(--mute);margin-top:12px;">ধন্যবাদ! আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব ডেলিভারি নিশ্চিত করতে।</p>
+    </div>
+
+    <div class="order-box" id="order-details"></div>
+
+    <div class="text-center" style="margin-top:32px;">
+      <a href="index.html#shop" class="btn btn-primary">Continue Shopping</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 Celures. All rights reserved.</span>
+      <span>thecelures@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get('orderId') || '';
+  const name = params.get('name') || '';
+  const phone = params.get('phone') || '';
+  const district = params.get('district') || '';
+  const address = params.get('address') || '';
+  const items = params.get('items') || '';
+  const subtotal = parseFloat(params.get('subtotal') || '0');
+  const delivery = parseFloat(params.get('delivery') || '0');
+  const total = parseFloat(params.get('total') || '0');
+
+  const box = document.getElementById('order-details');
+  if (!orderId) {
+    box.innerHTML = '<p class="t-body" style="text-align:center;color:var(--mute);">Order details not found. If you just placed an order, check your phone — we\'ll confirm shortly.</p>';
+  } else {
+    box.innerHTML =
+      '<div class="order-box-row"><span>Order ID</span><span>' + orderId + '</span></div>' +
+      '<div class="order-box-row"><span>Name</span><span>' + name + '</span></div>' +
+      '<div class="order-box-row"><span>Phone</span><span>' + phone + '</span></div>' +
+      '<div class="order-box-row"><span>District</span><span>' + district + '</span></div>' +
+      '<div class="order-box-row"><span>Address</span><span style="text-align:right;max-width:60%;">' + address + '</span></div>' +
+      '<div class="order-box-row"><span>Items</span><span style="text-align:right;max-width:60%;">' + items + '</span></div>' +
+      '<div class="order-box-row"><span>Subtotal</span><span>৳' + subtotal + '</span></div>' +
+      '<div class="order-box-row"><span>Delivery</span><span>' + (delivery === 0 ? 'FREE' : '৳' + delivery) + '</span></div>' +
+      '<div class="order-box-row" style="font-weight:700;border-top:1px solid var(--hairline);margin-top:8px;padding-top:12px;"><span>Total</span><span>৳' + total + '</span></div>';
+
+    /* Fire Meta Pixel Purchase exactly once per order, even if the page is refreshed */
+    const firedKey = 'celures_purchase_fired_' + orderId;
+    if (!sessionStorage.getItem(firedKey) && typeof fbq === 'function') {
+      fbq('track', 'Purchase', { value: total, currency: 'BDT' });
+      sessionStorage.setItem(firedKey, '1');
+    }
+  }
+})();
+</script>
+</body>
+</html>
