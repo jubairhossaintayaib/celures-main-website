@@ -4,7 +4,7 @@
    Each line item looks like:
    { key, slug, name, unitPrice, qty, tag }
    "key" = slug + "-" + unitPrice, so the same perfume bought as
-   the page's main pick (৳890) and as an add-on (৳480) elsewhere
+   the page's main pick (৳890) and as an add-on (৳490) elsewhere
    are tracked as separate, clearly-priced lines.
    ============================================================ */
 
@@ -79,13 +79,13 @@ function cartGetCount() {
   return getCart().reduce((sum, l) => sum + l.qty, 0);
 }
 
-/* Business rule: the ৳480 add-on price is only allowed once at least one
-   perfume has been added at its full regular price (৳890) — otherwise
-   someone could check out with only discounted add-ons and no "main" pick. */
+/* Business rule: the ৳490 add-on price is only allowed once at least one
+   perfume OR combo has been added at its own full/main price — otherwise
+   someone could check out with only discounted add-ons and no main pick. */
 function cartHasMainItem() {
   return getCart().some(function (line) {
-    var product = getProductBySlug(line.slug);
-    return product && line.unitPrice === product.price;
+    var info = getItemBySlug(line.slug);
+    return info && line.unitPrice === info.ownPrice;
   });
 }
 
