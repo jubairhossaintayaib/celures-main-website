@@ -99,6 +99,16 @@ fbq('track', 'PageView');
   </div>
 </section>
 
+<!-- ============ PERFUME INFO POPUP ============ -->
+<div class="info-modal-overlay" id="info-modal-overlay">
+  <div class="info-modal">
+    <button class="info-modal-close" id="info-modal-close" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M6 18L18 6" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div id="info-modal-body"></div>
+  </div>
+</div>
+
 <!-- ============ STICKY CART BAR ============ -->
 <div class="sticky-cart-bar">
   <div class="sticky-cart-total">
@@ -198,12 +208,13 @@ fbq('track', 'PageView');
 
   function addonCardHTML(p) {
     var img = (p.images && p.images[0])
-      ? '<img src="' + p.images[0] + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=\'<div class=&quot;img-placeholder&quot; style=&quot;font-size:13px;&quot;>' + p.name + '</div>\'">'
+      ? '<img src="' + p.images[0] + '" alt="' + p.name + '" onerror="this.outerHTML=\'<div class=&quot;img-placeholder&quot; style=&quot;font-size:13px;&quot;>' + p.name + '</div>\'">'
       : '<div class="img-placeholder" style="font-size:13px;">' + p.name + '</div>';
     return (
       '<div class="addon-card" data-slug="' + p.slug + '">' +
         '<div class="addon-card-image">' +
           img +
+          '<button class="addon-info-btn" data-info-slug="' + p.slug + '" aria-label="Perfume info">i</button>' +
           '<div class="addon-card-qty-overlay qty-control" data-slug="' + p.slug + '" data-price="' + p.addonPrice + '"></div>' +
         '</div>' +
         '<div class="addon-card-info">' +
@@ -236,6 +247,11 @@ fbq('track', 'PageView');
   }
 
   addonsList.addEventListener('click', function (e) {
+    var infoBtn = e.target.closest('.addon-info-btn');
+    if (infoBtn) {
+      openInfoModal(infoBtn.getAttribute('data-info-slug'));
+      return;
+    }
     var btn = e.target.closest('button');
     if (!btn) return;
     var control = btn.closest('.qty-control');
@@ -249,6 +265,31 @@ fbq('track', 'PageView');
       cartRemoveOne(slug + '-' + price);
     }
     refreshAllQtyControls();
+  });
+
+  /* ---------- Perfume info popup ---------- */
+  var infoOverlay = document.getElementById('info-modal-overlay');
+  var infoBody = document.getElementById('info-modal-body');
+
+  window.openInfoModal = function (slug) {
+    var p = getProductBySlug(slug);
+    if (!p) return;
+    infoBody.innerHTML =
+      '<div class="info-modal-eyebrow">' + p.inspiredBy + '</div>' +
+      '<h3 class="t-heading-lg" style="margin:6px 0 12px;">' + p.name + '</h3>' +
+      '<p class="t-body" style="color:var(--ash);">' + p.description + '</p>' +
+      '<div class="info-modal-notes">' +
+        '<div><strong>Top:</strong> ' + p.notes.top + '</div>' +
+        '<div><strong>Middle:</strong> ' + p.notes.middle + '</div>' +
+        '<div><strong>Base:</strong> ' + p.notes.base + '</div>' +
+      '</div>' +
+      '<div class="info-modal-price">৳' + p.addonPrice + ' as an add-on</div>';
+    infoOverlay.classList.add('open');
+  };
+  function closeInfoModal() { infoOverlay.classList.remove('open'); }
+  document.getElementById('info-modal-close').addEventListener('click', closeInfoModal);
+  infoOverlay.addEventListener('click', function (e) {
+    if (e.target === infoOverlay) closeInfoModal();
   });
 
   refreshAllQtyControls();
