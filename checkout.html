@@ -69,6 +69,8 @@ fbq('track', 'PageView');
       <!-- Summary + form -->
       <div>
         <div class="order-box" style="margin-top:0;">
+          <div class="summary-row"><span>Normal Price</span><span id="sum-normal">৳0</span></div>
+          <div class="summary-row"><span>Discount</span><span id="sum-discount" style="color:var(--success);">− ৳0</span></div>
           <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal">৳0</span></div>
           <div class="summary-row"><span>Delivery</span><span id="sum-delivery">—</span></div>
           <div class="summary-row total"><span>Total</span><span id="sum-total">৳0</span></div>
@@ -164,12 +166,26 @@ function renderCart() {
   });
 }
 
+/* Sum of every line item's REGULAR ৳890 price, ignoring what was actually
+   paid — this is the "before discount" number. */
+function cartGetNormalTotal() {
+  return getCart().reduce(function (sum, line) {
+    const product = getProductBySlug(line.slug);
+    const regularPrice = product ? product.price : line.unitPrice;
+    return sum + (regularPrice * line.qty);
+  }, 0);
+}
+
 function renderSummary() {
   const subtotal = cartGetTotal();
+  const normal = cartGetNormalTotal();
+  const discount = normal - subtotal;
   const district = document.getElementById('f-district').value;
   const delivery = calculateDelivery(subtotal, district);
   const total = subtotal + delivery;
 
+  document.getElementById('sum-normal').textContent = '৳' + normal;
+  document.getElementById('sum-discount').textContent = '− ৳' + discount;
   document.getElementById('sum-subtotal').textContent = '৳' + subtotal;
   document.getElementById('sum-delivery').textContent = district ? (delivery === 0 ? 'FREE' : '৳' + delivery) : '— select district —';
   document.getElementById('sum-total').textContent = '৳' + total;
@@ -230,6 +246,8 @@ document.getElementById('order-form').addEventListener('submit', function (e) {
   if (cart.length === 0) { showToast('Your cart is empty'); return; }
 
   const subtotal = cartGetTotal();
+  const normal = cartGetNormalTotal();
+  const discount = normal - subtotal;
   const delivery = calculateDelivery(subtotal, district);
   const total = subtotal + delivery;
   const orderId = 'CEL' + Date.now();
@@ -246,6 +264,8 @@ document.getElementById('order-form').addEventListener('submit', function (e) {
     district: district,
     address: address,
     items: itemsSummary,
+    normal: normal,
+    discount: discount,
     subtotal: subtotal,
     delivery: delivery,
     total: total
@@ -266,6 +286,8 @@ document.getElementById('order-form').addEventListener('submit', function (e) {
         district: district,
         address: address,
         items: itemsSummary,
+        normal: normal,
+        discount: discount,
         subtotal: subtotal,
         delivery: delivery,
         total: total
