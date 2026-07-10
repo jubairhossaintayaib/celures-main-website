@@ -32,6 +32,18 @@ function showToast(message) {
 
 document.addEventListener("DOMContentLoaded", initNavDrawer);
 
+function initCombosNav() {
+  if (typeof CELURES_COMBOS === "undefined") return;
+  const menu = document.getElementById("nav-combos-menu");
+  const drawerList = document.getElementById("nav-drawer-combos");
+  const linksHTML = CELURES_COMBOS.map(function (c) {
+    return '<a href="combo.html?slug=' + c.slug + '">' + c.name + '</a>';
+  }).join("");
+  if (menu) menu.innerHTML = linksHTML;
+  if (drawerList) drawerList.innerHTML = linksHTML;
+}
+document.addEventListener("DOMContentLoaded", initCombosNav);
+
 /* All 64 districts of Bangladesh, alphabetically. Used on checkout.html. */
 const BD_DISTRICTS = [
   "Bagerhat", "Bandarban", "Barguna", "Barisal", "Bhola", "Bogura",
