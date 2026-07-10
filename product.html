@@ -73,8 +73,10 @@ fbq('track', 'PageView');
       <div class="pdp-info">
         <div class="pdp-info-eyebrow" id="pdp-inspired"></div>
         <h1 class="pdp-title" id="pdp-name"></h1>
-        <div class="pdp-price">৳<span id="pdp-price"></span> <span class="t-caption-md">/ 30ml</span></div>
+        <div class="pdp-price" id="pdp-price-wrap"></div>
         <p class="pdp-desc" id="pdp-desc"></p>
+
+        <div class="pdp-add-to-cart" id="pdp-add-to-cart"></div>
 
         <div class="pdp-disclosure-row" onclick="this.classList.toggle('open')">
           <span class="label">Fragrance Notes</span>
@@ -90,9 +92,9 @@ fbq('track', 'PageView');
           ঢাকার ভিতরে ডেলিভারি চার্জ ৳৭০, ঢাকার বাইরে ৳১১০। মোট অর্ডার ৳১৫০০ বা তার বেশি হলে ডেলিভারি ফ্রি। ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে পেমেন্ট করুন।
         </div>
 
-        <!-- Every perfume, including this one, is picked the same way -->
-        <div class="addons-heading">Choose Your Perfumes</div>
-        <p class="addons-sub">প্রতিটি পারফিউম মাত্র ৳৪৮০ — যত খুশি যোগ করুন, ঠিক ফুডপান্ডার মতো।</p>
+        <!-- Add-ons unlock only after the main ৳890 perfume is in the cart -->
+        <div class="addons-heading">Add More, Save More</div>
+        <p class="addons-sub" id="addons-sub">আগে এই পারফিউমটি কার্টে যোগ করুন — তারপর অন্য যেকোনো পারফিউম যোগ করতে পারবেন মাত্র ৳৪৮০ তে।</p>
         <div class="addons-grid" id="addons-list"></div>
       </div>
     </div>
@@ -156,7 +158,7 @@ fbq('track', 'PageView');
   document.getElementById('page-title').textContent = product.name + ' — Celures';
   document.getElementById('pdp-inspired').textContent = product.inspiredBy;
   document.getElementById('pdp-name').textContent = product.name;
-  document.getElementById('pdp-price').textContent = product.price;
+  document.getElementById('pdp-price-wrap').innerHTML = '৳' + product.price + ' <span class="t-caption-md">/ 30ml</span>';
   document.getElementById('pdp-desc').textContent = product.description;
   document.getElementById('pdp-notes').innerHTML =
     '<strong>Top:</strong> ' + product.notes.top + '<br>' +
@@ -196,10 +198,9 @@ fbq('track', 'PageView');
     renderMain(null, 0);
   }
 
-  /* ---------- Every perfume is a card, priced the same (৳890 → ৳480), ----------
-     including this page's own perfume — which sits at the END of the grid. */
+  /* ---------- Add-ons: every OTHER perfume, ৳480 — gated behind the main ৳890 pick ---------- */
   var addonsList = document.getElementById('addons-list');
-  var allCards = CELURES_PRODUCTS.filter(function (p) { return p.slug !== product.slug; }).concat([product]);
+  var others = CELURES_PRODUCTS.filter(function (p) { return p.slug !== product.slug; });
 
   function addonCardHTML(p) {
     var img = (p.images && p.images[0])
@@ -220,14 +221,18 @@ fbq('track', 'PageView');
     );
   }
 
-  addonsList.innerHTML = allCards.map(addonCardHTML).join('');
+  addonsList.innerHTML = others.map(addonCardHTML).join('');
 
   function renderQtyControl(el) {
     var slug = el.getAttribute('data-slug');
     var price = parseInt(el.getAttribute('data-price'), 10);
+    var tag = el.getAttribute('data-tag') || '';
     var qty = cartGetQty(slug, price);
+    var locked = (tag === 'Add-on' && !cartHasMainItem());
     if (qty === 0) {
-      el.innerHTML = '<button class="qty-add-btn" data-action="add">+</button>';
+      el.innerHTML = locked
+        ? '<button class="qty-add-btn qty-locked" data-action="locked">+</button>'
+        : '<button class="qty-add-btn" data-action="add">+</button>';
     } else {
       el.innerHTML =
         '<button class="qty-btn" data-action="minus">−</button>' +
@@ -236,9 +241,42 @@ fbq('track', 'PageView');
     }
   }
 
+  function renderMainAddToCart() {
+    var qty = cartGetQty(product.slug, product.price);
+    var el = document.getElementById('pdp-add-to-cart');
+    if (qty === 0) {
+      el.innerHTML = '<button class="btn btn-primary btn-block" id="pdp-add-btn">Add to Cart — ৳' + product.price + '</button>';
+      document.getElementById('pdp-add-btn').addEventListener('click', function () {
+        cartAdd(product.slug, product.price, '');
+        showToast('Added to cart');
+        refreshAllQtyControls();
+      });
+    } else {
+      el.innerHTML =
+        '<div class="qty-control-full">' +
+          '<button class="qty-btn" id="pdp-minus-btn" aria-label="Remove one">−</button>' +
+          '<span>' + qty + ' in cart</span>' +
+          '<button class="qty-btn" id="pdp-plus-btn" aria-label="Add one more">+</button>' +
+        '</div>';
+      document.getElementById('pdp-minus-btn').addEventListener('click', function () {
+        cartRemoveOne(product.slug + '-' + product.price);
+        refreshAllQtyControls();
+      });
+      document.getElementById('pdp-plus-btn').addEventListener('click', function () {
+        cartAdd(product.slug, product.price, '');
+        showToast('Added to cart');
+        refreshAllQtyControls();
+      });
+    }
+  }
+
   function refreshAllQtyControls() {
     document.querySelectorAll('.qty-control').forEach(renderQtyControl);
+    renderMainAddToCart();
     document.getElementById('sticky-total').textContent = '৳' + cartGetTotal();
+    document.getElementById('addons-sub').textContent = cartHasMainItem()
+      ? 'অন্য যেকোনো পারফিউম যোগ করুন — মাত্র ৳৪৮০ প্রতিটি।'
+      : 'আগে এই পারফিউমটি কার্টে যোগ করুন — তারপর অন্য যেকোনো পারফিউম যোগ করতে পারবেন মাত্র ৳৪৮০ তে।';
   }
 
   document.addEventListener('click', function (e) {
@@ -254,6 +292,10 @@ fbq('track', 'PageView');
     var slug = control.getAttribute('data-slug');
     var price = parseInt(control.getAttribute('data-price'), 10);
     var action = btn.getAttribute('data-action');
+    if (action === 'locked') {
+      showToast('আগে এই পারফিউমটি ৳' + product.price + ' এ কার্টে যোগ করুন');
+      return;
+    }
     if (action === 'add' || action === 'plus') {
       cartAdd(slug, price, control.getAttribute('data-tag') || '');
       showToast('Added to cart');
@@ -279,7 +321,7 @@ fbq('track', 'PageView');
         '<div><strong>Middle:</strong> ' + p.notes.middle + '</div>' +
         '<div><strong>Base:</strong> ' + p.notes.base + '</div>' +
       '</div>' +
-      '<div class="info-modal-price">৳' + p.addonPrice + '</div>';
+      '<div class="info-modal-price">৳' + p.addonPrice + ' as an add-on</div>';
     infoOverlay.classList.add('open');
   };
   function closeInfoModal() { infoOverlay.classList.remove('open'); }
