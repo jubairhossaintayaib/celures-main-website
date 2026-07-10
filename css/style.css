@@ -416,9 +416,20 @@ h1, h2, h3, h4, p { margin: 0; }
 
 .pdp-info-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--mute); margin-bottom: 8px; }
 .pdp-title { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-.pdp-price { font-size: 24px; font-weight: 600; margin-bottom: 20px; }
-.pdp-qty-row { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; }
-.pdp-qty-row .qty-control { background: var(--soft-cloud); padding: 6px 12px; }
+.pdp-price { font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+.pdp-add-to-cart { margin-bottom: 28px; }
+.pdp-add-to-cart .btn { width: 100%; }
+.qty-control-full {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--soft-cloud);
+  border-radius: var(--r-lg);
+  padding: 8px 20px;
+  height: 48px;
+}
+.qty-control-full span { font-size: 15px; font-weight: 600; }
+.qty-control-full .qty-btn { width: 32px; height: 32px; font-size: 18px; }
 .pdp-desc { font-size: 16px; line-height: 1.7; color: var(--ash); margin-bottom: 28px; }
 
 .pdp-disclosure-row {
@@ -553,6 +564,10 @@ h1, h2, h3, h4, p { margin: 0; }
   box-shadow: 0 1px 4px rgba(0,0,0,0.25);
 }
 .qty-num { min-width: 16px; text-align: center; font-size: 14px; font-weight: 700; background: var(--canvas); border-radius: var(--r-full); padding: 4px 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+.qty-add-btn.qty-locked {
+  background: var(--stone);
+  cursor: not-allowed;
+}
 
 /* ---------- Sticky bottom bar ---------- */
 .sticky-cart-bar {
