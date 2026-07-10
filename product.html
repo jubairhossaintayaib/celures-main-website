@@ -92,7 +92,7 @@ fbq('track', 'PageView');
 
         <!-- Every perfume, including this one, is picked the same way -->
         <div class="addons-heading">Choose Your Perfumes</div>
-        <p class="addons-sub">এই পারফিউমটি ৳৮৯০। অন্য যেকোনো পারফিউম যোগ করলে মাত্র ৳৪৮০ — ঠিক ফুডপান্ডার মতো।</p>
+        <p class="addons-sub">প্রতিটি পারফিউম মাত্র ৳৪৮০ — যত খুশি যোগ করুন, ঠিক ফুডপান্ডার মতো।</p>
         <div class="addons-grid" id="addons-list"></div>
       </div>
     </div>
@@ -196,32 +196,25 @@ fbq('track', 'PageView');
     renderMain(null, 0);
   }
 
-  /* ---------- Every perfume is a card, including this page's own one ----------
-     This page's own perfume shows at full price (৳890, no strike-through).
-     Every other perfume shows ৳890 struck through → ৳480 add-on price.
-     Nothing is added to the cart automatically — the person taps "+" themselves. */
+  /* ---------- Every perfume is a card, priced the same (৳890 → ৳480), ----------
+     including this page's own perfume — which sits at the END of the grid. */
   var addonsList = document.getElementById('addons-list');
-  var allCards = [product].concat(CELURES_PRODUCTS.filter(function (p) { return p.slug !== product.slug; }));
+  var allCards = CELURES_PRODUCTS.filter(function (p) { return p.slug !== product.slug; }).concat([product]);
 
   function addonCardHTML(p) {
-    var isSelf = p.slug === product.slug;
-    var cardPrice = isSelf ? p.price : p.addonPrice;
     var img = (p.images && p.images[0])
       ? '<img src="' + p.images[0] + '" alt="' + p.name + '" onerror="this.outerHTML=\'<div class=&quot;img-placeholder&quot; style=&quot;font-size:13px;&quot;>' + p.name + '</div>\'">'
       : '<div class="img-placeholder" style="font-size:13px;">' + p.name + '</div>';
-    var priceHTML = isSelf
-      ? '৳' + p.price
-      : '<span class="price-strike">৳' + p.price + '</span> <span class="price-sale">৳' + p.addonPrice + '</span>';
     return (
       '<div class="addon-card" data-slug="' + p.slug + '">' +
         '<div class="addon-card-image">' +
           img +
           '<button class="addon-info-btn" data-info-slug="' + p.slug + '" aria-label="Perfume info">i</button>' +
-          '<div class="addon-card-qty-overlay qty-control" data-slug="' + p.slug + '" data-price="' + cardPrice + '" data-tag="' + (isSelf ? '' : 'Add-on') + '"></div>' +
+          '<div class="addon-card-qty-overlay qty-control" data-slug="' + p.slug + '" data-price="' + p.addonPrice + '" data-tag="Add-on"></div>' +
         '</div>' +
         '<div class="addon-card-info">' +
           '<div class="addon-card-name">' + p.name + '</div>' +
-          '<div class="addon-card-price">' + priceHTML + '</div>' +
+          '<div class="addon-card-price"><span class="price-strike">৳' + p.price + '</span> <span class="price-sale">৳' + p.addonPrice + '</span></div>' +
         '</div>' +
       '</div>'
     );
@@ -277,7 +270,6 @@ fbq('track', 'PageView');
   window.openInfoModal = function (slug) {
     var p = getProductBySlug(slug);
     if (!p) return;
-    var isSelf = p.slug === product.slug;
     infoBody.innerHTML =
       '<div class="info-modal-eyebrow">' + p.inspiredBy + '</div>' +
       '<h3 class="t-heading-lg" style="margin:6px 0 12px;">' + p.name + '</h3>' +
@@ -287,7 +279,7 @@ fbq('track', 'PageView');
         '<div><strong>Middle:</strong> ' + p.notes.middle + '</div>' +
         '<div><strong>Base:</strong> ' + p.notes.base + '</div>' +
       '</div>' +
-      '<div class="info-modal-price">' + (isSelf ? '৳' + p.price : '৳' + p.addonPrice + ' as an add-on') + '</div>';
+      '<div class="info-modal-price">৳' + p.addonPrice + '</div>';
     infoOverlay.classList.add('open');
   };
   function closeInfoModal() { infoOverlay.classList.remove('open'); }
