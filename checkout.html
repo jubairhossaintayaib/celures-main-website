@@ -280,6 +280,14 @@ function showError(id) {
 
 renderCart();
 renderSummary();
+
+/* Same bfcache fix: re-check real cart state on back/forward restore */
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) {
+    renderCart();
+    renderSummary();
+  }
+});
 </script>
 </body>
 </html>
