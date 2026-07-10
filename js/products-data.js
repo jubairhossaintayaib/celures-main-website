@@ -30,9 +30,9 @@ const CELURES_PRODUCTS = [
       base: "Licorice, Sandalwood, Amber, Patchouli"
     },
     images: [
-      "images/products/phantom-elixir-1.jpg",
-      "images/products/phantom-elixir-2.jpg",
-      "images/products/phantom-elixir-3.jpg"
+      "images/products/phantom-elixir-1.webp",
+      "images/products/phantom-elixir-2.webp",
+      "images/products/phantom-elixir-3.webp"
     ]
   },
   {
@@ -49,8 +49,8 @@ const CELURES_PRODUCTS = [
       base: "Cedar, Sandalwood, Musk"
     },
     images: [
-      "images/products/executive-bleu-1.jpg",
-      "images/products/executive-bleu-2.jpg"
+      "images/products/executive-bleu-1.webp",
+      "images/products/executive-bleu-2.webp"
     ]
   },
   {
@@ -68,7 +68,7 @@ const CELURES_PRODUCTS = [
     },
     images: [
       "images/products/sport-homme-1.webp",
-      "images/products/sport-homme-2.jpg"
+      "images/products/sport-homme-2.webp"
     ]
   },
   {
@@ -86,7 +86,7 @@ const CELURES_PRODUCTS = [
     },
     images: [
       "images/products/marine-cucumber-1.webp",
-      "images/products/marine-cucumber-2.jpg"
+      "images/products/marine-cucumber-2.webp"
     ]
   },
   {
@@ -103,8 +103,8 @@ const CELURES_PRODUCTS = [
       base: "Patchouli, Musky Woods"
     },
     images: [
-      "images/products/pure-aura-1.jpg",
-      "images/products/pure-aura-2.jpg"
+      "images/products/pure-aura-1.webp",
+      "images/products/pure-aura-2.webp"
     ]
   },
   {
@@ -121,8 +121,8 @@ const CELURES_PRODUCTS = [
       base: "Cedar, Vetiver, Tonka Bean, Amberwood"
     },
     images: [
-      "images/products/alpha-executive-1.jpg",
-      "images/products/alpha-executive-2.jpg"
+      "images/products/alpha-executive-1.webp",
+      "images/products/alpha-executive-2.webp"
     ]
   },
   {
@@ -139,8 +139,8 @@ const CELURES_PRODUCTS = [
       base: "Black Vanilla, Amber, Patchouli"
     },
     images: [
-      "images/products/midnight-drive-1.jpg",
-      "images/products/midnight-drive-2.jpg"
+      "images/products/midnight-drive-1.webp",
+      "images/products/midnight-drive-2.webp"
     ]
   },
   {
@@ -157,8 +157,8 @@ const CELURES_PRODUCTS = [
       base: "Tonka Bean"
     },
     images: [
-      "images/products/tropical-garden-1.jpg",
-      "images/products/tropical-garden-2.jpg"
+      "images/products/tropical-garden-1.webp",
+      "images/products/tropical-garden-2.webp"
     ]
   },
   {
@@ -175,8 +175,8 @@ const CELURES_PRODUCTS = [
       base: "Cedar, Musk, Amber"
     },
     images: [
-      "images/products/arctic-splash-1.jpg",
-      "images/products/arctic-splash-2.jpg"
+      "images/products/arctic-splash-1.webp",
+      "images/products/arctic-splash-2.webp"
     ]
   }
 ];
