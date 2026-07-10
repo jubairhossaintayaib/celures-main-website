@@ -130,27 +130,9 @@ h1, h2, h3, h4, p { margin: 0; }
   height: 36px;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  justify-content: center;
 }
-.marquee { width: 100%; overflow: hidden; }
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marqueeScroll 24s linear infinite;
-}
-.marquee-group { display: flex; align-items: center; flex-shrink: 0; }
-.marquee-group span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink);
-  padding: 0 14px;
-  white-space: nowrap;
-}
-.marquee-group .marquee-dot { color: var(--stone); padding: 0; }
-@keyframes marqueeScroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
+.utility-bar span { font-size: 12px; font-weight: 600; color: var(--ink); }
 
 .primary-nav {
   background: var(--canvas);
