@@ -79,6 +79,16 @@ function cartGetCount() {
   return getCart().reduce((sum, l) => sum + l.qty, 0);
 }
 
+/* Business rule: the ৳480 add-on price is only allowed once at least one
+   perfume has been added at its full regular price (৳890) — otherwise
+   someone could check out with only discounted add-ons and no "main" pick. */
+function cartHasMainItem() {
+  return getCart().some(function (line) {
+    var product = getProductBySlug(line.slug);
+    return product && line.unitPrice === product.price;
+  });
+}
+
 function cartClear() {
   localStorage.removeItem(CART_STORAGE_KEY);
   updateCartBadge();
