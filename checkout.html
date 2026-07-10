@@ -63,6 +63,9 @@ fbq('track', 'PageView');
     <div id="cart-content" class="checkout-grid">
       <!-- Cart lines -->
       <div>
+        <div id="cart-warning" style="display:none;background:#fff4f4;border:1px solid var(--sale);color:var(--sale);padding:14px 16px;font-size:14px;font-weight:600;margin-bottom:16px;">
+          অন্তত ১টি পারফিউম পূর্ণ দামে (৳৮৯০) যোগ করা প্রয়োজন — শুধু ডিসকাউন্ট আইটেম দিয়ে অর্ডার করা যাবে না।
+        </div>
         <div id="cart-lines"></div>
       </div>
 
@@ -137,6 +140,9 @@ function renderCart() {
   }
   empty.style.display = 'none';
   content.style.display = 'grid';
+
+  const warningEl = document.getElementById('cart-warning');
+  warningEl.style.display = cartHasMainItem() ? 'none' : 'block';
 
   const linesEl = document.getElementById('cart-lines');
   linesEl.innerHTML = cart.map(function (line) {
@@ -244,6 +250,10 @@ document.getElementById('order-form').addEventListener('submit', function (e) {
 
   const cart = getCart();
   if (cart.length === 0) { showToast('Your cart is empty'); return; }
+  if (!cartHasMainItem()) {
+    showToast('অন্তত ১টি পারফিউম পূর্ণ দামে (৳৮৯০) যোগ করুন');
+    return;
+  }
 
   const subtotal = cartGetTotal();
   const normal = cartGetNormalTotal();
