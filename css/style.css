@@ -67,6 +67,7 @@ h1, h2, h3, h4, p { margin: 0; }
   padding: 0 24px;
 }
 @media (min-width: 1920px) { .container { padding: 0 80px; } }
+@media (max-width: 599px) { .container { padding: 0 16px; } }
 
 /* ---------- Typography ---------- */
 .t-display {
@@ -143,13 +144,13 @@ h1, h2, h3, h4, p { margin: 0; }
   z-index: 100;
   box-shadow: inset 0 -1px 0 var(--hairline-soft);
 }
-/* Grid-based nav: guarantees true centering regardless of how wide the
-   logo / links / cart cluster are, at every breakpoint. */
+/* Grid-based nav: logo + links cluster together on the left (like Nike),
+   cart cluster pinned to the far right — not dead-centered links. */
 .primary-nav .container {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr;
   align-items: center;
-  column-gap: 24px;
+  column-gap: 40px;
 }
 .nav-logo {
   grid-column: 1;
@@ -161,7 +162,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .nav-links {
   grid-column: 2;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 32px;
 }
 .nav-links a { font-size: 16px; font-weight: 600; }
