@@ -169,7 +169,8 @@ fbq('track', 'PageView');
   var savings = regular - combo.price;
 
   document.getElementById('page-title').textContent = combo.name + ' — Celures';
-  document.getElementById('combo-eyebrow').textContent = 'COMBO OFFER · SAVE ৳' + savings;
+  document.getElementById('combo-eyebrow').textContent =
+    'Inspired by ' + p1.inspiredBy.replace(/^Inspired by /i, '') + ' & ' + p2.inspiredBy.replace(/^Inspired by /i, '');
   document.getElementById('combo-name').textContent = combo.name;
   document.getElementById('combo-price-wrap').innerHTML =
     '<span class="price-strike" style="font-size:20px;">৳' + regular + '</span> ' +
