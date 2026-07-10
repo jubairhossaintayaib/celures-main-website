@@ -193,22 +193,20 @@ h1, h2, h3, h4, p { margin: 0; }
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 12px;
+  margin-top: 0;
   background: var(--canvas);
   border: 1px solid var(--hairline);
   min-width: 260px;
   padding: 8px 0;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: opacity 0.15s ease;
   z-index: 150;
 }
 .nav-dropdown:hover .nav-dropdown-menu,
 .nav-dropdown:focus-within .nav-dropdown-menu {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
 }
 .nav-dropdown-menu a {
   display: block;
@@ -531,8 +529,8 @@ h1, h2, h3, h4, p { margin: 0; }
 .addon-card-info { padding-top: 10px; }
 .addon-card-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
 .addon-card-price { font-size: 13px; margin-top: 4px; }
-.addon-card-price .price-strike { color: var(--mute); text-decoration: line-through; margin-right: 6px; }
-.addon-card-price .price-sale { color: var(--sale); font-weight: 700; }
+.price-strike { color: var(--mute); text-decoration: line-through; margin-right: 6px; }
+.price-sale { color: var(--sale); font-weight: 700; }
 
 .addon-info-btn {
   position: absolute;
