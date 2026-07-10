@@ -185,7 +185,7 @@ const CELURES_PRODUCTS = [
 const CELURES_DELIVERY = {
   insideDhaka: 70,
   outsideDhaka: 110,
-  freeDeliveryThreshold: 1500
+  freeDeliveryThreshold: 2000
 };
 
 /* Meta Pixel ID — used by every page */
