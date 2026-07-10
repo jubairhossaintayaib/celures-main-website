@@ -419,6 +419,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .pdp-price { font-size: 24px; font-weight: 600; margin-bottom: 16px; }
 .pdp-add-to-cart { margin-bottom: 28px; }
 .pdp-add-to-cart .btn { width: 100%; }
+.pdp-add-to-cart .btn:disabled { background: var(--ink); color: var(--on-primary); opacity: 0.85; cursor: default; }
 .qty-control-full {
   display: flex;
   align-items: center;
