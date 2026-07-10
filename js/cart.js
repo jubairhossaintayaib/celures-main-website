@@ -106,3 +106,12 @@ function updateCartBadge() {
 }
 
 document.addEventListener("DOMContentLoaded", updateCartBadge);
+
+/* Fix for the browser's back/forward cache (bfcache): when you navigate
+   back to a page, some browsers restore the exact old snapshot instead
+   of re-running scripts — so the cart badge and buttons can show stale
+   data. This forces every page to re-check the real cart state whenever
+   it's restored this way. */
+window.addEventListener("pageshow", function (e) {
+  if (e.persisted) updateCartBadge();
+});
