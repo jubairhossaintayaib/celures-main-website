@@ -67,7 +67,7 @@ const CELURES_PRODUCTS = [
       base: "Vanilla, Tonka Bean, Musk"
     },
     images: [
-      "images/products/sport-homme-1.jpg",
+      "images/products/sport-homme-1.webp",
       "images/products/sport-homme-2.jpg"
     ]
   },
@@ -85,7 +85,7 @@ const CELURES_PRODUCTS = [
       base: "Cedar, Musk, Amber"
     },
     images: [
-      "images/products/marine-cucumber-1.jpg",
+      "images/products/marine-cucumber-1.webp",
       "images/products/marine-cucumber-2.jpg"
     ]
   },
