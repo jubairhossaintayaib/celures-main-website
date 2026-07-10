@@ -23,7 +23,7 @@ fbq('track', 'PageView');
 <body>
 
 <!-- ============ HEADER ============ -->
-<div class="utility-bar"><div class="container"><span>First perfume is ৳890 | Every extra perfume just ৳480</span></div></div>
+<div class="utility-bar"><div class="container"><span>First perfume is ৳890 | Every extra perfume just ৳490</span></div></div>
 <nav class="primary-nav">
   <div class="container">
     <button class="hamburger-btn" aria-label="Menu">
@@ -32,8 +32,13 @@ fbq('track', 'PageView');
     <a href="index.html" class="nav-logo">CELURES</a>
     <div class="nav-links">
       <a href="index.html#shop">All Perfumes</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button">Combos</button>
+        <div class="nav-dropdown-menu" id="nav-combos-menu"></div>
+      </div>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
+      <a href="faq.html">FAQ</a>
     </div>
     <div class="nav-right">
       <a href="checkout.html" class="cart-btn" aria-label="Cart">
@@ -50,8 +55,11 @@ fbq('track', 'PageView');
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M6 18L18 6" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
     <a href="index.html#shop">All Perfumes</a>
+    <div class="nav-drawer-section-title">Combos</div>
+    <div class="nav-drawer-combos" id="nav-drawer-combos"></div>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
+    <a href="faq.html">FAQ</a>
     <a href="return-policy.html">Return Policy</a>
     <a href="checkout.html">Cart</a>
   </div>
@@ -92,7 +100,7 @@ fbq('track', 'PageView');
 
         <!-- Add-ons unlock only after the main ৳890 perfume is in the cart -->
         <div class="addons-heading">Add More, Save More</div>
-        <p class="addons-sub" id="addons-sub">আগে এই পারফিউমটি কার্টে যোগ করুন — তারপর অন্য যেকোনো পারফিউম যোগ করতে পারবেন মাত্র ৳৪৮০ তে।</p>
+        <p class="addons-sub" id="addons-sub">Your first perfume is ৳890 — add as many more as you like, each just ৳490.</p>
         <div class="addons-grid" id="addons-list"></div>
       </div>
     </div>
@@ -130,6 +138,7 @@ fbq('track', 'PageView');
       <div class="footer-col">
         <div class="footer-col-title">Help</div>
         <a href="contact.html">Contact Us</a>
+        <a href="faq.html">FAQ</a>
         <a href="return-policy.html">Return Policy</a>
       </div>
       <div class="footer-col">
@@ -196,7 +205,7 @@ fbq('track', 'PageView');
     renderMain(null, 0);
   }
 
-  /* ---------- Add-ons: EVERY perfume (including this page's own one) at ৳480, ----------
+  /* ---------- Add-ons: EVERY perfume (including this page's own one) at ৳490, ----------
      gated behind the main ৳890 pick. Buying more than one of the perfume you're
      already viewing happens here, not from the main button above. */
   var addonsList = document.getElementById('addons-list');
@@ -253,7 +262,7 @@ fbq('track', 'PageView');
       });
     } else {
       /* Already added once at full price. Want more of this same perfume?
-         That happens via its own card in the grid below, at ৳480 — not here. */
+         That happens via its own card in the grid below, at ৳490 — not here. */
       el.innerHTML = '<button class="btn btn-primary btn-block" disabled>✓ Added to Cart</button>';
     }
   }
@@ -263,8 +272,8 @@ fbq('track', 'PageView');
     renderMainAddToCart();
     document.getElementById('sticky-total').textContent = '৳' + cartGetTotal();
     document.getElementById('addons-sub').textContent = cartHasMainItem()
-      ? 'অন্য যেকোনো পারফিউম যোগ করুন — মাত্র ৳৪৮০ প্রতিটি।'
-      : 'আগে এই পারফিউমটি কার্টে যোগ করুন — তারপর অন্য যেকোনো পারফিউম যোগ করতে পারবেন মাত্র ৳৪৮০ তে।';
+      ? 'Add as many more as you like, each just ৳490.'
+      : 'Your first perfume is ৳890 — add as many more as you like, each just ৳490.';
   }
 
   document.addEventListener('click', function (e) {
