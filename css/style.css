@@ -130,9 +130,27 @@ h1, h2, h3, h4, p { margin: 0; }
   height: 36px;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
-.utility-bar .container { display: flex; justify-content: flex-end; gap: 20px; }
-.utility-bar span { font-size: 12px; font-weight: 500; color: var(--ink); }
+.marquee { width: 100%; overflow: hidden; }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 24s linear infinite;
+}
+.marquee-group { display: flex; align-items: center; flex-shrink: 0; }
+.marquee-group span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 0 14px;
+  white-space: nowrap;
+}
+.marquee-group .marquee-dot { color: var(--stone); padding: 0; }
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 .primary-nav {
   background: var(--canvas);
@@ -270,10 +288,11 @@ h1, h2, h3, h4, p { margin: 0; }
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 0 32px 64px;
+  padding: 0 64px 64px;
   max-width: 720px;
 }
-@media (min-width: 1920px) { .hero-content { padding-left: 80px; } }
+@media (min-width: 1600px) { .hero-content { padding-left: 100px; } }
+@media (min-width: 1920px) { .hero-content { padding-left: 140px; } }
 .hero-eyebrow {
   font-size: 13px;
   font-weight: 600;
@@ -299,7 +318,7 @@ h1, h2, h3, h4, p { margin: 0; }
 }
 @media (max-width: 960px) { .hero-title { font-size: 72px; } }
 @media (max-width: 599px) {
-  .hero { min-height: 78vh; }
+  .hero { min-height: 62vh; }
   .hero-title { font-size: 52px; }
   .hero-content { padding: 0 16px 40px; }
 }
