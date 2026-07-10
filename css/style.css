@@ -464,6 +464,64 @@ h1, h2, h3, h4, p { margin: 0; }
 .addon-card-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
 .addon-card-price { font-size: 13px; color: var(--mute); margin-top: 4px; }
 
+.addon-info-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-full);
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+
+/* ---------- Perfume info popup ---------- */
+.info-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17,17,17,0.55);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.info-modal-overlay.open { display: flex; }
+.info-modal {
+  background: var(--canvas);
+  width: 100%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 32px 28px 28px;
+  position: relative;
+}
+.info-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-full);
+  background: var(--soft-cloud);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.info-modal-eyebrow { font-size: 13px; font-weight: 600; color: var(--mute); text-transform: uppercase; letter-spacing: 0.5px; }
+.info-modal-notes { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--hairline-soft); }
+.info-modal-notes div { font-size: 14px; color: var(--ash); margin-bottom: 6px; }
+.info-modal-price { margin-top: 16px; font-size: 15px; font-weight: 700; }
+
 .qty-control { display: flex; align-items: center; gap: 10px; background: var(--canvas); border-radius: var(--r-full); }
 .qty-btn {
   width: 28px;
