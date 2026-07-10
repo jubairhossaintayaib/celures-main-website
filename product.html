@@ -302,6 +302,12 @@ fbq('track', 'PageView');
   });
 
   refreshAllQtyControls();
+
+  /* Same bfcache fix as cart.js: re-check real cart state if this page
+     is restored from back/forward navigation instead of freshly loaded. */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) refreshAllQtyControls();
+  });
 })();
 </script>
 </body>
