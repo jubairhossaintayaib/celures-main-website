@@ -93,7 +93,7 @@ fbq('track', 'PageView');
         <!-- Add-ons -->
         <div class="addons-heading">Add More, Save More</div>
         <p class="addons-sub">এই পারফিউমের সাথে আরও পারফিউম যোগ করুন — মাত্র ৳৪৮০ প্রতিটি।</p>
-        <div id="addons-list"></div>
+        <div class="addons-grid" id="addons-list"></div>
       </div>
     </div>
   </div>
@@ -196,23 +196,25 @@ fbq('track', 'PageView');
   var addonsList = document.getElementById('addons-list');
   var others = CELURES_PRODUCTS.filter(function (p) { return p.slug !== product.slug; });
 
-  function addonRowHTML(p) {
+  function addonCardHTML(p) {
     var img = (p.images && p.images[0])
-      ? '<img src="' + p.images[0] + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=\'<div class=&quot;img-placeholder&quot; style=&quot;font-size:9px;&quot;>' + p.name + '</div>\'">'
-      : '<div class="img-placeholder" style="font-size:9px;">' + p.name + '</div>';
+      ? '<img src="' + p.images[0] + '" alt="' + p.name + '" onerror="this.parentElement.innerHTML=\'<div class=&quot;img-placeholder&quot; style=&quot;font-size:13px;&quot;>' + p.name + '</div>\'">'
+      : '<div class="img-placeholder" style="font-size:13px;">' + p.name + '</div>';
     return (
-      '<div class="addon-row" data-slug="' + p.slug + '">' +
-        '<div class="addon-thumb">' + img + '</div>' +
-        '<div class="addon-info">' +
-          '<div class="addon-name">' + p.name + '</div>' +
-          '<div class="addon-price">৳' + p.addonPrice + '</div>' +
+      '<div class="addon-card" data-slug="' + p.slug + '">' +
+        '<div class="addon-card-image">' +
+          img +
+          '<div class="addon-card-qty-overlay qty-control" data-slug="' + p.slug + '" data-price="' + p.addonPrice + '"></div>' +
         '</div>' +
-        '<div class="qty-control" data-slug="' + p.slug + '" data-price="' + p.addonPrice + '"></div>' +
+        '<div class="addon-card-info">' +
+          '<div class="addon-card-name">' + p.name + '</div>' +
+          '<div class="addon-card-price">৳' + p.addonPrice + '</div>' +
+        '</div>' +
       '</div>'
     );
   }
 
-  addonsList.innerHTML = others.map(addonRowHTML).join('');
+  addonsList.innerHTML = others.map(addonCardHTML).join('');
 
   function renderQtyControl(el) {
     var slug = el.getAttribute('data-slug');
