@@ -74,6 +74,12 @@ fbq('track', 'PageView');
         <div class="pdp-info-eyebrow" id="pdp-inspired"></div>
         <h1 class="pdp-title" id="pdp-name"></h1>
         <div class="pdp-price">৳<span id="pdp-price"></span> <span class="t-caption-md">/ 30ml</span></div>
+
+        <div class="pdp-qty-row">
+          <span class="t-body-strong">Quantity</span>
+          <div class="qty-control" id="hero-qty-control"></div>
+        </div>
+
         <p class="pdp-desc" id="pdp-desc"></p>
 
         <div class="pdp-disclosure-row" onclick="this.classList.toggle('open')">
@@ -113,7 +119,7 @@ fbq('track', 'PageView');
 <div class="sticky-cart-bar">
   <div class="sticky-cart-total">
     <span>Total</span>
-    ৳<span id="sticky-total">0</span>
+    <span id="sticky-total">৳0</span>
   </div>
   <a href="checkout.html" class="btn btn-primary">View Cart</a>
 </div>
@@ -197,10 +203,12 @@ fbq('track', 'PageView');
   }
 
   /* ---------- Pre-add this page's hero product at full price ---------- */
-  var heroKey = product.slug + '-' + product.price;
   if (cartGetQty(product.slug, product.price) === 0) {
     cartAdd(product.slug, product.price, '');
   }
+  var heroQtyEl = document.getElementById('hero-qty-control');
+  heroQtyEl.setAttribute('data-slug', product.slug);
+  heroQtyEl.setAttribute('data-price', product.price);
 
   /* ---------- Add-ons: every other perfume, Foodpanda style ---------- */
   var addonsList = document.getElementById('addons-list');
@@ -219,7 +227,7 @@ fbq('track', 'PageView');
         '</div>' +
         '<div class="addon-card-info">' +
           '<div class="addon-card-name">' + p.name + '</div>' +
-          '<div class="addon-card-price">৳' + p.addonPrice + '</div>' +
+          '<div class="addon-card-price"><span class="price-strike">৳' + p.price + '</span> <span class="price-sale">৳' + p.addonPrice + '</span></div>' +
         '</div>' +
       '</div>'
     );
@@ -243,23 +251,24 @@ fbq('track', 'PageView');
 
   function refreshAllQtyControls() {
     document.querySelectorAll('.qty-control').forEach(renderQtyControl);
-    document.getElementById('sticky-total').textContent = cartGetTotal();
+    document.getElementById('sticky-total').textContent = '৳' + cartGetTotal();
   }
 
-  addonsList.addEventListener('click', function (e) {
+  document.addEventListener('click', function (e) {
     var infoBtn = e.target.closest('.addon-info-btn');
     if (infoBtn) {
       openInfoModal(infoBtn.getAttribute('data-info-slug'));
       return;
     }
+    var control = e.target.closest('.qty-control');
+    if (!control) return;
     var btn = e.target.closest('button');
     if (!btn) return;
-    var control = btn.closest('.qty-control');
     var slug = control.getAttribute('data-slug');
     var price = parseInt(control.getAttribute('data-price'), 10);
     var action = btn.getAttribute('data-action');
     if (action === 'add' || action === 'plus') {
-      cartAdd(slug, price, 'Add-on');
+      cartAdd(slug, price, control.id === 'hero-qty-control' ? '' : 'Add-on');
       showToast('Added to cart');
     } else if (action === 'minus') {
       cartRemoveOne(slug + '-' + price);
