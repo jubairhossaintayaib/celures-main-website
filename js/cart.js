@@ -26,8 +26,8 @@ function saveCart(cart) {
 
 /* Add one unit of a product to the cart (or increment if it already exists at this price tier) */
 function cartAdd(slug, unitPrice, tag) {
-  const product = getProductBySlug(slug);
-  if (!product) return;
+  const info = getItemBySlug(slug);
+  if (!info) return;
   const cart = getCart();
   const key = slug + "-" + unitPrice;
   const existing = cart.find(l => l.key === key);
@@ -37,7 +37,7 @@ function cartAdd(slug, unitPrice, tag) {
     cart.push({
       key: key,
       slug: slug,
-      name: product.name,
+      name: info.item.name,
       unitPrice: unitPrice,
       qty: 1,
       tag: tag || ""
