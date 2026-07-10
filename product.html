@@ -198,9 +198,11 @@ fbq('track', 'PageView');
     renderMain(null, 0);
   }
 
-  /* ---------- Add-ons: every OTHER perfume, ৳480 — gated behind the main ৳890 pick ---------- */
+  /* ---------- Add-ons: EVERY perfume (including this page's own one) at ৳480, ----------
+     gated behind the main ৳890 pick. Buying more than one of the perfume you're
+     already viewing happens here, not from the main button above. */
   var addonsList = document.getElementById('addons-list');
-  var others = CELURES_PRODUCTS.filter(function (p) { return p.slug !== product.slug; });
+  var addonCards = CELURES_PRODUCTS;
 
   function addonCardHTML(p) {
     var img = (p.images && p.images[0])
@@ -221,7 +223,7 @@ fbq('track', 'PageView');
     );
   }
 
-  addonsList.innerHTML = others.map(addonCardHTML).join('');
+  addonsList.innerHTML = addonCards.map(addonCardHTML).join('');
 
   function renderQtyControl(el) {
     var slug = el.getAttribute('data-slug');
@@ -252,21 +254,9 @@ fbq('track', 'PageView');
         refreshAllQtyControls();
       });
     } else {
-      el.innerHTML =
-        '<div class="qty-control-full">' +
-          '<button class="qty-btn" id="pdp-minus-btn" aria-label="Remove one">−</button>' +
-          '<span>' + qty + ' in cart</span>' +
-          '<button class="qty-btn" id="pdp-plus-btn" aria-label="Add one more">+</button>' +
-        '</div>';
-      document.getElementById('pdp-minus-btn').addEventListener('click', function () {
-        cartRemoveOne(product.slug + '-' + product.price);
-        refreshAllQtyControls();
-      });
-      document.getElementById('pdp-plus-btn').addEventListener('click', function () {
-        cartAdd(product.slug, product.price, '');
-        showToast('Added to cart');
-        refreshAllQtyControls();
-      });
+      /* Already added once at full price. Want more of this same perfume?
+         That happens via its own card in the grid below, at ৳480 — not here. */
+      el.innerHTML = '<button class="btn btn-primary btn-block" disabled>✓ Added to Cart</button>';
     }
   }
 
