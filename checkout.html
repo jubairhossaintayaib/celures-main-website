@@ -96,7 +96,7 @@ fbq('track', 'PageView');
           </div>
           <div class="form-group">
             <label class="form-label">Phone Number / মোবাইল নম্বর</label>
-            <input class="form-input" type="tel" id="f-phone" placeholder="01XXXXXXXXX" required>
+            <input class="form-input" type="tel" id="f-phone" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX" required>
             <div class="form-error">সঠিক মোবাইল নম্বর দিন</div>
           </div>
           <div class="form-group district-dropdown">
@@ -206,6 +206,11 @@ function renderSummary() {
   document.getElementById('sum-total').textContent = '৳' + total;
   document.getElementById('free-note').style.display = (delivery === 0 && subtotal > 0) ? 'block' : 'none';
 }
+
+/* ---------- Phone: digits only, max 11 ---------- */
+document.getElementById('f-phone').addEventListener('input', function (e) {
+  e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 11);
+});
 
 /* ---------- Searchable district dropdown ---------- */
 const districtInput = document.getElementById('f-district');
