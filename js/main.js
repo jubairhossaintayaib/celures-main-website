@@ -41,6 +41,14 @@ function initCombosNav() {
   }).join("");
   if (menu) menu.innerHTML = linksHTML;
   if (drawerList) drawerList.innerHTML = linksHTML;
+
+  const drawerToggle = document.getElementById("nav-drawer-combos-toggle");
+  if (drawerToggle && drawerList) {
+    drawerToggle.addEventListener("click", function () {
+      drawerToggle.classList.toggle("open");
+      drawerList.classList.toggle("open");
+    });
+  }
 }
 document.addEventListener("DOMContentLoaded", initCombosNav);
 
