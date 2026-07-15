@@ -218,12 +218,11 @@ h1, h2, h3, h4, p { margin: 0; }
 
 /* ---------- Combos list inside the mobile drawer ---------- */
 .nav-drawer-section-title {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--mute);
-  margin-top: -8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 0;
+  padding-left: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -231,11 +230,11 @@ h1, h2, h3, h4, p { margin: 0; }
   text-align: left;
   cursor: pointer;
 }
-.nav-drawer-combos-chevron { font-size: 16px; font-weight: 700; transition: transform 0.15s ease; }
+.nav-drawer-combos-chevron { font-size: 18px; font-weight: 700; color: var(--mute); transition: transform 0.15s ease; }
 .nav-drawer-section-title.open .nav-drawer-combos-chevron { transform: rotate(45deg); }
-.nav-drawer-combos { display: none; flex-direction: column; gap: 14px; margin-top: -4px; padding-left: 4px; }
+.nav-drawer-combos { display: none; flex-direction: column; gap: 14px; margin-top: -4px; padding-left: 16px; }
 .nav-drawer-combos.open { display: flex; }
-.nav-drawer-combos a { font-size: 15px; font-weight: 500; color: var(--ash); }
+.nav-drawer-combos a { font-size: 16px; font-weight: 500; color: var(--ash); }
 .cart-btn {
   position: relative;
   display: inline-flex;
