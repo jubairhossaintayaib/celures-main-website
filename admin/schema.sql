@@ -50,11 +50,18 @@ create table if not exists orders (
   is_dispatched boolean not null default false,
   dispatched_at timestamptz,
   dispatch_date date,
+  is_cancelled boolean not null default false,
+  cancelled_at timestamptz,
   created_at timestamptz not null default now()
 );
 
 create index if not exists orders_created_at_idx on orders (created_at);
 create index if not exists orders_dispatch_date_idx on orders (dispatch_date);
+
+-- If you already had the orders table from before (without cancellation
+-- tracking), this adds the missing columns without touching your data.
+alter table orders add column if not exists is_cancelled boolean not null default false;
+alter table orders add column if not exists cancelled_at timestamptz;
 
 -- ---------- STAFF / ROLES ----------
 -- One row per team member who's allowed to log in. "id" matches
