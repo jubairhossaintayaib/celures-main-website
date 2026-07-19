@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Celures Admin</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.0/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="admin-login-wrap">
+  <div class="admin-login-card">
+    <div class="admin-logo">CELURES ADMIN</div>
+    <form id="login-form">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="login-email" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="login-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="login-btn">Log In</button>
+      <div class="admin-error-msg" id="login-error">Wrong email or password, or you don't have access yet.</div>
+    </form>
+  </div>
+</div>
+
+<script src="../js/supabase-config.js"></script>
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('denied')) {
+    document.getElementById('login-error').textContent = "That login doesn't have admin access. Ask an admin to add you.";
+    document.getElementById('login-error').style.display = 'block';
+  }
+
+  document.getElementById('login-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorEl = document.getElementById('login-error');
+    const btn = document.getElementById('login-btn');
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Logging in...';
+
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      errorEl.textContent = 'Wrong email or password.';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Log In';
+      return;
+    }
+    window.location.href = 'orders.html';
+  });
+
+  /* If already logged in, skip straight to orders */
+  supabaseClient.auth.getSession().then(function (res) {
+    if (res.data.session) window.location.href = 'orders.html';
+  });
+})();
+</script>
+</body>
+</html>
