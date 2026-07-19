@@ -96,6 +96,12 @@ create policy "Staff can update orders" on orders
   for update
   using (exists (select 1 from staff where staff.id = auth.uid()));
 
+-- Only logged-in staff/admins can DELETE orders.
+drop policy if exists "Staff can delete orders" on orders;
+create policy "Staff can delete orders" on orders
+  for delete
+  using (exists (select 1 from staff where staff.id = auth.uid()));
+
 -- A logged-in user can check their OWN staff row (to see their role).
 drop policy if exists "Users can view own staff row" on staff;
 create policy "Users can view own staff row" on staff
