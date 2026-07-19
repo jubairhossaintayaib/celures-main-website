@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Cart — Celures</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.0/umd/supabase.min.js"></script>
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -131,14 +132,8 @@ fbq('track', 'PageView');
 <script src="js/products-data.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
+<script src="js/supabase-config.js"></script>
 <script>
-/* =============================================================
-   IMPORTANT — ORDER BACKEND
-   Replace the URL below with your own Google Apps Script Web App
-   URL once it's set up (see instructions Mo received separately).
-   ============================================================= */
-const ORDER_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
-
 function renderCart() {
   const cart = getCart();
   const empty = document.getElementById('empty-cart');
@@ -284,26 +279,28 @@ document.getElementById('order-form').addEventListener('submit', function (e) {
   confirmBtn.textContent = 'Placing Order...';
 
   const payload = {
-    orderId: orderId,
+    order_id: orderId,
     name: name,
     phone: phone,
     district: district,
     address: address,
     items: itemsSummary,
-    normal: normal,
+    normal_price: normal,
     discount: discount,
     subtotal: subtotal,
     delivery: delivery,
     total: total
   };
 
-  fetch(ORDER_SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload)
-  }).catch(function () { /* no-cors gives no readable response; proceed regardless */ })
-    .finally(function () {
+  supabaseClient.from('orders').insert(payload)
+    .then(function (res) {
+      if (res.error) {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Confirm Order';
+        showToast('Something went wrong placing your order — please try again');
+        console.error(res.error);
+        return;
+      }
       cartClear();
       const params = new URLSearchParams({
         orderId: orderId,
