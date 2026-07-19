@@ -2,10 +2,21 @@
    CELURES ADMIN — STYLES
    Built on the same design tokens as the storefront (../css/style.css
    is loaded first on every admin page for the CSS variables, fonts,
-   and .btn/.form-input classes). This file adds admin-only pieces.
+   and .btn/.form-input/.primary-nav classes). This file adds the
+   admin-only pieces.
    ============================================================ */
 
 body { background: var(--soft-cloud); }
+
+/* Storefront form inputs use the same gray as this page's background —
+   invisible here. Give them a white fill and a real border instead. */
+.form-input, .form-select, .form-textarea {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--ink);
+}
 
 .admin-loading-gate {
   min-height: 100vh;
@@ -17,38 +28,43 @@ body { background: var(--soft-cloud); }
   color: var(--mute);
 }
 
-.admin-topbar {
-  background: var(--canvas);
-  border-bottom: 1px solid var(--hairline);
-  height: 56px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-.admin-topbar-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1100px; margin: 0 auto; }
-.admin-logo { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; }
-.admin-nav { display: flex; gap: 4px; }
-.admin-nav a {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--mute);
-  padding: 8px 12px;
-  border-radius: var(--r-full);
-}
-.admin-nav a.active { color: var(--on-primary); background: var(--ink); }
-.admin-logout-btn { font-size: 13px; font-weight: 600; color: var(--mute); }
+/* The nav bar itself (logo, Reports/Team links, hamburger drawer on
+   mobile) reuses .primary-nav / .nav-logo / .nav-links / .nav-drawer*
+   straight from the storefront's style.css — no admin-specific nav
+   CSS needed. This file just adds a plain Log Out button variant. */
+.admin-logout-btn { font-size: 14px; font-weight: 600; color: var(--mute); }
 
-.admin-main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 80px; }
+.admin-main { max-width: 1000px; margin: 0 auto; padding: 20px 16px 80px; }
 .admin-page-title { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
 
 /* ---------- Login card ---------- */
 .admin-login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
 .admin-login-card { width: 100%; max-width: 380px; }
-.admin-login-card .admin-logo { display: block; text-align: center; font-size: 28px; margin-bottom: 24px; }
+.admin-login-card .admin-logo { display: block; text-align: center; font-family: var(--font-display); font-size: 28px; margin-bottom: 24px; }
 .admin-error-msg { font-size: 13px; color: var(--sale); margin-top: 8px; display: none; }
+
+/* ---------- Order status tabs ---------- */
+.admin-tab-bar {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.admin-tab-bar::-webkit-scrollbar { display: none; }
+.admin-tab-bar button {
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mute);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  flex-shrink: 0;
+}
+.admin-tab-bar button.active { color: var(--ink); border-bottom-color: var(--ink); }
+.admin-tab-count { color: var(--mute); font-weight: 500; }
+.admin-tab-bar button.active .admin-tab-count { color: var(--ink); }
 
 /* ---------- Date range bar ---------- */
 .admin-filter-bar {
@@ -90,13 +106,45 @@ body { background: var(--soft-cloud); }
   padding: 16px;
   margin-bottom: 12px;
 }
+.order-card.is-cancelled { opacity: 0.6; }
 .order-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
 .order-card-id { font-size: 12px; color: var(--mute); font-weight: 600; }
-.order-card-time { font-size: 12px; color: var(--mute); }
-.order-card-name { font-size: 17px; font-weight: 700; margin-top: 2px; }
-.order-card-phone a { font-size: 14px; color: var(--ink); text-decoration: underline; }
-.order-card-address { font-size: 14px; color: var(--ash); margin-top: 6px; line-height: 1.5; }
-.order-card-items { font-size: 13px; color: var(--ash); margin-top: 8px; background: var(--soft-cloud); padding: 8px 10px; }
+.order-card-time { font-size: 12px; color: var(--mute); white-space: nowrap; }
+.order-card-name { font-size: 17px; font-weight: 700; }
+.order-card-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--sale);
+  color: var(--on-primary);
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  margin-left: 8px;
+}
+
+/* Name / phone / address rows each with a copy icon next to them,
+   for pasting straight into Steadfast when making labels. */
+.copyable-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.copyable-row:first-of-type { margin-top: 2px; }
+.copy-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-sm);
+  background: var(--soft-cloud);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mute);
+}
+.copy-btn svg { width: 14px; height: 14px; }
+.copy-btn.copied { background: var(--success); color: var(--on-primary); }
+.order-card-phone-value a { font-size: 14px; color: var(--ink); text-decoration: underline; }
+.order-card-address-value { font-size: 14px; color: var(--ash); line-height: 1.5; }
+
+.order-card-items { font-size: 13px; color: var(--ash); margin-top: 10px; background: var(--soft-cloud); padding: 8px 10px; }
 .order-card-price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 15px; font-weight: 700; }
 
 .order-card-controls { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hairline-soft); display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
@@ -109,25 +157,18 @@ body { background: var(--soft-cloud); }
 .toggle-slider::before { content: ""; position: absolute; height: 20px; width: 20px; left: 3px; bottom: 3px; background: var(--canvas); border-radius: 50%; transition: 0.15s; }
 .toggle-switch input:checked + .toggle-slider { background: var(--success); }
 .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+/* Cancel toggle turns red when on, instead of the usual green */
+.toggle-switch.toggle-danger input:checked + .toggle-slider { background: var(--sale); }
 
 .dispatch-date-field { display: flex; align-items: center; gap: 8px; }
 .dispatch-date-field label { font-size: 12px; font-weight: 600; color: var(--mute); }
 .dispatch-date-field input { height: 36px; padding: 0 8px; border: 1px solid var(--hairline); border-radius: var(--r-sm); font-size: 13px; }
-.dispatch-quick-btn { font-size: 12px; font-weight: 600; padding: 6px 10px; background: var(--soft-cloud); border-radius: var(--r-full); }
 
 .order-empty-state { text-align: center; padding: 60px 16px; color: var(--mute); }
 
-/* ---------- Dispatch board ---------- */
-.dispatch-group-title { font-size: 16px; font-weight: 700; margin: 24px 0 10px; }
-.dispatch-group-title:first-child { margin-top: 0; }
-.dispatch-check-row { display: flex; align-items: center; gap: 14px; }
-.dispatch-check-row .toggle-switch { width: 52px; height: 30px; }
-.dispatch-check-row .toggle-slider::before { height: 24px; width: 24px; }
-.dispatch-check-row input:checked + .toggle-slider::before { transform: translateX(22px); }
-
 /* ---------- Reports ---------- */
 .report-stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
-@media (min-width: 700px) { .report-stat-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 700px) { .report-stat-grid { grid-template-columns: repeat(5, 1fr); } }
 .report-stat-card { background: var(--canvas); border: 1px solid var(--hairline); padding: 16px; }
 .report-stat-label { font-size: 12px; font-weight: 600; color: var(--mute); text-transform: uppercase; }
 .report-stat-value { font-size: 28px; font-weight: 700; margin-top: 6px; }
@@ -135,6 +176,5 @@ body { background: var(--soft-cloud); }
 .report-chart-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
 
 @media (max-width: 599px) {
-  .admin-nav a { padding: 8px; font-size: 13px; }
   .order-card-controls { flex-direction: column; align-items: stretch; }
 }
