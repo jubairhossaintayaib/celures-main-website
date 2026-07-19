@@ -5,7 +5,7 @@
    "service_role" key (that one must stay secret, server-side only).
    ============================================================ */
 
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
-const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+const SUPABASE_URL = "https://ilxhvchbyhvzylpadprh.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlseGh2Y2hieWh2enlscGFkcHJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0NjcwMjEsImV4cCI6MjEwMDA0MzAyMX0.szmKreFfffeHy6xTjYooDEg7pwmK99b4C_VdACw7aT0";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
