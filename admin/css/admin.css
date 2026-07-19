@@ -166,6 +166,67 @@ body { background: var(--soft-cloud); }
 
 .order-empty-state { text-align: center; padding: 60px 16px; color: var(--mute); }
 
+/* ---------- Delete icon + confirmation modal ---------- */
+.delete-order-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-sm);
+  background: var(--soft-cloud);
+  color: var(--mute);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.delete-order-btn svg { width: 15px; height: 15px; }
+
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17,17,17,0.55);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.admin-modal-overlay.open { display: flex; }
+.admin-modal { background: var(--canvas); width: 100%; max-width: 340px; padding: 24px; }
+.admin-modal-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.admin-modal-body { font-size: 14px; color: var(--ash); margin-bottom: 20px; }
+.admin-modal-actions { display: flex; gap: 10px; }
+.admin-modal-actions button { flex: 1; height: 44px; border-radius: var(--r-lg); font-size: 14px; font-weight: 700; }
+.admin-modal-no { background: var(--success); color: var(--on-primary); }
+.admin-modal-yes { background: var(--sale); color: var(--on-primary); }
+
+/* ---------- Editable items field ---------- */
+.order-card-items-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.order-card-items-row .order-card-items { flex: 1; margin-top: 0; }
+.edit-items-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-sm);
+  background: var(--soft-cloud);
+  color: var(--mute);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.edit-items-btn svg { width: 13px; height: 13px; }
+.order-card-items-edit { margin-top: 10px; }
+.items-edit-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 10px;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-sm);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  resize: vertical;
+}
+.items-save-btn { margin-top: 8px; height: 36px; padding: 0 20px; }
+
 /* ---------- Reports ---------- */
 .report-stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
 @media (min-width: 700px) { .report-stat-grid { grid-template-columns: repeat(5, 1fr); } }
