@@ -9,23 +9,43 @@
    not in the staff table. Returns the staff row {id, email, role}
    on success — use this to know the current user's role. */
 async function requireStaff() {
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if (!session) {
-    window.location.href = "login.html";
-    return null;
-  }
-  const { data: staffRow, error } = await supabaseClient
-    .from("staff")
-    .select("*")
-    .eq("id", session.user.id)
-    .maybeSingle();
+  try {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) {
+      window.location.href = "login.html";
+      return null;
+    }
+    const { data: staffRow, error } = await supabaseClient
+      .from("staff")
+      .select("*")
+      .eq("id", session.user.id)
+      .maybeSingle();
 
-  if (error || !staffRow) {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html?denied=1";
+    if (error || !staffRow) {
+      await supabaseClient.auth.signOut();
+      window.location.href = "login.html?denied=1";
+      return null;
+    }
+    return staffRow;
+  } catch (e) {
+    showAuthGuardError(e);
     return null;
   }
-  return staffRow;
+}
+
+/* If something breaks unexpectedly (bad Supabase config, network
+   issue, etc.) show a real error instead of hanging on "Checking
+   access..." forever. */
+function showAuthGuardError(e) {
+  console.error("Celures admin — auth check failed:", e);
+  const gate = document.getElementById("admin-loading-gate");
+  if (gate) {
+    gate.innerHTML =
+      '<div style="text-align:center;max-width:320px;">' +
+        '<div style="font-weight:700;margin-bottom:8px;">Couldn\'t connect</div>' +
+        '<div style="font-size:13px;">Something\'s wrong with the connection to Supabase. Check js/supabase-config.js has the right URL and key, then reload.</div>' +
+      '</div>';
+  }
 }
 
 /* Same as requireStaff(), but also kicks non-admins back to
