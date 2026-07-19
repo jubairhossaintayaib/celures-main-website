@@ -10,6 +10,9 @@
 </head>
 <body>
 
+<div class="admin-loading-gate" id="admin-loading-gate">Checking access…</div>
+<div id="admin-app" style="display:none;">
+
 <div class="admin-topbar">
   <div class="admin-topbar-inner">
     <div class="admin-logo">CELURES ADMIN</div>
@@ -30,6 +33,8 @@
   <div id="dispatch-groups"></div>
   <div class="order-empty-state" id="dispatch-empty" style="display:none;">Nothing waiting to be dispatched — you're all caught up.</div>
 </main>
+
+</div>
 
 <script src="../js/supabase-config.js"></script>
 <script src="js/auth-guard.js"></script>
@@ -143,6 +148,8 @@
   (async function init() {
     const staffRow = await requireStaff();
     if (!staffRow) return;
+    document.getElementById('admin-loading-gate').style.display = 'none';
+    document.getElementById('admin-app').style.display = '';
     if (staffRow.role === 'admin') {
       document.getElementById('nav-reports-link').style.display = '';
       document.getElementById('nav-team-link').style.display = '';
