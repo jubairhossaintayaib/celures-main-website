@@ -20,6 +20,7 @@
     </button>
     <a href="orders.html" class="nav-logo">CELURES ADMIN</a>
     <div class="nav-links">
+      <a href="orders.html" class="active">Orders</a>
       <a href="reports.html" id="nav-reports-link" style="display:none;">Reports</a>
       <a href="team.html" id="nav-team-link" style="display:none;">Team</a>
     </div>
@@ -76,6 +77,17 @@
   <div id="orders-list"></div>
   <div class="order-empty-state" id="orders-empty" style="display:none;">No orders match this filter.</div>
 </main>
+
+<div class="admin-modal-overlay" id="delete-modal-overlay">
+  <div class="admin-modal">
+    <div class="admin-modal-title">Delete this order?</div>
+    <p class="admin-modal-body">This can't be undone.</p>
+    <div class="admin-modal-actions">
+      <button type="button" class="admin-modal-no" id="delete-modal-no">No, Cancel</button>
+      <button type="button" class="admin-modal-yes" id="delete-modal-yes">Yes, Delete</button>
+    </div>
+  </div>
+</div>
 
 </div>
 
@@ -186,9 +198,18 @@
   function escapeAttr(s) {
     return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   }
+  function escapeHTML(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
 
   function copyIconSVG() {
     return '<svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a1 1 0 0 1 1-1h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  }
+  function deleteIconSVG() {
+    return '<svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M9 6V4h6v2M6 6l1 14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+  function editIconSVG() {
+    return '<svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5a1.5 1.5 0 0 1 2 0l2 2a1.5 1.5 0 0 1 0 2L8 20 4 21l1-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
   }
 
   function copyRow(value, innerHTML) {
@@ -200,20 +221,36 @@
     );
   }
 
+  /* Order IDs currently in "edit items" mode. Kept outside allOrders so
+     it survives the list re-rendering after any toggle change. */
+  const editingItemsIds = new Set();
+
   function orderCardHTML(o) {
     const time = new Date(o.created_at).toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
     const fullAddress = o.district + ' — ' + o.address;
+    const itemsHTML = editingItemsIds.has(o.id)
+      ? '<div class="order-card-items-edit">' +
+          '<textarea class="items-edit-input">' + escapeHTML(o.items) + '</textarea>' +
+          '<button type="button" class="btn btn-primary items-save-btn">Save</button>' +
+        '</div>'
+      : '<div class="order-card-items-row">' +
+          '<div class="order-card-items">' + o.items + '</div>' +
+          '<button type="button" class="edit-items-btn" aria-label="Edit items">' + editIconSVG() + '</button>' +
+        '</div>';
     return (
       '<div class="order-card' + (o.is_cancelled ? ' is-cancelled' : '') + '" data-id="' + o.id + '">' +
         '<div class="order-card-top">' +
           '<div><div class="order-card-id">' + o.order_id + (o.is_cancelled ? '<span class="order-card-badge">Cancelled</span>' : '') + '</div>' +
           '<div class="order-card-name">' + o.name + '</div></div>' +
-          '<div class="order-card-time">' + time + '</div>' +
+          '<div style="display:flex;align-items:center;gap:10px;">' +
+            '<div class="order-card-time">' + time + '</div>' +
+            '<button type="button" class="delete-order-btn" aria-label="Delete order">' + deleteIconSVG() + '</button>' +
+          '</div>' +
         '</div>' +
         copyRow(o.name) +
         copyRow(o.phone, '<span class="order-card-phone-value"><a href="tel:' + o.phone + '">' + o.phone + '</a></span>') +
         copyRow(fullAddress, '<span class="order-card-address-value">' + fullAddress + '</span>') +
-        '<div class="order-card-items">' + o.items + '</div>' +
+        itemsHTML +
         '<div class="order-card-price-row"><span>Total</span><span>৳' + o.total + '</span></div>' +
         '<div class="order-card-controls">' +
           '<label class="toggle-row"><span>Confirmed</span>' +
@@ -248,17 +285,72 @@
     document.getElementById('orders-list').innerHTML = filtered.map(orderCardHTML).join('');
   }
 
-  /* ---------- Copy buttons ---------- */
+  /* ---------- Copy buttons, edit-items, delete ---------- */
+  let pendingDeleteId = null;
+
   document.getElementById('orders-list').addEventListener('click', function (e) {
     const copyBtn = e.target.closest('.copy-btn');
-    if (!copyBtn) return;
-    const val = copyBtn.getAttribute('data-copy-value');
-    navigator.clipboard.writeText(val).then(function () {
-      copyBtn.classList.add('copied');
-      setTimeout(function () { copyBtn.classList.remove('copied'); }, 1000);
-    }).catch(function () {
-      showToast('Could not copy — try selecting the text manually');
-    });
+    if (copyBtn) {
+      const val = copyBtn.getAttribute('data-copy-value');
+      navigator.clipboard.writeText(val).then(function () {
+        copyBtn.classList.add('copied');
+        setTimeout(function () { copyBtn.classList.remove('copied'); }, 1000);
+      }).catch(function () {
+        showToast('Could not copy — try selecting the text manually');
+      });
+      return;
+    }
+
+    const card = e.target.closest('.order-card');
+    if (!card) return;
+    const id = card.getAttribute('data-id');
+
+    if (e.target.closest('.delete-order-btn')) {
+      pendingDeleteId = id;
+      document.getElementById('delete-modal-overlay').classList.add('open');
+      return;
+    }
+
+    if (e.target.closest('.edit-items-btn')) {
+      editingItemsIds.add(id);
+      renderOrders();
+      return;
+    }
+
+    if (e.target.closest('.items-save-btn')) {
+      const textarea = card.querySelector('.items-edit-input');
+      const newItems = textarea.value.trim();
+      supabaseClient.from('orders').update({ items: newItems }).eq('id', id).then(function (res) {
+        if (res.error) { showToast('Could not save — try again'); return; }
+        const order = allOrders.find(function (o) { return o.id === id; });
+        if (order) order.items = newItems;
+        editingItemsIds.delete(id);
+        renderOrders();
+        showToast('Items updated');
+      });
+      return;
+    }
+  });
+
+  /* ---------- Delete confirmation modal ---------- */
+  document.getElementById('delete-modal-no').addEventListener('click', function () {
+    pendingDeleteId = null;
+    document.getElementById('delete-modal-overlay').classList.remove('open');
+  });
+  document.getElementById('delete-modal-overlay').addEventListener('click', function (e) {
+    if (e.target === this) {
+      pendingDeleteId = null;
+      this.classList.remove('open');
+    }
+  });
+  document.getElementById('delete-modal-yes').addEventListener('click', async function () {
+    if (!pendingDeleteId) return;
+    const { error } = await supabaseClient.from('orders').delete().eq('id', pendingDeleteId);
+    document.getElementById('delete-modal-overlay').classList.remove('open');
+    pendingDeleteId = null;
+    if (error) { showToast('Could not delete — try again'); return; }
+    showToast('Order deleted');
+    loadOrders();
   });
 
   /* ---------- Toggles + dispatch date ---------- */
