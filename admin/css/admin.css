@@ -7,6 +7,16 @@
 
 body { background: var(--soft-cloud); }
 
+.admin-loading-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mute);
+}
+
 .admin-topbar {
   background: var(--canvas);
   border-bottom: 1px solid var(--hairline);
