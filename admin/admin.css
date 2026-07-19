@@ -1,0 +1,130 @@
+/* ============================================================
+   CELURES ADMIN — STYLES
+   Built on the same design tokens as the storefront (../css/style.css
+   is loaded first on every admin page for the CSS variables, fonts,
+   and .btn/.form-input classes). This file adds admin-only pieces.
+   ============================================================ */
+
+body { background: var(--soft-cloud); }
+
+.admin-topbar {
+  background: var(--canvas);
+  border-bottom: 1px solid var(--hairline);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.admin-topbar-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1100px; margin: 0 auto; }
+.admin-logo { font-family: var(--font-display); font-size: 22px; letter-spacing: 1px; }
+.admin-nav { display: flex; gap: 4px; }
+.admin-nav a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mute);
+  padding: 8px 12px;
+  border-radius: var(--r-full);
+}
+.admin-nav a.active { color: var(--on-primary); background: var(--ink); }
+.admin-logout-btn { font-size: 13px; font-weight: 600; color: var(--mute); }
+
+.admin-main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 80px; }
+.admin-page-title { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+
+/* ---------- Login card ---------- */
+.admin-login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.admin-login-card { width: 100%; max-width: 380px; }
+.admin-login-card .admin-logo { display: block; text-align: center; font-size: 28px; margin-bottom: 24px; }
+.admin-error-msg { font-size: 13px; color: var(--sale); margin-top: 8px; display: none; }
+
+/* ---------- Date range bar ---------- */
+.admin-filter-bar {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  padding: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.admin-filter-field { flex: 1; min-width: 130px; }
+.admin-filter-field label { display: block; font-size: 12px; font-weight: 600; color: var(--mute); margin-bottom: 4px; }
+.admin-filter-field input, .admin-filter-field select {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
+.admin-quick-dates { display: flex; gap: 6px; flex-wrap: wrap; }
+.admin-quick-dates button {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: var(--r-full);
+  background: var(--soft-cloud);
+  border: 1px solid var(--hairline);
+}
+.admin-quick-dates button.active { background: var(--ink); color: var(--on-primary); border-color: var(--ink); }
+
+/* ---------- Order card ---------- */
+.order-card {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.order-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.order-card-id { font-size: 12px; color: var(--mute); font-weight: 600; }
+.order-card-time { font-size: 12px; color: var(--mute); }
+.order-card-name { font-size: 17px; font-weight: 700; margin-top: 2px; }
+.order-card-phone a { font-size: 14px; color: var(--ink); text-decoration: underline; }
+.order-card-address { font-size: 14px; color: var(--ash); margin-top: 6px; line-height: 1.5; }
+.order-card-items { font-size: 13px; color: var(--ash); margin-top: 8px; background: var(--soft-cloud); padding: 8px 10px; }
+.order-card-price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 15px; font-weight: 700; }
+
+.order-card-controls { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hairline-soft); display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+.toggle-row { display: flex; align-items: center; gap: 10px; }
+.toggle-row span { font-size: 14px; font-weight: 600; }
+
+.toggle-switch { position: relative; display: inline-block; width: 46px; height: 26px; flex-shrink: 0; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; inset: 0; background: var(--hairline); border-radius: var(--r-full); transition: 0.15s; }
+.toggle-slider::before { content: ""; position: absolute; height: 20px; width: 20px; left: 3px; bottom: 3px; background: var(--canvas); border-radius: 50%; transition: 0.15s; }
+.toggle-switch input:checked + .toggle-slider { background: var(--success); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+.dispatch-date-field { display: flex; align-items: center; gap: 8px; }
+.dispatch-date-field label { font-size: 12px; font-weight: 600; color: var(--mute); }
+.dispatch-date-field input { height: 36px; padding: 0 8px; border: 1px solid var(--hairline); border-radius: var(--r-sm); font-size: 13px; }
+.dispatch-quick-btn { font-size: 12px; font-weight: 600; padding: 6px 10px; background: var(--soft-cloud); border-radius: var(--r-full); }
+
+.order-empty-state { text-align: center; padding: 60px 16px; color: var(--mute); }
+
+/* ---------- Dispatch board ---------- */
+.dispatch-group-title { font-size: 16px; font-weight: 700; margin: 24px 0 10px; }
+.dispatch-group-title:first-child { margin-top: 0; }
+.dispatch-check-row { display: flex; align-items: center; gap: 14px; }
+.dispatch-check-row .toggle-switch { width: 52px; height: 30px; }
+.dispatch-check-row .toggle-slider::before { height: 24px; width: 24px; }
+.dispatch-check-row input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+/* ---------- Reports ---------- */
+.report-stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
+@media (min-width: 700px) { .report-stat-grid { grid-template-columns: repeat(4, 1fr); } }
+.report-stat-card { background: var(--canvas); border: 1px solid var(--hairline); padding: 16px; }
+.report-stat-label { font-size: 12px; font-weight: 600; color: var(--mute); text-transform: uppercase; }
+.report-stat-value { font-size: 28px; font-weight: 700; margin-top: 6px; }
+.report-chart-card { background: var(--canvas); border: 1px solid var(--hairline); padding: 16px; margin-bottom: 20px; }
+.report-chart-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+
+@media (max-width: 599px) {
+  .admin-nav a { padding: 8px; font-size: 13px; }
+  .order-card-controls { flex-direction: column; align-items: stretch; }
+}
