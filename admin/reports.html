@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports — Celures Admin</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.0/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="admin-topbar">
+  <div class="admin-topbar-inner">
+    <div class="admin-logo">CELURES ADMIN</div>
+    <div class="admin-nav" id="admin-nav">
+      <a href="orders.html">Orders</a>
+      <a href="dispatch.html">Dispatch</a>
+      <a href="reports.html" class="active">Reports</a>
+      <a href="team.html">Team</a>
+    </div>
+    <button class="admin-logout-btn" onclick="adminLogout()">Log Out</button>
+  </div>
+</div>
+
+<main class="admin-main">
+  <div class="admin-page-title">Reports</div>
+
+  <div class="admin-filter-bar">
+    <div class="admin-filter-field">
+      <label>From</label>
+      <input type="date" id="filter-from">
+    </div>
+    <div class="admin-filter-field">
+      <label>To</label>
+      <input type="date" id="filter-to">
+    </div>
+    <div class="admin-quick-dates" id="quick-dates">
+      <button type="button" data-range="week">This Week</button>
+      <button type="button" data-range="month">This Month</button>
+      <button type="button" data-range="all">All Time</button>
+    </div>
+  </div>
+
+  <div class="report-stat-grid">
+    <div class="report-stat-card">
+      <div class="report-stat-label">Total Orders</div>
+      <div class="report-stat-value" id="stat-total">—</div>
+    </div>
+    <div class="report-stat-card">
+      <div class="report-stat-label">Confirmed</div>
+      <div class="report-stat-value" id="stat-confirmed">—</div>
+    </div>
+    <div class="report-stat-card">
+      <div class="report-stat-label">Dispatched</div>
+      <div class="report-stat-value" id="stat-dispatched">—</div>
+    </div>
+    <div class="report-stat-card">
+      <div class="report-stat-label">Total Revenue</div>
+      <div class="report-stat-value" id="stat-revenue">—</div>
+    </div>
+  </div>
+
+  <div class="report-chart-card">
+    <div class="report-chart-title">Orders Per Day</div>
+    <canvas id="chart-orders" height="90"></canvas>
+  </div>
+
+  <div class="report-chart-card">
+    <div class="report-chart-title">Revenue Per Day (৳)</div>
+    <canvas id="chart-revenue" height="90"></canvas>
+  </div>
+</main>
+
+<script src="../js/supabase-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+(function () {
+  let ordersChart, revenueChart;
+
+  function fmtDateInput(d) { return d.toISOString().slice(0, 10); }
+
+  function setActiveQuickRange(key) {
+    document.querySelectorAll('#quick-dates button').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-range') === key);
+    });
+  }
+
+  function applyQuickRange(key) {
+    const today = new Date();
+    const from = document.getElementById('filter-from');
+    const to = document.getElementById('filter-to');
+    if (key === 'week') {
+      const start = new Date(today); start.setDate(start.getDate() - start.getDay());
+      from.value = fmtDateInput(start); to.value = fmtDateInput(today);
+    } else if (key === 'month') {
+      const start = new Date(today.getFullYear(), today.getMonth(), 1);
+      from.value = fmtDateInput(start); to.value = fmtDateInput(today);
+    } else if (key === 'all') {
+      from.value = ''; to.value = '';
+    }
+    setActiveQuickRange(key);
+    loadReport();
+  }
+
+  document.querySelectorAll('#quick-dates button').forEach(function (btn) {
+    btn.addEventListener('click', function () { applyQuickRange(btn.getAttribute('data-range')); });
+  });
+  document.getElementById('filter-from').addEventListener('change', function () { setActiveQuickRange(''); loadReport(); });
+  document.getElementById('filter-to').addEventListener('change', function () { setActiveQuickRange(''); loadReport(); });
+
+  async function loadReport() {
+    let query = supabaseClient.from('orders').select('*').order('created_at', { ascending: true });
+    const from = document.getElementById('filter-from').value;
+    const to = document.getElementById('filter-to').value;
+    if (from) query = query.gte('created_at', from + 'T00:00:00');
+    if (to) {
+      const toEnd = new Date(to + 'T00:00:00');
+      toEnd.setDate(toEnd.getDate() + 1);
+      query = query.lt('created_at', toEnd.toISOString().slice(0, 10) + 'T00:00:00');
+    }
+    const { data, error } = await query;
+    if (error) { alert('Error loading report: ' + error.message); return; }
+    render(data || []);
+  }
+
+  function render(orders) {
+    const total = orders.length;
+    const confirmed = orders.filter(function (o) { return o.is_confirmed; }).length;
+    const dispatched = orders.filter(function (o) { return o.is_dispatched; }).length;
+    const revenue = orders.reduce(function (sum, o) { return sum + (o.total || 0); }, 0);
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-confirmed').textContent = total ? Math.round((confirmed / total) * 100) + '%' : '—';
+    document.getElementById('stat-dispatched').textContent = confirmed ? Math.round((dispatched / confirmed) * 100) + '%' : '—';
+    document.getElementById('stat-revenue').textContent = '৳' + revenue.toLocaleString();
+
+    /* Group by day */
+    const byDay = {};
+    orders.forEach(function (o) {
+      const day = o.created_at.slice(0, 10);
+      if (!byDay[day]) byDay[day] = { count: 0, revenue: 0 };
+      byDay[day].count += 1;
+      byDay[day].revenue += (o.total || 0);
+    });
+    const days = Object.keys(byDay).sort();
+    const counts = days.map(function (d) { return byDay[d].count; });
+    const revenues = days.map(function (d) { return byDay[d].revenue; });
+    const labels = days.map(function (d) {
+      return new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+    });
+
+    if (ordersChart) ordersChart.destroy();
+    ordersChart = new Chart(document.getElementById('chart-orders'), {
+      type: 'bar',
+      data: { labels: labels, datasets: [{ label: 'Orders', data: counts, backgroundColor: '#111111' }] },
+      options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+    });
+
+    if (revenueChart) revenueChart.destroy();
+    revenueChart = new Chart(document.getElementById('chart-revenue'), {
+      type: 'line',
+      data: { labels: labels, datasets: [{ label: 'Revenue', data: revenues, borderColor: '#111111', backgroundColor: 'rgba(17,17,17,0.08)', fill: true, tension: 0.2 }] },
+      options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+  }
+
+  (async function init() {
+    const staffRow = await requireAdmin();
+    if (!staffRow) return;
+    applyQuickRange('week');
+  })();
+})();
+</script>
+</body>
+</html>

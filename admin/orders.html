@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orders — Celures Admin</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.0/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="admin-topbar">
+  <div class="admin-topbar-inner">
+    <div class="admin-logo">CELURES ADMIN</div>
+    <div class="admin-nav" id="admin-nav">
+      <a href="orders.html" class="active">Orders</a>
+      <a href="dispatch.html">Dispatch</a>
+      <a href="reports.html" id="nav-reports-link" style="display:none;">Reports</a>
+      <a href="team.html" id="nav-team-link" style="display:none;">Team</a>
+    </div>
+    <button class="admin-logout-btn" onclick="adminLogout()">Log Out</button>
+  </div>
+</div>
+
+<main class="admin-main">
+  <div class="admin-page-title">Orders</div>
+
+  <div class="admin-filter-bar">
+    <div class="admin-filter-field">
+      <label>From</label>
+      <input type="date" id="filter-from">
+    </div>
+    <div class="admin-filter-field">
+      <label>To</label>
+      <input type="date" id="filter-to">
+    </div>
+    <div class="admin-filter-field" style="flex:2;min-width:180px;">
+      <label>Search (name / phone / order ID)</label>
+      <input type="text" id="filter-search" placeholder="Search...">
+    </div>
+    <div class="admin-quick-dates" id="quick-dates">
+      <button type="button" data-range="today">Today</button>
+      <button type="button" data-range="yesterday">Yesterday</button>
+      <button type="button" data-range="week">This Week</button>
+      <button type="button" data-range="all">All</button>
+    </div>
+  </div>
+
+  <div id="orders-list"></div>
+  <div class="order-empty-state" id="orders-empty" style="display:none;">No orders match this filter.</div>
+</main>
+
+<script src="../js/supabase-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+(function () {
+  let allOrders = [];
+
+  function fmtDateInput(d) {
+    return d.toISOString().slice(0, 10);
+  }
+
+  function setActiveQuickRange(key) {
+    document.querySelectorAll('#quick-dates button').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-range') === key);
+    });
+  }
+
+  function applyQuickRange(key) {
+    const today = new Date();
+    const from = document.getElementById('filter-from');
+    const to = document.getElementById('filter-to');
+    if (key === 'today') {
+      from.value = fmtDateInput(today);
+      to.value = fmtDateInput(today);
+    } else if (key === 'yesterday') {
+      const y = new Date(today); y.setDate(y.getDate() - 1);
+      from.value = fmtDateInput(y);
+      to.value = fmtDateInput(y);
+    } else if (key === 'week') {
+      const start = new Date(today); start.setDate(start.getDate() - start.getDay());
+      from.value = fmtDateInput(start);
+      to.value = fmtDateInput(today);
+    } else if (key === 'all') {
+      from.value = '';
+      to.value = '';
+    }
+    setActiveQuickRange(key);
+    loadOrders();
+  }
+
+  document.querySelectorAll('#quick-dates button').forEach(function (btn) {
+    btn.addEventListener('click', function () { applyQuickRange(btn.getAttribute('data-range')); });
+  });
+  document.getElementById('filter-from').addEventListener('change', function () { setActiveQuickRange(''); loadOrders(); });
+  document.getElementById('filter-to').addEventListener('change', function () { setActiveQuickRange(''); loadOrders(); });
+  document.getElementById('filter-search').addEventListener('input', renderOrders);
+
+  async function loadOrders() {
+    let query = supabaseClient.from('orders').select('*').order('created_at', { ascending: false });
+
+    const from = document.getElementById('filter-from').value;
+    const to = document.getElementById('filter-to').value;
+    if (from) query = query.gte('created_at', from + 'T00:00:00');
+    if (to) {
+      const toEnd = new Date(to + 'T00:00:00');
+      toEnd.setDate(toEnd.getDate() + 1);
+      query = query.lt('created_at', toEnd.toISOString().slice(0, 10) + 'T00:00:00');
+    }
+
+    const { data, error } = await query;
+    if (error) {
+      document.getElementById('orders-list').innerHTML = '<p style="color:var(--sale);">Error loading orders: ' + error.message + '</p>';
+      return;
+    }
+    allOrders = data || [];
+    renderOrders();
+  }
+
+  function orderCardHTML(o) {
+    const time = new Date(o.created_at).toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+    return (
+      '<div class="order-card" data-id="' + o.id + '">' +
+        '<div class="order-card-top">' +
+          '<div><div class="order-card-id">' + o.order_id + '</div>' +
+            '<div class="order-card-name">' + o.name + '</div></div>' +
+          '<div class="order-card-time">' + time + '</div>' +
+        '</div>' +
+        '<div class="order-card-phone"><a href="tel:' + o.phone + '">' + o.phone + '</a></div>' +
+        '<div class="order-card-address">' + o.district + ' — ' + o.address + '</div>' +
+        '<div class="order-card-items">' + o.items + '</div>' +
+        '<div class="order-card-price-row"><span>Total</span><span>৳' + o.total + '</span></div>' +
+        '<div class="order-card-controls">' +
+          '<label class="toggle-row"><span>Confirmed</span>' +
+            '<span class="toggle-switch"><input type="checkbox" class="confirm-toggle" ' + (o.is_confirmed ? 'checked' : '') + '><span class="toggle-slider"></span></span>' +
+          '</label>' +
+          '<label class="toggle-row"><span>Dispatched</span>' +
+            '<span class="toggle-switch"><input type="checkbox" class="dispatch-toggle" ' + (o.is_dispatched ? 'checked' : '') + '><span class="toggle-slider"></span></span>' +
+          '</label>' +
+          '<div class="dispatch-date-field">' +
+            '<label>Dispatch Date</label>' +
+            '<input type="date" class="dispatch-date-input" value="' + (o.dispatch_date || '') + '">' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderOrders() {
+    const search = document.getElementById('filter-search').value.trim().toLowerCase();
+    let filtered = allOrders;
+    if (search) {
+      filtered = allOrders.filter(function (o) {
+        return (o.name || '').toLowerCase().includes(search) ||
+               (o.phone || '').toLowerCase().includes(search) ||
+               (o.order_id || '').toLowerCase().includes(search);
+      });
+    }
+    document.getElementById('orders-empty').style.display = filtered.length === 0 ? 'block' : 'none';
+    document.getElementById('orders-list').innerHTML = filtered.map(orderCardHTML).join('');
+  }
+
+  document.getElementById('orders-list').addEventListener('change', async function (e) {
+    const card = e.target.closest('.order-card');
+    if (!card) return;
+    const id = card.getAttribute('data-id');
+
+    if (e.target.classList.contains('confirm-toggle')) {
+      const checked = e.target.checked;
+      await supabaseClient.from('orders').update({
+        is_confirmed: checked,
+        confirmed_at: checked ? new Date().toISOString() : null
+      }).eq('id', id);
+      const order = allOrders.find(function (o) { return o.id === id; });
+      if (order) { order.is_confirmed = checked; }
+    }
+
+    if (e.target.classList.contains('dispatch-toggle')) {
+      const checked = e.target.checked;
+      await supabaseClient.from('orders').update({
+        is_dispatched: checked,
+        dispatched_at: checked ? new Date().toISOString() : null
+      }).eq('id', id);
+      const order = allOrders.find(function (o) { return o.id === id; });
+      if (order) { order.is_dispatched = checked; }
+    }
+
+    if (e.target.classList.contains('dispatch-date-input')) {
+      const val = e.target.value || null;
+      await supabaseClient.from('orders').update({ dispatch_date: val }).eq('id', id);
+      const order = allOrders.find(function (o) { return o.id === id; });
+      if (order) { order.dispatch_date = val; }
+    }
+  });
+
+  (async function init() {
+    const staffRow = await requireStaff();
+    if (!staffRow) return;
+    if (staffRow.role === 'admin') {
+      document.getElementById('nav-reports-link').style.display = '';
+      document.getElementById('nav-team-link').style.display = '';
+    }
+    applyQuickRange('today');
+  })();
+})();
+</script>
+</body>
+</html>
