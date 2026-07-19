@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — Celures Admin</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.0/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="admin-topbar">
+  <div class="admin-topbar-inner">
+    <div class="admin-logo">CELURES ADMIN</div>
+    <div class="admin-nav" id="admin-nav">
+      <a href="orders.html">Orders</a>
+      <a href="dispatch.html">Dispatch</a>
+      <a href="reports.html">Reports</a>
+      <a href="team.html" class="active">Team</a>
+    </div>
+    <button class="admin-logout-btn" onclick="adminLogout()">Log Out</button>
+  </div>
+</div>
+
+<main class="admin-main" style="max-width:640px;">
+  <div class="admin-page-title">Team</div>
+
+  <div class="order-card" style="margin-bottom:24px;">
+    <div style="font-weight:700;font-size:16px;margin-bottom:14px;">Add Team Member</div>
+    <form id="add-form">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="new-email" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="text" id="new-password" placeholder="At least 6 characters" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Role</label>
+        <select class="form-select" id="new-role">
+          <option value="staff">Staff (Orders + Dispatch)</option>
+          <option value="admin">Admin (also sees Reports + Team)</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="add-btn">Add Team Member</button>
+      <div class="admin-error-msg" id="add-error"></div>
+      <div class="admin-error-msg" id="add-success" style="color:var(--success);"></div>
+    </form>
+  </div>
+
+  <div style="font-weight:700;font-size:16px;margin-bottom:10px;">Current Team</div>
+  <div id="team-list"></div>
+</main>
+
+<script src="../js/supabase-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+(function () {
+  let currentUserId = null;
+
+  async function loadTeam() {
+    const { data, error } = await supabaseClient.from('staff').select('*').order('created_at', { ascending: true });
+    const listEl = document.getElementById('team-list');
+    if (error) {
+      listEl.innerHTML = '<p style="color:var(--sale);">Error loading team: ' + error.message + '</p>';
+      return;
+    }
+    listEl.innerHTML = (data || []).map(function (s) {
+      const isSelf = s.id === currentUserId;
+      return (
+        '<div class="order-card" style="display:flex;align-items:center;justify-content:space-between;">' +
+          '<div><div style="font-weight:600;">' + s.email + '</div>' +
+          '<div class="t-caption-md" style="text-transform:capitalize;">' + s.role + '</div></div>' +
+          (isSelf ? '<span class="t-caption-md">(you)</span>' : '<button class="btn btn-secondary" data-remove-id="' + s.id + '" style="padding:8px 16px;height:auto;">Remove Access</button>') +
+        '</div>'
+      );
+    }).join('') || '<p class="t-caption-md">No team members yet.</p>';
+  }
+
+  document.getElementById('team-list').addEventListener('click', async function (e) {
+    const btn = e.target.closest('[data-remove-id]');
+    if (!btn) return;
+    if (!confirm('Remove this person\'s access to the admin panel?')) return;
+    const id = btn.getAttribute('data-remove-id');
+    const { error } = await supabaseClient.from('staff').delete().eq('id', id);
+    if (error) { alert('Error: ' + error.message); return; }
+    loadTeam();
+  });
+
+  document.getElementById('add-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = document.getElementById('new-email').value.trim();
+    const password = document.getElementById('new-password').value;
+    const role = document.getElementById('new-role').value;
+    const errorEl = document.getElementById('add-error');
+    const successEl = document.getElementById('add-success');
+    const btn = document.getElementById('add-btn');
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Adding...';
+
+    const { data, error } = await supabaseClient.functions.invoke('create-staff-user', {
+      body: { email: email, password: password, role: role }
+    });
+
+    btn.disabled = false;
+    btn.textContent = 'Add Team Member';
+
+    if (error || (data && data.error)) {
+      errorEl.textContent = (data && data.error) || error.message || 'Something went wrong.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    successEl.textContent = 'Added! Share the login page with them: ' + window.location.origin + window.location.pathname.replace('team.html', 'login.html');
+    successEl.style.display = 'block';
+    document.getElementById('add-form').reset();
+    loadTeam();
+  });
+
+  (async function init() {
+    const staffRow = await requireAdmin();
+    if (!staffRow) return;
+    currentUserId = staffRow.id;
+    loadTeam();
+  })();
+})();
+</script>
+</body>
+</html>
