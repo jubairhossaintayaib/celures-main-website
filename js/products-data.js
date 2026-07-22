@@ -144,8 +144,8 @@ const CELURES_PRODUCTS = [
     ]
   },
   {
-    slug: "tropical-garden",
-    name: "Tropical Garden",
+    slug: "tropical-island",
+    name: "Tropical Island",
     inspiredBy: "Inspired by Jean Paul Gaultier Le Beau",
     price: 890,
     addonPrice: 490,
@@ -157,8 +157,8 @@ const CELURES_PRODUCTS = [
       base: "Tonka Bean"
     },
     images: [
-      "images/products/tropical-garden-1.webp",
-      "images/products/tropical-garden-2.webp"
+      "images/products/tropical-island-1.webp",
+      "images/products/tropical-island-2.webp"
     ]
   },
   {
@@ -233,9 +233,9 @@ const CELURES_COMBOS = [
     name: "Dating For Men Combo",
     price: 1380,
     perfume1Slug: "midnight-drive",
-    perfume2Slug: "tropical-garden",
+    perfume2Slug: "tropical-island",
     tagline: "Seductive nights, easy days.",
-    description: "Midnight Drive's warm, seductive intensity for date nights, paired with Tropical Garden's creamy, easygoing freshness for daytime dates.",
+    description: "Midnight Drive's warm, seductive intensity for date nights, paired with Tropical Island's creamy, easygoing freshness for daytime dates.",
     images: [
       "images/combos/dating-for-men-1.webp",
       "images/combos/dating-for-men-2.webp"
