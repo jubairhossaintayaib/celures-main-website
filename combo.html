@@ -100,7 +100,7 @@ fbq('track', 'PageView');
           <span>+</span>
         </div>
         <div class="pdp-disclosure-body">
-          ঢাকার ভিতরে ডেলিভারি চার্জ ৳৭০, ঢাকার বাইরে ৳১১০। মোট অর্ডার ৳২০০০ বা তার বেশি হলে ডেলিভারি ফ্রি। ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে পেমেন্ট করুন।
+          ঢাকার ভিতরে ডেলিভারি চার্জ ৳৭০, ঢাকার বাইরে ৳১১০। মোট অর্ডার ৳১৫০০ বা তার বেশি হলে ডেলিভারি ফ্রি। ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে পেমেন্ট করুন।
         </div>
 
         <div class="addons-heading">Add More, Save More</div>
@@ -123,11 +123,17 @@ fbq('track', 'PageView');
 
 <!-- ============ STICKY CART BAR ============ -->
 <div class="sticky-cart-bar">
-  <div class="sticky-cart-total">
-    <span>Total</span>
-    <span id="sticky-total">৳0</span>
+  <div class="free-delivery-progress" id="free-delivery-progress" style="display:none;">
+    <div class="free-delivery-msg" id="free-delivery-msg"></div>
+    <div class="free-delivery-track"><div class="free-delivery-fill" id="free-delivery-fill"></div></div>
   </div>
-  <a href="checkout.html" class="btn btn-primary">View Cart</a>
+  <div class="sticky-cart-bar-row">
+    <div class="sticky-cart-total">
+      <span>Total</span>
+      <span id="sticky-total">৳0</span>
+    </div>
+    <a href="checkout.html" class="btn btn-primary">View Cart</a>
+  </div>
 </div>
 
 <!-- ============ FOOTER ============ -->
@@ -263,7 +269,7 @@ fbq('track', 'PageView');
           '<div class="addon-card-qty-overlay qty-control" data-slug="' + p.slug + '" data-price="' + p.addonPrice + '" data-tag="Add-on"></div>' +
         '</div>' +
         '<div class="addon-card-info">' +
-          '<div class="addon-card-name">' + p.name + '</div>' +
+          '<div class="addon-card-name">' + p.name + ' <span class="addon-card-inspired">(' + p.inspiredBy.replace(/^Inspired by /i, '') + ')</span></div>' +
           '<div class="addon-card-price"><span class="price-strike">৳' + p.price + '</span> <span class="price-sale">৳' + p.addonPrice + '</span></div>' +
         '</div>' +
       '</div>'
@@ -293,10 +299,33 @@ fbq('track', 'PageView');
   function refreshAllQtyControls() {
     document.querySelectorAll('.qty-control').forEach(renderQtyControl);
     renderMainAddToCart();
-    document.getElementById('sticky-total').textContent = '৳' + cartGetTotal();
+    var total = cartGetTotal();
+    document.getElementById('sticky-total').textContent = '৳' + total;
     document.getElementById('addons-sub').textContent = cartHasMainItem()
       ? 'Add as many more as you like, each just ৳490.'
       : 'Add this combo to your cart first — then add any extra perfume for just ৳490.';
+    updateFreeDeliveryProgress(total);
+  }
+
+  function updateFreeDeliveryProgress(total) {
+    var threshold = CELURES_DELIVERY.freeDeliveryThreshold;
+    var fill = document.getElementById('free-delivery-fill');
+    var msg = document.getElementById('free-delivery-msg');
+    var wrap = document.getElementById('free-delivery-progress');
+    if (total <= 0) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    if (total >= threshold) {
+      fill.style.width = '100%';
+      fill.classList.add('unlocked');
+      msg.classList.add('unlocked');
+      msg.textContent = '🎉 Free delivery unlocked!';
+    } else {
+      var remaining = threshold - total;
+      fill.style.width = Math.min(100, (total / threshold) * 100) + '%';
+      fill.classList.remove('unlocked');
+      msg.classList.remove('unlocked');
+      msg.textContent = 'Add ৳' + remaining + ' more for FREE delivery!';
+    }
   }
 
   document.addEventListener('click', function (e) {
