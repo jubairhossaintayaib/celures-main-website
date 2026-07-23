@@ -146,7 +146,7 @@ const CELURES_PRODUCTS = [
   {
     slug: "tropical-island",
     name: "Tropical Island",
-    inspiredBy: "Inspired by Jean Paul Gaultier Le Beau",
+    inspiredBy: "Inspired by JPG Le Beau Paradise Garden",
     price: 890,
     addonPrice: 490,
     tagline: "Tropical, creamy, beach-ready.",
@@ -299,7 +299,7 @@ function getItemBySlug(slug) {
 const CELURES_DELIVERY = {
   insideDhaka: 70,
   outsideDhaka: 110,
-  freeDeliveryThreshold: 2000
+  freeDeliveryThreshold: 1500
 };
 
 /* Meta Pixel ID — used by every page */
