@@ -381,8 +381,16 @@ var LP_DISTRICTS = [
         delivery: delivery,
         total: total
       });
-      window.location.href = '../thank-you.html?' + params.toString();
+      window.location.href = 'thank-you.html?' + params.toString();
     });
+  });
+
+  /* If someone hits the browser's back button after ordering, some
+     browsers restore a frozen snapshot of this page — showing the
+     submit button stuck on "কনফার্ম হচ্ছে..." even though the order
+     already went through. Reloading fresh avoids that confusion. */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) window.location.reload();
   });
 })();
 </script>
