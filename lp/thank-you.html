@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অর্ডার সম্পন্ন হয়েছে — Celures</title>
+<meta name="robots" content="noindex, follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap">
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1517308272696814');
+fbq('track', 'PageView');
+</script>
+<style>
+  :root {
+    --lp-bg1: #E8EBE6;
+    --lp-bg2: #ffffff;
+    --lp-btn: #9EE870;
+    --lp-text: #000000;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--lp-bg1);
+    color: var(--lp-text);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .lp-wrap { max-width: 480px; margin: 0 auto; padding: 48px 20px 32px; }
+  .lp-check {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--lp-btn);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .lp-check svg { width: 30px; height: 30px; }
+  .lp-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .lp-sub { font-size: 14.5px; text-align: center; color: rgba(0,0,0,0.7); line-height: 1.6; margin-bottom: 28px; }
+  .lp-order-box {
+    background: var(--lp-bg2);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .lp-order-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; font-size: 13.5px; }
+  .lp-order-row span:first-child { color: rgba(0,0,0,0.55); flex-shrink: 0; }
+  .lp-order-row span:last-child { text-align: right; font-weight: 600; }
+  .lp-order-row.total { border-top: 1px solid rgba(0,0,0,0.1); margin-top: 6px; padding-top: 14px; font-size: 15px; }
+  .lp-order-row.total span { font-weight: 800; }
+  .lp-footer { text-align: center; padding: 24px 20px; font-size: 12px; color: rgba(0,0,0,0.4); }
+</style>
+</head>
+<body>
+
+<div class="lp-wrap">
+  <div class="lp-check">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l5 5L20 7" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <h1 class="lp-heading">অর্ডার সম্পন্ন হয়েছে!</h1>
+  <p class="lp-sub">ধন্যবাদ! আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব ডেলিভারি নিশ্চিত করতে।</p>
+
+  <div class="lp-order-box" id="order-details"></div>
+</div>
+
+<div class="lp-footer">© 2026 Celures</div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var orderId = params.get('orderId') || '';
+  var name = params.get('name') || '';
+  var phone = params.get('phone') || '';
+  var district = params.get('district') || '';
+  var address = params.get('address') || '';
+  var items = params.get('items') || '';
+  var subtotal = parseFloat(params.get('subtotal') || '0');
+  var delivery = parseFloat(params.get('delivery') || '0');
+  var total = parseFloat(params.get('total') || '0');
+
+  var box = document.getElementById('order-details');
+  if (!orderId) {
+    box.innerHTML = '<p style="text-align:center;color:rgba(0,0,0,0.5);font-size:13.5px;">অর্ডার তথ্য পাওয়া যায়নি। যদি আপনি এইমাত্র অর্ডার করে থাকেন, আমরা শীঘ্রই আপনার ফোনে যোগাযোগ করব।</p>';
+  } else {
+    box.innerHTML =
+      '<div class="lp-order-row"><span>Order ID</span><span>' + orderId + '</span></div>' +
+      '<div class="lp-order-row"><span>Name</span><span>' + name + '</span></div>' +
+      '<div class="lp-order-row"><span>Phone</span><span>' + phone + '</span></div>' +
+      '<div class="lp-order-row"><span>District</span><span>' + district + '</span></div>' +
+      '<div class="lp-order-row"><span>Address</span><span>' + address + '</span></div>' +
+      '<div class="lp-order-row"><span>Items</span><span>' + items + '</span></div>' +
+      '<div class="lp-order-row"><span>Subtotal</span><span>৳' + subtotal + '</span></div>' +
+      '<div class="lp-order-row"><span>Delivery</span><span>' + (delivery === 0 ? 'FREE' : '৳' + delivery) + '</span></div>' +
+      '<div class="lp-order-row total"><span>Total</span><span>৳' + total + '</span></div>';
+
+    /* Fire Meta Pixel Purchase exactly once per order, even if the page is refreshed */
+    var firedKey = 'celures_purchase_fired_' + orderId;
+    if (!sessionStorage.getItem(firedKey) && typeof fbq === 'function') {
+      fbq('track', 'Purchase', { value: total, currency: 'BDT' });
+      sessionStorage.setItem(firedKey, '1');
+    }
+  }
+})();
+</script>
+</body>
+</html>
