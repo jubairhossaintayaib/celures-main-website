@@ -119,7 +119,57 @@ fbq('track', 'PageView');
   .lp-tick svg { width: 13px; height: 13px; }
   .lp-checklist p { font-size: 14.5px; line-height: 1.65; color: rgba(0,0,0,0.8); }
 
-  /* ---------- Order form ---------- */
+  /* ---------- Order option selector ---------- */
+  .lp-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .lp-option {
+    background: var(--lp-bg2);
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    position: relative;
+  }
+  .lp-option.selected { border: 2px solid var(--lp-text); }
+  .lp-option-radio {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lp-option.selected .lp-option-radio {
+    border: none;
+    background: var(--lp-btn);
+  }
+  .lp-option-radio svg { display: none; width: 12px; height: 12px; }
+  .lp-option.selected .lp-option-radio svg { display: block; }
+  .lp-option-text { flex: 1; min-width: 0; }
+  .lp-option-name { font-size: 15px; font-weight: 700; }
+  .lp-option-desc { font-size: 12.5px; color: rgba(0,0,0,0.55); margin-top: 2px; }
+  .lp-option-price-col { text-align: right; flex-shrink: 0; }
+  .lp-option-price { font-size: 16px; font-weight: 800; }
+  .lp-option-price-old { text-decoration: line-through; color: rgba(0,0,0,0.4); font-weight: 400; font-size: 0.75em; margin-right: 4px; }
+  .lp-option-price-sub { font-size: 11.5px; color: rgba(0,0,0,0.5); margin-top: 2px; }
+  .lp-option-price-sub.combo-sub { color: #1a7a40; font-weight: 700; }
+
+  .lp-option.combo { flex-direction: column; align-items: stretch; padding: 14px 16px 0; }
+  .lp-option-top-row { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; }
+  .lp-option-best-tag {
+    position: absolute; top: -11px; right: 14px;
+    background: var(--lp-text); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+    padding: 3px 11px; border-radius: 20px;
+  }
+  .lp-option-discount-strip {
+    background: var(--lp-btn); color: var(--lp-text);
+    font-size: 13px; font-weight: 700; text-align: center;
+    padding: 9px 14px; margin: 0 -16px; border-radius: 0 0 8px 8px;
+  }
+
+
   .lp-form-section { background: var(--lp-bg1); padding: 36px 20px 48px; }
   .lp-form-heading {
     font-family: 'Bebas Neue', sans-serif;
@@ -128,18 +178,6 @@ fbq('track', 'PageView');
     margin-bottom: 8px;
     color: var(--lp-text);
   }
-  .lp-price-info {
-    background: var(--lp-bg2);
-    border: 1px solid rgba(0,0,0,0.08);
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-size: 13.5px;
-    line-height: 1.7;
-    color: rgba(0,0,0,0.75);
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .lp-price-info strong { color: var(--lp-text); }
 
   .lp-form-group { margin-bottom: 16px; }
   .lp-form-label { display: block; font-size: 13px; font-weight: 600; color: rgba(0,0,0,0.7); margin-bottom: 6px; }
@@ -234,10 +272,48 @@ fbq('track', 'PageView');
 <!-- ============ ORDER FORM ============ -->
 <section class="lp-form-section" id="order-form">
   <div class="lp-wrap">
-    <h2 class="lp-form-heading">অর্ডার কনফার্ম করুন</h2>
-    <div class="lp-price-info">
-      <strong>Phantom Elixir &amp; Executive Bleu Combo (২টা 30ml করে) — ৳1380</strong><br>
-      ডেলিভারি: Dhaka ৳70 · বাইরে ৳110
+    <h2 class="lp-form-heading">আপনার অর্ডার বেছে নিন</h2>
+
+    <div class="lp-options">
+      <div class="lp-option" id="opt-phantom" onclick="selectOrderOption('phantom')">
+        <div class="lp-option-radio"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="lp-option-text">
+          <div class="lp-option-name">Phantom Elixir</div>
+          <div class="lp-option-desc">30ml · Single bottle</div>
+        </div>
+        <div class="lp-option-price-col">
+          <div class="lp-option-price">৳890</div>
+          <div class="lp-option-price-sub">+ ডেলিভারি</div>
+        </div>
+      </div>
+
+      <div class="lp-option" id="opt-executive" onclick="selectOrderOption('executive')">
+        <div class="lp-option-radio"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="lp-option-text">
+          <div class="lp-option-name">Executive Bleu</div>
+          <div class="lp-option-desc">30ml · Single bottle</div>
+        </div>
+        <div class="lp-option-price-col">
+          <div class="lp-option-price">৳890</div>
+          <div class="lp-option-price-sub">+ ডেলিভারি</div>
+        </div>
+      </div>
+
+      <div class="lp-option combo selected" id="opt-combo" onclick="selectOrderOption('combo')">
+        <div class="lp-option-best-tag">🔥 Best Value</div>
+        <div class="lp-option-top-row">
+          <div class="lp-option-radio"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="lp-option-text">
+            <div class="lp-option-name">Phantom Elixir + Executive Bleu</div>
+            <div class="lp-option-desc">30ml each · 2 × ৳890 = ৳1,780</div>
+          </div>
+          <div class="lp-option-price-col">
+            <div class="lp-option-price"><span class="lp-option-price-old">৳1,780</span> ৳1,380</div>
+            <div class="lp-option-price-sub">+ ডেলিভারি</div>
+          </div>
+        </div>
+        <div class="lp-option-discount-strip">🎉 ৳400 discount কম্বোতে!</div>
+      </div>
     </div>
 
     <form id="lp-order-form">
@@ -302,19 +378,49 @@ var LP_DISTRICTS = [
     districtSelect.appendChild(opt);
   });
 
+  var ORDER_OPTIONS = {
+    phantom: {
+      price: 890, normalPrice: 890, freeDelivery: false,
+      itemsLabel: 'Phantom Elixir x1',
+      priceInfoHTML: '<strong>Phantom Elixir (30ml) — ৳890</strong><br>ডেলিভারি: Dhaka ৳70 · বাইরে ৳110'
+    },
+    executive: {
+      price: 890, normalPrice: 890, freeDelivery: false,
+      itemsLabel: 'Executive Bleu x1',
+      priceInfoHTML: '<strong>Executive Bleu (30ml) — ৳890</strong><br>ডেলিভারি: Dhaka ৳70 · বাইরে ৳110'
+    },
+    combo: {
+      price: 1380, normalPrice: 1780, freeDelivery: false,
+      itemsLabel: 'Phantom Elixir & Executive Bleu Combo x1',
+      priceInfoHTML: '<strong>Phantom Elixir &amp; Executive Bleu Combo (২টা 30ml করে) — ৳1380</strong><br>ডেলিভারি: Dhaka ৳70 · বাইরে ৳110'
+    }
+  };
+  var selectedOrderOption = 'combo';
+
+  window.selectOrderOption = function (key) {
+    selectedOrderOption = key;
+    ['phantom', 'executive', 'combo'].forEach(function (k) {
+      document.getElementById('opt-' + k).classList.toggle('selected', k === key);
+    });
+    updateTotalPreview();
+  };
+
   function calcDelivery(district) {
     return district.trim().toLowerCase() === 'dhaka' ? 70 : 110;
   }
 
-  districtSelect.addEventListener('change', function () {
+  function updateTotalPreview() {
     var totalEl = document.getElementById('lp-total');
+    var cfg = ORDER_OPTIONS[selectedOrderOption];
     if (!districtSelect.value) {
-      totalEl.textContent = '৳1380 + ডেলিভারি';
+      totalEl.textContent = '৳' + cfg.price + ' + ডেলিভারি';
       return;
     }
     var delivery = calcDelivery(districtSelect.value);
-    totalEl.textContent = '৳' + (1380 + delivery);
-  });
+    totalEl.textContent = '৳' + (cfg.price + delivery);
+  }
+
+  districtSelect.addEventListener('change', updateTotalPreview);
 
   /* Phone: digits only, max 11 */
   document.getElementById('lp-phone').addEventListener('input', function (e) {
@@ -335,16 +441,19 @@ var LP_DISTRICTS = [
     if (!name) { document.getElementById('err-name').style.display = 'block'; valid = false; }
     if (!/^01[0-9]{9}$/.test(phone)) { document.getElementById('err-phone').style.display = 'block'; valid = false; }
     if (!address) { document.getElementById('err-address').style.display = 'block'; valid = false; }
+    /* District is required for every option — even free-delivery combos still
+       need a real address to actually ship the product to. */
     if (!district) { document.getElementById('err-district').style.display = 'block'; valid = false; }
     if (!valid) return;
 
+    var cfg = ORDER_OPTIONS[selectedOrderOption];
     var delivery = calcDelivery(district);
-    var subtotal = 1380;
-    var normal = 1780;
+    var subtotal = cfg.price;
+    var normal = cfg.normalPrice;
     var discount = normal - subtotal;
     var total = subtotal + delivery;
     var orderId = 'CEL' + Date.now();
-    var items = "Phantom Elixir & Executive Bleu Combo x1";
+    var items = cfg.itemsLabel;
 
     var btn = document.getElementById('lp-submit-btn');
     btn.disabled = true;
