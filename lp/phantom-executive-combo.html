@@ -518,7 +518,7 @@ nav {
       <hr class="divider-line">
 
       <div class="price-row">
-        <div class="price-new" id="dynamicPrice">৳১,৩৯০</div>
+        <div class="price-new" id="dynamicPrice">৳১,৪৯০</div>
       </div>
 
       <div class="cod-badge">
@@ -574,12 +574,12 @@ nav {
               <div class="option-selected-label">✓ Selected</div>
             </div>
             <div class="option-price-col">
-              <div class="option-price"><span class="combo-price-old">৳১,৭৮০</span> ৳১,৩৯০</div>
-              <div class="option-price-sub">+ delivery</div>
+              <div class="option-price"><span class="combo-price-old">৳১,৭৮০</span> ৳১,৪৯০</div>
+              <div class="option-price-sub" style="color:#1a7a40; font-weight:600;">Free delivery সারা বাংলাদেশে 🎁</div>
             </div>
           </div>
           <div class="combo-discount-strip">
-            🎉 Get ৳390 discount with the Combo!
+            🎉 ৳২৯০ discount + FREE Delivery সারা বাংলাদেশে!
           </div>
         </div>
 
@@ -652,8 +652,9 @@ nav {
 
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
-        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,390</span></span></div>
-        <div class="total-row" id="summaryDeliveryRow"><span>Delivery</span><span id="deliveryAmt">—</span></div>
+        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,490</span></span></div>
+        <div class="total-row free-row" id="summaryFreeRow" style="display:flex"><span>Delivery</span><span>FREE 🎁</span></div>
+        <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
         <hr class="total-divider">
         <div class="total-final" id="totalFinal" style="display:none">
           <span>Total (Cash on Delivery)</span>
@@ -677,7 +678,7 @@ nav {
         <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div>
           <div class="faq-q">এই offer এ কী পাবো?</div>
-          <div class="faq-a">Combo নিলে Phantom Elixir (30ml) + Executive Bleu (30ml) — দুটো premium perfume, মাত্র ১,৩৯০ টাকায়।</div>
+          <div class="faq-a">Combo নিলে Phantom Elixir (30ml) + Executive Bleu (30ml) — দুটো premium perfume, মাত্র ১,৪৯০ টাকায়, সাথে সারা বাংলাদেশে ফ্রি ডেলিভারি!</div>
         </div>
       </div>
 
@@ -717,7 +718,7 @@ nav {
         <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div>
           <div class="faq-q">Delivery charge ও সময়?</div>
-          <div class="faq-a">ঢাকার ভেতরে ৭০ টাকা, বাইরে ১১০ টাকা — Single bottle হোক বা Combo, সব order এ একই delivery charge প্রযোজ্য। Order confirm হওয়ার পর ৪৮–৭২ ঘন্টায় পৌঁছে যাবে।</div>
+          <div class="faq-a">Single bottle এর জন্য ঢাকার ভেতরে ৳৭০, বাইরে ৳১১০। তবে Combo অর্ডারে সারা বাংলাদেশে ডেলিভারি সম্পূর্ণ ফ্রি! Order confirm হওয়ার পর ৪৮–৭২ ঘন্টায় পৌঁছে যাবে।</div>
         </div>
       </div>
 
@@ -756,11 +757,11 @@ nav {
 let selectedOption = 'combo'; // 'phantom' | 'executive' | 'combo'
 
 const OPTION_CONFIG = {
-  phantom:   { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Phantom Elixir (30ml)',                   itemsLabel: 'Phantom Elixir x1' },
-  executive: { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Executive Bleu (30ml)',                   itemsLabel: 'Executive Bleu x1' },
-  combo:     { price: 1390, normalPrice: 1780, priceDisplay: '৳১,৩৯০', label: 'Phantom Elixir + Executive Bleu (Combo)', itemsLabel: 'Phantom Elixir & Executive Bleu Combo x1' }
+  phantom:   { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Phantom Elixir (30ml)',                   itemsLabel: 'Phantom Elixir x1', freeDelivery: false },
+  executive: { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Executive Bleu (30ml)',                   itemsLabel: 'Executive Bleu x1', freeDelivery: false },
+  combo:     { price: 1490, normalPrice: 1780, priceDisplay: '৳১,৪৯০', label: 'Phantom Elixir + Executive Bleu (Combo)', itemsLabel: 'Phantom Elixir & Executive Bleu Combo x1', freeDelivery: true }
 };
-// Every option now charges delivery — nothing is free anymore.
+// Only the combo is free delivery — singles still charge normally.
 
 let selectedDistrict = "";
 
@@ -775,8 +776,19 @@ function selectOption(key) {
   const cfg = OPTION_CONFIG[key];
   document.getElementById('dynamicPrice').textContent = cfg.priceDisplay;
   document.getElementById('summaryProduct').textContent = cfg.label;
-  document.getElementById('summaryBasePrice').textContent = cfg.price === 1390 ? '1,390' : '890';
-  updateTotal();
+  document.getElementById('summaryBasePrice').textContent = cfg.price === 1490 ? '1,490' : '890';
+
+  if (cfg.freeDelivery) {
+    document.getElementById('summaryFreeRow').style.display = 'flex';
+    document.getElementById('summaryDeliveryRow').style.display = 'none';
+    document.getElementById('totalFinal').style.display = 'flex';
+    document.getElementById('totalPending').style.display = 'none';
+    document.getElementById('totalAmt').textContent = 'Tk ' + cfg.price;
+  } else {
+    document.getElementById('summaryFreeRow').style.display = 'none';
+    document.getElementById('summaryDeliveryRow').style.display = '';
+    updateTotal();
+  }
 }
 
 // ── IMAGE GRID ──
@@ -890,6 +902,13 @@ function calcDelivery(district) {
 }
 
 function updateTotal() {
+  const cfg = OPTION_CONFIG[selectedOption];
+  if (cfg.freeDelivery) {
+    document.getElementById('totalFinal').style.display = 'flex';
+    document.getElementById('totalPending').style.display = 'none';
+    document.getElementById('totalAmt').textContent = 'Tk ' + cfg.price;
+    return;
+  }
   if (!selectedDistrict) {
     document.getElementById('deliveryAmt').textContent = '—';
     document.getElementById('totalFinal').style.display = 'none';
@@ -897,7 +916,7 @@ function updateTotal() {
     return;
   }
   const delivery = calcDelivery(selectedDistrict);
-  const base = OPTION_CONFIG[selectedOption].price;
+  const base = cfg.price;
   const total = base + delivery;
   document.getElementById('deliveryAmt').textContent    = 'Tk ' + delivery;
   document.getElementById('totalAmt').textContent       = 'Tk ' + total;
@@ -928,7 +947,7 @@ function submitOrder() {
   if (!valid) { document.getElementById('orderFormBlock').scrollIntoView({ behavior:'smooth', block:'start' }); return; }
 
   const cfg = OPTION_CONFIG[selectedOption];
-  const delivery = calcDelivery(selectedDistrict);
+  const delivery = cfg.freeDelivery ? 0 : calcDelivery(selectedDistrict);
   const subtotal = cfg.price;
   const normal = cfg.normalPrice;
   const discount = normal - subtotal;
