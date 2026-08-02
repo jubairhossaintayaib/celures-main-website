@@ -432,17 +432,22 @@ nav {
 
 /* ORDER BUMP */
 .order-bump {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   background: #fff9e6;
   border: 1.5px dashed #d4a017;
   border-radius: 10px;
   padding: 12px 14px;
   margin-top: 20px;
 }
+.order-bump-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
 .order-bump-img {
-  width: 56px; height: 56px;
+  width: 40%;
+  max-width: 150px;
+  aspect-ratio: 1 / 1;
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
@@ -452,7 +457,13 @@ nav {
 .order-bump-text { flex: 1; min-width: 0; }
 .order-bump-title { font-size: 13px; font-weight: 600; color: var(--black); line-height: 1.3; }
 .order-bump-desc { font-size: 11.5px; color: var(--gray-600); margin-top: 2px; }
-.order-bump-price { font-family: var(--serif); font-size: 19px; margin-top: 4px; color: var(--black); }
+.order-bump-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.order-bump-price { font-family: var(--serif); font-size: 19px; color: var(--black); }
 .order-bump-price-old { text-decoration: line-through; color: var(--gray-400); font-weight: 400; font-size: 0.65em; margin-right: 4px; }
 .order-bump-btn {
   flex-shrink: 0;
@@ -657,15 +668,19 @@ nav {
       </div>
 
       <div class="order-bump">
-        <div class="order-bump-img">
-          <img src="../images/products/executive-bleu-1.webp" alt="Executive Bleu" onerror="this.parentElement.innerHTML='EB'">
+        <div class="order-bump-top">
+          <div class="order-bump-img">
+            <img src="../images/products/executive-bleu-1.webp" alt="Executive Bleu" onerror="this.parentElement.innerHTML='EB'">
+          </div>
+          <div class="order-bump-text">
+            <div class="order-bump-title">First Time Order Discount!</div>
+            <div class="order-bump-desc">মাত্র ৳৩৯০ extra দিয়ে আমাদের most famous Bleu De Chanel এর impression Executive Bleu আপনার অর্ডারে add করুন। Normal price ৳৮৯০।</div>
+          </div>
         </div>
-        <div class="order-bump-text">
-          <div class="order-bump-title">First Time Order Discount!</div>
-          <div class="order-bump-desc">মাত্র ৳৩৯০ extra দিয়ে আমাদের most famous Bleu De Chanel এর impression Executive Bleu আপনার অর্ডারে add করুন। Normal price ৳৮৯০।</div>
+        <div class="order-bump-bottom">
           <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৩৯০</div>
+          <button type="button" class="order-bump-btn" id="orderBumpBtn" onclick="toggleOrderBump()">Add</button>
         </div>
-        <button type="button" class="order-bump-btn" id="orderBumpBtn" onclick="toggleOrderBump()">Add</button>
       </div>
 
       <div class="order-total-box">
