@@ -637,7 +637,7 @@ nav {
         <div class="error-msg" id="errAddress">Please enter your delivery address.</div>
       </div>
 
-      <div class="order-bump">
+      <div class="order-bump" id="orderBump">
         <div class="order-bump-top">
           <div class="order-bump-img">
             <img src="../images/products/executive-bleu-1.webp" alt="Executive Bleu" onerror="this.parentElement.innerHTML='EB'">
@@ -777,6 +777,17 @@ function selectOption(key) {
   document.getElementById('dynamicPrice').textContent = cfg.priceDisplay;
   document.getElementById('summaryProduct').textContent = cfg.label;
   document.getElementById('summaryBasePrice').textContent = cfg.price === 1490 ? '1,490' : '890';
+
+  // The bump offer is only available with the combo — switching to a
+  // single perfume hides it and clears it if it was already added.
+  document.getElementById('orderBump').style.display = (key === 'combo') ? 'block' : 'none';
+  if (key !== 'combo' && bumpAdded) {
+    bumpAdded = false;
+    const btn = document.getElementById('orderBumpBtn');
+    btn.textContent = 'Add';
+    btn.classList.remove('added');
+  }
+
   updateTotal();
 }
 
