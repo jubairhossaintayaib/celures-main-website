@@ -122,28 +122,54 @@ nav {
   border: none;
 }
 
-.desktop-image-grid { display: none; }
-@media (min-width: 900px) {
-  .desktop-image-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
-    padding: 3px;
-  }
-  .desktop-image-grid .grid-thumb {
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    cursor: pointer;
-    background: var(--gray-100);
-    position: relative;
-  }
-  .desktop-image-grid .grid-thumb img {
-    width: 100%; height: 100%;
-    object-fit: cover; display: block;
-    transition: transform 0.2s;
-  }
-  .desktop-image-grid .grid-thumb:hover img { transform: scale(1.04); }
+/* ── PRODUCT GALLERY: big main image + thumbnail strip ── */
+.main-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--gray-100);
+  overflow: hidden;
+  position: relative;
+  touch-action: pan-y;
 }
+.main-image-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.main-image-arrow {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,0.85); border: none; cursor: pointer;
+  font-size: 18px; color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.main-image-arrow:hover { background: #fff; }
+.main-image-arrow.prev { left: 10px; }
+.main-image-arrow.next { right: 10px; }
+
+.thumbnail-strip {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--gray-200);
+}
+.thumbnail-strip::-webkit-scrollbar { display: none; }
+.thumb-item {
+  flex-shrink: 0;
+  width: 60px; height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--gray-100);
+  border: 2px solid transparent;
+  opacity: 0.6;
+  transition: border-color 0.15s, opacity 0.15s;
+}
+.thumb-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb-item.active { border-color: var(--black); opacity: 1; }
 
 .right-col { width: 100%; }
 @media (min-width: 900px) { .right-col { width: 50%; } }
@@ -303,64 +329,6 @@ nav {
   margin: 0 -16px;
   border-radius: 0 0 8px 8px;
 }
-
-.mobile-image-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
-  padding: 3px;
-  border-bottom: 1px solid var(--gray-200);
-}
-@media (min-width: 900px) { .mobile-image-grid { display: none; } }
-.grid-thumb {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--gray-100);
-  position: relative;
-}
-.grid-thumb img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-  transition: transform 0.2s;
-}
-.grid-thumb:hover img { transform: scale(1.04); }
-
-.img-lightbox {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.96); z-index: 300;
-  flex-direction: column; align-items: center; justify-content: center;
-}
-.img-lightbox.open { display: flex; }
-.img-lightbox-viewport {
-  width: 100vw; height: 85vh; max-width: 500px;
-  position: relative; overflow: hidden;
-}
-.img-lightbox-track {
-  display: flex; height: 100%;
-  transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-.img-lightbox-slide { flex-shrink: 0; width: 100%; height: 100%; }
-.img-lightbox-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.img-lightbox-close {
-  position: absolute; top: 14px; right: 16px;
-  width: 40px; height: 40px; border-radius: 50%;
-  background: rgba(255,255,255,0.12); border: none; cursor: pointer;
-  color: #fff; font-size: 18px;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s; z-index: 10;
-}
-.img-lightbox-close:hover { background: rgba(255,255,255,0.25); }
-.img-lightbox-nav { display: flex; gap: 14px; margin-top: 16px; }
-.img-lightbox-btn {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: rgba(255,255,255,0.12); border: none; cursor: pointer;
-  color: #fff; font-size: 22px;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s;
-}
-.img-lightbox-btn:hover { background: rgba(255,255,255,0.28); }
-.img-lightbox-counter { color: rgba(255,255,255,0.45); font-size: 12px; letter-spacing: 1px; margin-top: 10px; }
 
 .section {
   padding: 28px 20px;
@@ -523,10 +491,12 @@ nav {
 <div class="product-layout">
 
   <div class="left-col">
-    <div class="desktop-image-grid" id="desktopImageGrid"></div>
-    <div style="border-bottom: 1px solid var(--gray-200); padding: 4px 0;">
-      <div class="mobile-image-grid" id="mobileImageGrid"></div>
+    <div class="main-image-wrap" id="mainImageWrap">
+      <img id="mainProductImage" src="" alt="Sport Homme + Marine Cucumber">
+      <button class="main-image-arrow prev" id="prevArrow" onclick="galleryNav(-1)" aria-label="Previous photo">‹</button>
+      <button class="main-image-arrow next" id="nextArrow" onclick="galleryNav(1)" aria-label="Next photo">›</button>
     </div>
+    <div class="thumbnail-strip" id="thumbnailStrip"></div>
   </div>
 
   <div class="right-col">
@@ -768,17 +738,6 @@ nav {
 </div>
 </div>
 
-<div class="img-lightbox" id="imgLightbox" onclick="closeLightboxOnBg(event)">
-  <button class="img-lightbox-close" onclick="closeLightbox()">✕</button>
-  <div class="img-lightbox-viewport">
-    <div class="img-lightbox-track" id="lightboxTrack"></div>
-  </div>
-  <div class="img-lightbox-nav">
-    <button class="img-lightbox-btn" onclick="lightboxNav(-1)">‹</button>
-    <button class="img-lightbox-btn" onclick="lightboxNav(1)">›</button>
-  </div>
-  <div class="img-lightbox-counter" id="lightboxCounter"></div>
-</div>
 
 <div class="toast" id="toast"></div>
 
@@ -821,74 +780,61 @@ function selectOption(key) {
   updateTotal();
 }
 
-const GALLERY_IMAGES = Array.from({length: 6}, (_, i) => `images/sport-marine/gallery${i+1}.png`);
-let validImages = [], lightboxIdx = 0;
+const GALLERY_IMAGES = Array.from({length: 6}, (_, i) => `images/sport-marine/gallery${i+1}.webp`);
+let validImages = [], currentImageIdx = 0;
 
-function initImageGrids() {
-  const mobileGrid  = document.getElementById('mobileImageGrid');
-  const desktopGrid = document.getElementById('desktopImageGrid');
-  const lbTrack     = document.getElementById('lightboxTrack');
-
-  GALLERY_IMAGES.forEach((src) => {
+function initGallery() {
+  const strip = document.getElementById('thumbnailStrip');
+  const probes = GALLERY_IMAGES.map((src) => new Promise((resolve) => {
     const probe = new Image();
-    probe.onload = () => {
-      validImages.push(src);
-      const lbSlide = document.createElement('div');
-      lbSlide.className = 'img-lightbox-slide';
-      lbSlide.innerHTML = `<img src="${src}" alt="Product photo">`;
-      lbTrack.appendChild(lbSlide);
-
-      const mThumb = document.createElement('div');
-      mThumb.className = 'grid-thumb';
-      mThumb.innerHTML = `<img src="${src}" alt="Product">`;
-      mThumb.onclick = () => openLightbox(validImages.indexOf(src));
-      mobileGrid.appendChild(mThumb);
-
-      const dThumb = document.createElement('div');
-      dThumb.className = 'grid-thumb';
-      dThumb.innerHTML = `<img src="${src}" alt="Product">`;
-      dThumb.onclick = () => openLightbox(validImages.indexOf(src));
-      desktopGrid.appendChild(dThumb);
-    };
+    probe.onload = () => resolve(src);
+    probe.onerror = () => resolve(null);
     probe.src = src;
+  }));
+
+  Promise.all(probes).then((results) => {
+    validImages = results.filter(Boolean);
+    if (validImages.length === 0) return;
+
+    document.getElementById('mainProductImage').src = validImages[0];
+
+    strip.innerHTML = validImages.map((src, i) =>
+      `<div class="thumb-item${i === 0 ? ' active' : ''}" data-idx="${i}"><img src="${src}" alt="Product photo"></div>`
+    ).join('');
+
+    strip.querySelectorAll('.thumb-item').forEach((el) => {
+      el.addEventListener('click', () => showImage(parseInt(el.dataset.idx, 10)));
+    });
+
+    document.getElementById('prevArrow').style.display = validImages.length > 1 ? 'flex' : 'none';
+    document.getElementById('nextArrow').style.display = validImages.length > 1 ? 'flex' : 'none';
   });
 }
 
-initImageGrids();
-selectOption('combo');
+function showImage(idx) {
+  if (validImages.length === 0) return;
+  currentImageIdx = (idx + validImages.length) % validImages.length;
+  document.getElementById('mainProductImage').src = validImages[currentImageIdx];
+  document.querySelectorAll('.thumb-item').forEach((el) => {
+    el.classList.toggle('active', parseInt(el.dataset.idx, 10) === currentImageIdx);
+  });
+}
 
-function openLightbox(idx) {
-  lightboxIdx = idx; updateLightbox();
-  document.getElementById('imgLightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
+function galleryNav(dir) {
+  showImage(currentImageIdx + dir);
 }
-function closeLightbox() {
-  document.getElementById('imgLightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function closeLightboxOnBg(e) {
-  if (e.target === document.getElementById('imgLightbox')) closeLightbox();
-}
-function updateLightbox() {
-  document.getElementById('lightboxTrack').style.transform = `translateX(-${lightboxIdx * 100}%)`;
-  document.getElementById('lightboxCounter').textContent = (lightboxIdx + 1) + ' / ' + validImages.length;
-}
-function lightboxNav(dir) {
-  lightboxIdx = Math.max(0, Math.min(validImages.length - 1, lightboxIdx + dir));
-  updateLightbox();
-}
-let lbTouchX = 0;
-document.getElementById('imgLightbox').addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
-document.getElementById('imgLightbox').addEventListener('touchend', e => {
-  const diff = lbTouchX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 40) lightboxNav(diff > 0 ? 1 : -1);
+
+/* Swipe left/right on the main image */
+let mainTouchX = 0;
+const mainImageWrap = document.getElementById('mainImageWrap');
+mainImageWrap.addEventListener('touchstart', e => { mainTouchX = e.touches[0].clientX; }, { passive: true });
+mainImageWrap.addEventListener('touchend', e => {
+  const diff = mainTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) galleryNav(diff > 0 ? 1 : -1);
 });
-document.addEventListener('keydown', e => {
-  if (!document.getElementById('imgLightbox').classList.contains('open')) return;
-  if (e.key === 'ArrowRight') lightboxNav(1);
-  if (e.key === 'ArrowLeft')  lightboxNav(-1);
-  if (e.key === 'Escape')     closeLightbox();
-});
+
+initGallery();
+selectOption('combo');
 
 const DISTRICTS = ["Bagerhat","Bandarban","Barguna","Barishal","Bhola","Bogura","Brahmanbaria","Chandpur","Chattogram","Chuadanga","Cox's Bazar","Cumilla","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jashore","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"];
 
