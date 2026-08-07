@@ -21,7 +21,7 @@ const CELURES_PRODUCTS = [
     name: "Phantom Elixir",
     inspiredBy: "Inspired by Dior Sauvage Elixir",
     price: 890,                              // main price (30ml)
-    addonPrice: 490,                         // price when added as an add-on from another product page
+    addonPrice: 590,                         // price when added as an add-on from another product page
     tagline: "Bold, warm, unforgettable.",
     description: "Grapefruit, cinnamon, cardamom and nutmeg open sharp and spiced, before a lavender heart settles into sweet licorice, sandalwood, amber and patchouli. Rich, warm and long-lasting — this is the one you wear when you want to be remembered.",
     notes: {
@@ -40,7 +40,7 @@ const CELURES_PRODUCTS = [
     name: "Executive Bleu",
     inspiredBy: "Inspired by Bleu de Chanel",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "Clean. Sharp. Boardroom to dinner.",
     description: "Crisp grapefruit, lemon and mint open into ginger and jasmine, resting on a smooth base of cedar, sandalwood and musk. A versatile everyday classic that works from the office to date night.",
     notes: {
@@ -58,7 +58,7 @@ const CELURES_PRODUCTS = [
     name: "Sport Homme",
     inspiredBy: "Inspired by Chanel Allure Homme Sport",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "Fresh, athletic, effortless.",
     description: "Juicy orange and mandarin with a splash of sea notes open into a peppery-cedar heart, resting on a soft vanilla-tonka-musk base. Fresh, energetic, and easy to wear all day.",
     notes: {
@@ -76,7 +76,7 @@ const CELURES_PRODUCTS = [
     name: "Marine Cucumber",
     inspiredBy: "Inspired by Nautica Voyage",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "Breezy. Fresh. Made for summer.",
     description: "Green apple and crisp leaves open bright and clean, into a watery lotus-mimosa heart, resting on cedar, musk and amber. A breezy, cucumber-fresh signature for hot Dhaka afternoons.",
     notes: {
@@ -94,7 +94,7 @@ const CELURES_PRODUCTS = [
     name: "Pure Aura",
     inspiredBy: "Inspired by YSL MYSELF",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "Modern, floral, effortlessly clean.",
     description: "Sparkling bergamot opens into a rich orange blossom heart, grounded by warm patchouli and soft musky woods. A modern, easy-to-wear scent that gets noticed without trying too hard.",
     notes: {
@@ -112,7 +112,7 @@ const CELURES_PRODUCTS = [
     name: "Alpha Executive",
     inspiredBy: "Inspired by YSL Y",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "Confident, sharp, long-lasting.",
     description: "Green apple, ginger and bergamot open into an aromatic sage and geranium heart, deepening into cedar, vetiver, tonka bean and amberwood. Sharp, confident, and built to last the whole day.",
     notes: {
@@ -130,7 +130,7 @@ const CELURES_PRODUCTS = [
     name: "Midnight Drive",
     inspiredBy: "Inspired by Jean Paul Gaultier Ultra Male",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "Sweet, seductive, made for the night.",
     description: "Juicy pear, lavender and mint open into warm cinnamon and clary sage, resting on black vanilla, amber and patchouli. Sweet, seductive, and built for nights out.",
     notes: {
@@ -148,7 +148,7 @@ const CELURES_PRODUCTS = [
     name: "Tropical Island",
     inspiredBy: "Inspired by JPG Le Beau Paradise Garden",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "Tropical, creamy, beach-ready.",
     description: "Zesty bergamot opens fresh and bright, into a creamy coconut heart, settling on smooth tonka bean. A tropical, beach-ready signature that feels like a holiday in a bottle.",
     notes: {
@@ -166,7 +166,7 @@ const CELURES_PRODUCTS = [
     name: "Arctic Splash",
     inspiredBy: "Inspired by Davidoff Cool Water",
     price: 890,
-    addonPrice: 490,
+    addonPrice: 590,
     tagline: "The original clean aquatic classic.",
     description: "Sea water, mint and lavender open crisp and cool, into a heart of geranium, jasmine and neroli, resting on cedar, musk and light amber. The clean aquatic classic that started it all.",
     notes: {
@@ -192,7 +192,7 @@ const CELURES_COMBOS = [
   {
     slug: "mens-legacy",
     name: "Men's Legacy Combo",
-    price: 1380,
+    price: 1490,
     perfume1Slug: "executive-bleu",
     perfume2Slug: "phantom-elixir",
     tagline: "Sharp by day, bold by night.",
@@ -205,7 +205,7 @@ const CELURES_COMBOS = [
   {
     slug: "summer-for-men",
     name: "Summer For Men Combo",
-    price: 1380,
+    price: 1490,
     perfume1Slug: "executive-bleu",
     perfume2Slug: "arctic-splash",
     tagline: "Two fresh signatures for hot days.",
@@ -218,7 +218,7 @@ const CELURES_COMBOS = [
   {
     slug: "executive-combo",
     name: "Executive Combo",
-    price: 1380,
+    price: 1490,
     perfume1Slug: "executive-bleu",
     perfume2Slug: "alpha-executive",
     tagline: "Confidence, covered from every angle.",
@@ -231,7 +231,7 @@ const CELURES_COMBOS = [
   {
     slug: "dating-for-men",
     name: "Dating For Men Combo",
-    price: 1380,
+    price: 1490,
     perfume1Slug: "midnight-drive",
     perfume2Slug: "tropical-island",
     tagline: "Seductive nights, easy days.",
@@ -244,7 +244,7 @@ const CELURES_COMBOS = [
   {
     slug: "mens-outdoor",
     name: "Men's Outdoor Combo",
-    price: 1380,
+    price: 1490,
     perfume1Slug: "sport-homme",
     perfume2Slug: "marine-cucumber",
     tagline: "Fresh, athletic, built to move.",
@@ -257,7 +257,7 @@ const CELURES_COMBOS = [
   {
     slug: "compliment-magnet",
     name: "Compliment Magnet Combo",
-    price: 1380,
+    price: 1490,
     perfume1Slug: "pure-aura",
     perfume2Slug: "sport-homme",
     tagline: "The two most complimented scents, together.",
@@ -275,11 +275,12 @@ function getComboBySlug(slug) {
 }
 
 /* Helper: works for EITHER a perfume slug or a combo slug. Returns:
-   - ownPrice: the price this item is meant to be added at as a "main" pick
-     (890 for a perfume, 1380 for a combo) — used to gate ৳490 add-ons.
+   - ownPrice: the price this item is meant to be added at
+     (890 for a perfume, 1490 for a combo).
    - regularReference: what it would cost bought piece-by-piece at full
      price (890 for a perfume, 890+890=1780 for a combo) — used to show
-     the "Normal Price" / discount breakdown at checkout. */
+     the "Normal Price" / discount breakdown at checkout (still relevant
+     for combos, which are genuinely discounted vs buying separately). */
 function getItemBySlug(slug) {
   const product = getProductBySlug(slug);
   if (product) {
@@ -299,7 +300,7 @@ function getItemBySlug(slug) {
 const CELURES_DELIVERY = {
   insideDhaka: 70,
   outsideDhaka: 110,
-  freeDeliveryThreshold: 1500
+  freeDeliveryThreshold: 1000
 };
 
 /* Meta Pixel ID — used by every page */
