@@ -103,8 +103,8 @@ fbq('track', 'PageView');
           ঢাকার ভিতরে ডেলিভারি চার্জ ৳৭০, ঢাকার বাইরে ৳১১০। মোট অর্ডার ৳১০০০ বা তার বেশি হলে ডেলিভারি ফ্রি। ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে পেমেন্ট করুন।
         </div>
 
-        <div class="addons-heading">Add More Perfumes</div>
-        <p class="addons-sub" id="addons-sub">Add any other perfume for ৳890 each.</p>
+        <div class="addons-heading">Add More, Save More</div>
+        <p class="addons-sub" id="addons-sub">Add this combo to your cart first — then add any extra perfume for just ৳590.</p>
         <div class="addons-grid" id="addons-list"></div>
       </div>
     </div>
@@ -254,7 +254,7 @@ fbq('track', 'PageView');
     }
   }
 
-  /* ---------- Add-ons: all 9 perfumes, same price as buying separately ---------- */
+  /* ---------- Add-ons: all 9 perfumes at ৳590, gated behind the combo ---------- */
   var addonsList = document.getElementById('addons-list');
 
   function addonCardHTML(p) {
@@ -266,7 +266,7 @@ fbq('track', 'PageView');
         '<div class="addon-card-image">' +
           img +
           '<button class="addon-info-btn" data-info-slug="' + p.slug + '" aria-label="Perfume info">i</button>' +
-          '<div class="addon-card-qty-overlay qty-control" data-slug="' + p.slug + '" data-price="' + p.addonPrice + '" data-tag=""></div>' +
+          '<div class="addon-card-qty-overlay qty-control" data-slug="' + p.slug + '" data-price="' + p.addonPrice + '" data-tag="Add-on"></div>' +
         '</div>' +
         '<div class="addon-card-info">' +
           '<div class="addon-card-name">' + p.name + ' <span class="addon-card-inspired">(' + p.inspiredBy.replace(/^Inspired by /i, '') + ')</span></div>' +
@@ -281,9 +281,13 @@ fbq('track', 'PageView');
   function renderQtyControl(el) {
     var eSlug = el.getAttribute('data-slug');
     var price = parseInt(el.getAttribute('data-price'), 10);
+    var tag = el.getAttribute('data-tag') || '';
     var qty = cartGetQty(eSlug, price);
+    var locked = (tag === 'Add-on' && !cartHasMainItem());
     if (qty === 0) {
-      el.innerHTML = '<button class="qty-add-btn" data-action="add">+</button>';
+      el.innerHTML = locked
+        ? '<button class="qty-add-btn qty-locked" data-action="locked">+</button>'
+        : '<button class="qty-add-btn" data-action="add">+</button>';
     } else {
       el.innerHTML =
         '<button class="qty-btn" data-action="minus">−</button>' +
@@ -297,6 +301,9 @@ fbq('track', 'PageView');
     renderMainAddToCart();
     var total = cartGetTotal();
     document.getElementById('sticky-total').textContent = '৳' + total;
+    document.getElementById('addons-sub').textContent = cartHasMainItem()
+      ? 'Add as many more as you like, each just ৳590.'
+      : 'Add this combo to your cart first — then add any extra perfume for just ৳590.';
     updateFreeDeliveryProgress(total);
   }
 
@@ -334,6 +341,10 @@ fbq('track', 'PageView');
     var cSlug = control.getAttribute('data-slug');
     var price = parseInt(control.getAttribute('data-price'), 10);
     var action = btn.getAttribute('data-action');
+    if (action === 'locked') {
+      showToast('Add the combo to your cart first');
+      return;
+    }
     if (action === 'add' || action === 'plus') {
       cartAdd(cSlug, price, control.getAttribute('data-tag') || '');
       showToast('Added to cart');
@@ -359,7 +370,7 @@ fbq('track', 'PageView');
         '<div><strong>Middle:</strong> ' + p.notes.middle + '</div>' +
         '<div><strong>Base:</strong> ' + p.notes.base + '</div>' +
       '</div>' +
-      '<div class="info-modal-price">৳' + p.addonPrice + '</div>';
+      '<div class="info-modal-price">৳' + p.addonPrice + ' as an add-on</div>';
     infoOverlay.classList.add('open');
   };
   function closeInfoModal() { infoOverlay.classList.remove('open'); }
