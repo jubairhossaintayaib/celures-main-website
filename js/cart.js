@@ -3,9 +3,9 @@
    Cart is stored in the browser's localStorage under "celures_cart".
    Each line item looks like:
    { key, slug, name, unitPrice, qty, tag }
-   "key" = slug + "-" + unitPrice, so the same perfume bought as
-   the page's main pick (৳890) and as an add-on (৳490) elsewhere
-   are tracked as separate, clearly-priced lines.
+   "key" = slug + "-" + unitPrice, so a perfume can be tracked
+   under different price tiers if it's ever priced differently in
+   different contexts (e.g. inside a combo vs bought on its own).
    ============================================================ */
 
 const CART_STORAGE_KEY = "celures_cart";
@@ -79,9 +79,11 @@ function cartGetCount() {
   return getCart().reduce((sum, l) => sum + l.qty, 0);
 }
 
-/* Business rule: the ৳490 add-on price is only allowed once at least one
-   perfume OR combo has been added at its own full/main price — otherwise
-   someone could check out with only discounted add-ons and no main pick. */
+/* Business rule: the discounted ৳590 add-on price is only allowed once
+   at least one perfume OR combo has been added at its own full/main
+   price — otherwise someone could check out with only discounted
+   add-ons and no main pick. Active again now that add-ons (৳590) are
+   priced differently from a main pick (৳890 perfume / ৳1490 combo). */
 function cartHasMainItem() {
   return getCart().some(function (line) {
     var info = getItemBySlug(line.slug);
