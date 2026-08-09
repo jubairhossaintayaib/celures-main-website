@@ -447,6 +447,52 @@ nav {
   background: var(--gray-100); border: 1px solid var(--gray-200);
   border-radius: 10px; padding: 16px 18px; margin: 20px 0 14px;
 }
+
+/* ORDER BUMP */
+.order-bump {
+  background: #fff9e6;
+  border: 1.5px dashed #d4a017;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 20px;
+}
+.order-bump-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.order-bump-img {
+  width: 40%;
+  max-width: 150px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--gray-100);
+}
+.order-bump-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.order-bump-text { flex: 1; min-width: 0; }
+.order-bump-title { font-size: 13px; font-weight: 600; color: var(--black); line-height: 1.3; }
+.order-bump-desc { font-size: 13.5px; color: var(--gray-600); margin-top: 2px; line-height: 1.5; }
+.order-bump-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.order-bump-price { font-family: var(--serif); font-size: 26px; color: var(--black); }
+.order-bump-price-old { text-decoration: line-through; text-decoration-color: #b94040; text-decoration-thickness: 2px; color: var(--gray-600); font-weight: 400; font-size: 0.7em; margin-right: 6px; }
+.order-bump-btn {
+  flex-shrink: 0;
+  background: var(--black); color: #fff;
+  border: none; border-radius: 20px;
+  padding: 9px 18px;
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.order-bump-btn.added { background: #b94040; }
 .total-label { font-size: 11px; letter-spacing: 2px; color: var(--gray-600); text-transform: uppercase; margin-bottom: 12px; }
 .total-row { display: flex; justify-content: space-between; font-size: 15px; color: var(--gray-600); margin-bottom: 6px; }
 .total-row.main { color: var(--black); }
@@ -650,9 +696,26 @@ nav {
         <div class="error-msg" id="errAddress">Please enter your delivery address.</div>
       </div>
 
+      <div class="order-bump" id="orderBump">
+        <div class="order-bump-top">
+          <div class="order-bump-img">
+            <img src="../images/products/midnight-drive-1.webp" alt="Midnight Drive" onerror="this.parentElement.innerHTML='MD'">
+          </div>
+          <div class="order-bump-text">
+            <div class="order-bump-title">For First Time Customers!</div>
+            <div class="order-bump-desc">মাত্র ৳৪৯০ extra দিয়ে আমাদের popular JPG Ultra Male এর impression Midnight Drive (30ml) আপনার অর্ডারে add করুন। যারা একটু sweet perfume চান, night time, dating, বা special occasion এর জন্য — এটা আপনার collection এ add করার জন্য দারুণ সুযোগ। Normal price ৳৮৯০।</div>
+          </div>
+        </div>
+        <div class="order-bump-bottom">
+          <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৪৯০</div>
+          <button type="button" class="order-bump-btn" id="orderBumpBtn" onclick="toggleOrderBump()">Add</button>
+        </div>
+      </div>
+
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
         <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,490</span></span></div>
+        <div class="total-row" id="summaryBumpRow" style="display:none"><span>+ Midnight Drive (Bonus)</span><span>Tk 490</span></div>
         <div class="total-row free-row" id="summaryFreeRow" style="display:flex"><span>Delivery</span><span>FREE 🎁</span></div>
         <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
         <hr class="total-divider">
@@ -755,6 +818,10 @@ nav {
 // ── OPTION SELECTION STATE ──
 // Default: combo selected
 let selectedOption = 'combo'; // 'phantom' | 'executive' | 'combo'
+let bumpAdded = false;
+const BUMP_PRICE = 490;
+const BUMP_NORMAL_PRICE = 890;
+const BUMP_ITEMS_LABEL = "Midnight Drive (Bump Offer) x1";
 
 const OPTION_CONFIG = {
   phantom:   { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Phantom Elixir (30ml)',                   itemsLabel: 'Phantom Elixir x1', freeDelivery: false },
@@ -764,6 +831,14 @@ const OPTION_CONFIG = {
 // Only the combo is free delivery — singles still charge normally.
 
 let selectedDistrict = "";
+
+function toggleOrderBump() {
+  bumpAdded = !bumpAdded;
+  const btn = document.getElementById('orderBumpBtn');
+  btn.textContent = bumpAdded ? 'Remove' : 'Add';
+  btn.classList.toggle('added', bumpAdded);
+  updateTotal();
+}
 
 function selectOption(key) {
   selectedOption = key;
@@ -778,17 +853,17 @@ function selectOption(key) {
   document.getElementById('summaryProduct').textContent = cfg.label;
   document.getElementById('summaryBasePrice').textContent = cfg.price === 1490 ? '1,490' : '890';
 
-  if (cfg.freeDelivery) {
-    document.getElementById('summaryFreeRow').style.display = 'flex';
-    document.getElementById('summaryDeliveryRow').style.display = 'none';
-    document.getElementById('totalFinal').style.display = 'flex';
-    document.getElementById('totalPending').style.display = 'none';
-    document.getElementById('totalAmt').textContent = 'Tk ' + cfg.price;
-  } else {
-    document.getElementById('summaryFreeRow').style.display = 'none';
-    document.getElementById('summaryDeliveryRow').style.display = '';
-    updateTotal();
+  // The bump offer is only available with the combo — switching to a
+  // single perfume hides it and clears it if it was already added.
+  document.getElementById('orderBump').style.display = (key === 'combo') ? 'block' : 'none';
+  if (key !== 'combo' && bumpAdded) {
+    bumpAdded = false;
+    const bumpBtn = document.getElementById('orderBumpBtn');
+    bumpBtn.textContent = 'Add';
+    bumpBtn.classList.remove('added');
   }
+
+  updateTotal();
 }
 
 // ── IMAGE GRID ──
@@ -903,12 +978,22 @@ function calcDelivery(district) {
 
 function updateTotal() {
   const cfg = OPTION_CONFIG[selectedOption];
+  const bumpRow = document.getElementById('summaryBumpRow');
+  bumpRow.style.display = bumpAdded ? 'flex' : 'none';
+  const bumpAmount = bumpAdded ? BUMP_PRICE : 0;
+
   if (cfg.freeDelivery) {
+    document.getElementById('summaryFreeRow').style.display = 'flex';
+    document.getElementById('summaryDeliveryRow').style.display = 'none';
     document.getElementById('totalFinal').style.display = 'flex';
     document.getElementById('totalPending').style.display = 'none';
-    document.getElementById('totalAmt').textContent = 'Tk ' + cfg.price;
+    document.getElementById('totalAmt').textContent = 'Tk ' + (cfg.price + bumpAmount);
     return;
   }
+
+  document.getElementById('summaryFreeRow').style.display = 'none';
+  document.getElementById('summaryDeliveryRow').style.display = '';
+
   if (!selectedDistrict) {
     document.getElementById('deliveryAmt').textContent = '—';
     document.getElementById('totalFinal').style.display = 'none';
@@ -917,7 +1002,7 @@ function updateTotal() {
   }
   const delivery = calcDelivery(selectedDistrict);
   const base = cfg.price;
-  const total = base + delivery;
+  const total = base + bumpAmount + delivery;
   document.getElementById('deliveryAmt').textContent    = 'Tk ' + delivery;
   document.getElementById('totalAmt').textContent       = 'Tk ' + total;
   document.getElementById('totalFinal').style.display   = 'flex';
@@ -948,12 +1033,17 @@ function submitOrder() {
 
   const cfg = OPTION_CONFIG[selectedOption];
   const delivery = cfg.freeDelivery ? 0 : calcDelivery(selectedDistrict);
-  const subtotal = cfg.price;
-  const normal = cfg.normalPrice;
+  let subtotal = cfg.price;
+  let normal = cfg.normalPrice;
+  let items = cfg.itemsLabel;
+  if (bumpAdded) {
+    subtotal += BUMP_PRICE;
+    normal += BUMP_NORMAL_PRICE;
+    items += ", " + BUMP_ITEMS_LABEL;
+  }
   const discount = normal - subtotal;
   const total = subtotal + delivery;
   const orderId = 'CEL' + Date.now();
-  const items = cfg.itemsLabel;
 
   const btn = document.getElementById('confirmBtn');
   btn.disabled = true; btn.textContent = 'Submitting...';
