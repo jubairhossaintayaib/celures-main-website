@@ -101,13 +101,6 @@ fbq('track', 'PageView');
       '<div class="lp-order-row"><span>Subtotal</span><span>৳' + subtotal + '</span></div>' +
       '<div class="lp-order-row"><span>Delivery</span><span>' + (delivery === 0 ? 'FREE' : '৳' + delivery) + '</span></div>' +
       '<div class="lp-order-row total"><span>Total</span><span>৳' + total + '</span></div>';
-
-    /* Fire Meta Pixel Purchase exactly once per order, even if the page is refreshed */
-    var firedKey = 'celures_purchase_fired_' + orderId;
-    if (!sessionStorage.getItem(firedKey) && typeof fbq === 'function') {
-      fbq('track', 'Purchase', { value: total, currency: 'BDT' });
-      sessionStorage.setItem(firedKey, '1');
-    }
   }
 })();
 </script>
