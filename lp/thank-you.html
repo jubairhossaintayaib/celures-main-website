@@ -101,6 +101,15 @@ fbq('track', 'PageView');
       '<div class="lp-order-row"><span>Subtotal</span><span>৳' + subtotal + '</span></div>' +
       '<div class="lp-order-row"><span>Delivery</span><span>' + (delivery === 0 ? 'FREE' : '৳' + delivery) + '</span></div>' +
       '<div class="lp-order-row total"><span>Total</span><span>৳' + total + '</span></div>';
+
+    /* Fire Meta Pixel Purchase exactly once per order, even if the page is refreshed.
+       eventID is the order ID, so if this URL is ever reopened in a new tab or a
+       different browser (where sessionStorage won't help), Meta still counts it once. */
+    var firedKey = 'celures_purchase_fired_' + orderId;
+    if (!sessionStorage.getItem(firedKey) && typeof fbq === 'function') {
+      fbq('track', 'Purchase', { value: total, currency: 'BDT' }, { eventID: orderId });
+      sessionStorage.setItem(firedKey, '1');
+    }
   }
 })();
 </script>
