@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="facebook-domain-verification" content="54apk5zpbcoiaqv7aig8d5lcmmlpd5" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celures – Phantom Elixir + Executive Bleu Combo</title>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1517308272696814');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1517308272696814&ev=PageView&noscript=1"/></noscript>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0a0a;
+  --white: #fafafa;
+  --gray-100: #f4f4f2;
+  --gray-200: #e8e8e4;
+  --gray-400: #b0b0a8;
+  --gray-600: #6e6e68;
+  --green: #25D366;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --nav-h: 56px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--white);
+  color: var(--black);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--white); border-bottom: 1px solid var(--gray-200);
+  height: var(--nav-h);
+  display: flex; align-items: center; padding: 0 20px;
+}
+.nav-inner {
+  width: 100%; max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo img { height: 20px; width: auto; display: block; }
+@media (min-width: 900px) { .logo img { height: 28px; } }
+.nav-whatsapp {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--green); color: #fff; text-decoration: none;
+  padding: 7px 16px; border-radius: 24px;
+  font-size: 12px; font-weight: 500;
+  transition: opacity 0.2s; white-space: nowrap;
+}
+.nav-whatsapp:hover { opacity: 0.88; }
+.nav-whatsapp svg { width: 15px; height: 15px; flex-shrink: 0; }
+@media (max-width: 400px) {
+  .nav-whatsapp span.wa-text { display: none; }
+  .nav-whatsapp { padding: 7px 10px; }
+}
+
+/* ── PAGE ── */
+.page-body { padding-top: var(--nav-h); }
+
+/* ── LAYOUT ── */
+.product-layout {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 900px) {
+  .product-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* ── LEFT COL ── */
+.left-col { width: 100%; }
+@media (min-width: 900px) {
+  .left-col {
+    width: 50%;
+    position: sticky;
+    top: var(--nav-h);
+    height: calc(100vh - var(--nav-h));
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    border-right: 1px solid var(--gray-200);
+  }
+  .left-col::-webkit-scrollbar { display: none; }
+}
+
+/* ── YouTube video ── */
+.video-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  position: relative;
+}
+.video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+/* Desktop image grid */
+.desktop-image-grid { display: none; }
+@media (min-width: 900px) {
+  .desktop-image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    padding: 3px;
+  }
+  .desktop-image-grid .grid-thumb {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--gray-100);
+    position: relative;
+  }
+  .desktop-image-grid .grid-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.2s;
+  }
+  .desktop-image-grid .grid-thumb:hover img { transform: scale(1.04); }
+}
+
+/* ── RIGHT COL ── */
+.right-col { width: 100%; }
+@media (min-width: 900px) { .right-col { width: 50%; } }
+
+/* ── PRODUCT INFO ── */
+.product-info {
+  padding: 22px 20px 24px;
+  border-bottom: 1px solid var(--gray-200);
+}
+@media (min-width: 900px) { .product-info { padding: 32px 40px 28px; } }
+
+.badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.badge {
+  font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  border-radius: 4px; padding: 4px 10px;
+}
+.badge-sale { background: var(--black); color: var(--white); }
+
+/* ── PRODUCT TITLE — one line, sans-serif ── */
+.product-title {
+  font-family: var(--sans);
+  font-size: clamp(22px, 4.5vw, 34px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+.product-title .ml-label {
+  font-size: 0.72em;
+  font-weight: 400;
+  color: var(--gray-600);
+}
+.product-title .plus-sign {
+  font-weight: 300;
+  color: var(--gray-400);
+  margin: 0 4px;
+}
+
+.divider-line { border: none; border-top: 1px solid var(--gray-200); margin: 0 0 18px; }
+
+/* ── DYNAMIC PRICE ── */
+.price-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.price-new { font-family: var(--serif); font-size: 40px; font-weight: 400; color: var(--black); line-height: 1; }
+
+.cod-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #f0faf4; border: 1px solid #b6e2c8;
+  color: #1a7a40; border-radius: 6px;
+  padding: 8px 16px; font-size: 14px; font-weight: 500; margin-bottom: 10px;
+}
+.cod-badge svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+.delivery-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 0; }
+.delivery-pill {
+  font-size: 13px; color: var(--gray-600);
+  border: 1px solid var(--gray-200); border-radius: 20px; padding: 5px 14px;
+}
+
+/* ── OPTION TABS ── */
+.option-tabs-section {
+  padding: 20px 20px 24px;
+  border-bottom: 1px solid var(--gray-200);
+}
+@media (min-width: 900px) { .option-tabs-section { padding: 24px 40px 28px; } }
+
+.option-tabs-label {
+  font-size: 22px; font-weight: 600;
+  color: var(--black); margin-bottom: 12px;
+}
+
+.option-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-tab {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  background: var(--white);
+  user-select: none;
+  position: relative;
+}
+.option-tab:hover { border-color: var(--gray-400); }
+.option-tab.selected {
+  border: 2px solid var(--black);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+}
+
+/* Radio dot */
+.option-radio {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--gray-400);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.option-tab.selected .option-radio {
+  border-color: var(--black);
+  background: var(--black);
+}
+.option-radio svg { display: none; }
+.option-tab.selected .option-radio svg { display: block; }
+.option-radio::after { display: none; }
+
+.option-text { flex: 1; }
+.option-name { font-size: 15px; font-weight: 500; color: var(--black); line-height: 1.3; }
+.option-desc { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
+.option-selected-label {
+  display: none;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--black); margin-top: 4px;
+}
+.option-tab.selected .option-selected-label { display: block; }
+
+.option-price-col { text-align: right; flex-shrink: 0; }
+.option-price { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--black); line-height: 1; }
+.option-price-sub { font-size: 12px; color: var(--gray-600); margin-top: 2px; }
+.option-tab.selected .option-price-sub { color: var(--black); font-weight: 500; }
+
+/* Best value tag */
+.option-best-tag {
+  position: absolute;
+  top: -11px; right: 14px;
+  background: var(--black); color: var(--white);
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 11px; border-radius: 20px;
+}
+
+/* Combo tab with green discount strip — switches to column layout */
+.option-tab.combo-with-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 14px 16px 0;
+}
+.combo-tab-toprow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
+}
+.combo-price-old {
+  text-decoration: line-through;
+  color: var(--gray-400);
+  font-weight: 400;
+  font-size: 0.65em;
+  margin-right: 6px;
+}
+.combo-discount-strip {
+  background: #1a7a40;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  padding: 9px 14px;
+  margin: 0 -16px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* ── MOBILE IMAGE GRID ── */
+.mobile-image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 3px;
+  border-bottom: 1px solid var(--gray-200);
+}
+@media (min-width: 900px) { .mobile-image-grid { display: none; } }
+.grid-thumb {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--gray-100);
+  position: relative;
+}
+.grid-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.2s;
+}
+.grid-thumb:hover img { transform: scale(1.04); }
+
+/* ── IMAGE LIGHTBOX ── */
+.img-lightbox {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.96); z-index: 300;
+  flex-direction: column; align-items: center; justify-content: center;
+}
+.img-lightbox.open { display: flex; }
+.img-lightbox-viewport {
+  width: 100vw; height: 85vh; max-width: 500px;
+  position: relative; overflow: hidden;
+}
+.img-lightbox-track {
+  display: flex; height: 100%;
+  transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.img-lightbox-slide { flex-shrink: 0; width: 100%; height: 100%; }
+.img-lightbox-slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.img-lightbox-close {
+  position: absolute; top: 14px; right: 16px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); border: none; cursor: pointer;
+  color: #fff; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s; z-index: 10;
+}
+.img-lightbox-close:hover { background: rgba(255,255,255,0.25); }
+.img-lightbox-nav { display: flex; gap: 14px; margin-top: 16px; }
+.img-lightbox-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); border: none; cursor: pointer;
+  color: #fff; font-size: 22px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.img-lightbox-btn:hover { background: rgba(255,255,255,0.28); }
+.img-lightbox-counter { color: rgba(255,255,255,0.45); font-size: 12px; letter-spacing: 1px; margin-top: 10px; }
+
+/* ── CONTENT SECTIONS ── */
+.section {
+  padding: 28px 20px;
+  border-bottom: 1px solid var(--gray-200);
+}
+@media (min-width: 900px) { .section { padding: 32px 40px; } }
+
+.section-title {
+  font-family: var(--serif); font-size: 30px; font-weight: 300;
+  color: var(--black); margin-bottom: 20px;
+}
+
+/* FAQ */
+.faq-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 15px 0; border-bottom: 1px solid var(--gray-100);
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-check {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.faq-check svg { width: 10px; height: 10px; }
+.faq-q { font-size: 16px; font-weight: 500; color: var(--black); margin-bottom: 5px; line-height: 1.4; }
+.faq-a { font-size: 15px; color: var(--gray-600); line-height: 1.9; }
+
+/* ORDER FORM */
+.form-title { font-family: var(--serif); font-size: 30px; font-weight: 300; color: var(--black); margin-bottom: 4px; }
+.form-subtitle { font-size: 15px; color: var(--gray-600); margin-bottom: 22px; }
+
+.form-group { margin-bottom: 15px; }
+.form-group label {
+  display: block; font-size: 11px; letter-spacing: 1.5px;
+  color: var(--gray-600); text-transform: uppercase; margin-bottom: 6px;
+}
+.form-group input, .form-group textarea {
+  width: 100%; padding: 13px 14px;
+  border: 1px solid var(--gray-200); border-radius: 8px;
+  font-family: var(--sans); font-size: 16px; color: var(--black);
+  background: var(--white); outline: none; transition: border-color 0.18s;
+  -webkit-appearance: none;
+}
+.form-group input:focus, .form-group textarea:focus { border-color: var(--black); }
+.form-group input.error, .form-group textarea.error { border-color: #b94040; }
+.form-group textarea { resize: none; height: 80px; }
+
+.district-wrapper { position: relative; }
+.district-input-wrap { position: relative; }
+.district-input-wrap input { padding-right: 34px; }
+.district-arrow { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--gray-600); font-size: 10px; }
+.district-dropdown {
+  display: none; position: absolute;
+  top: calc(100% + 4px); left: 0; right: 0;
+  background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: 8px; max-height: 200px; overflow-y: auto;
+  z-index: 50; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.district-dropdown.open { display: block; }
+.district-option { padding: 11px 13px; font-size: 15px; cursor: pointer; color: var(--black); transition: background 0.1s; }
+.district-option:hover { background: var(--gray-100); }
+.district-option.no-results { color: var(--gray-600); cursor: default; }
+
+.error-msg { font-size: 13px; color: #b94040; margin-top: 4px; display: none; }
+.error-msg.show { display: block; }
+
+.order-total-box {
+  background: var(--gray-100); border: 1px solid var(--gray-200);
+  border-radius: 10px; padding: 16px 18px; margin: 20px 0 14px;
+}
+
+/* ORDER BUMP */
+.order-bump {
+  background: #fff9e6;
+  border: 1.5px dashed #d4a017;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 20px;
+}
+.order-bump-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.order-bump-img {
+  width: 40%;
+  max-width: 150px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--gray-100);
+}
+.order-bump-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.order-bump-text { flex: 1; min-width: 0; }
+.order-bump-title { font-size: 13px; font-weight: 600; color: var(--black); line-height: 1.3; }
+.order-bump-desc { font-size: 13.5px; color: var(--gray-600); margin-top: 2px; line-height: 1.5; }
+.order-bump-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.order-bump-price { font-family: var(--serif); font-size: 26px; color: var(--black); }
+.order-bump-price-old { text-decoration: line-through; text-decoration-color: #b94040; text-decoration-thickness: 2px; color: var(--gray-600); font-weight: 400; font-size: 0.7em; margin-right: 6px; }
+.order-bump-btn {
+  flex-shrink: 0;
+  background: var(--black); color: #fff;
+  border: none; border-radius: 20px;
+  padding: 9px 18px;
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.order-bump-btn.added { background: #b94040; }
+.total-label { font-size: 11px; letter-spacing: 2px; color: var(--gray-600); text-transform: uppercase; margin-bottom: 12px; }
+.total-row { display: flex; justify-content: space-between; font-size: 15px; color: var(--gray-600); margin-bottom: 6px; }
+.total-row.main { color: var(--black); }
+.total-row.free-row { color: #1a7a40; font-weight: 500; }
+.total-divider { border: none; border-top: 1px solid var(--gray-200); margin: 10px 0; }
+.total-final { display: flex; justify-content: space-between; font-size: 16px; font-weight: 600; color: var(--black); }
+.total-final .amount { font-size: 17px; }
+.total-pending { font-size: 13px; color: var(--gray-400); font-style: italic; text-align: center; padding: 4px 0; }
+
+.confirm-btn {
+  width: 100%; height: 56px;
+  background: var(--black); color: var(--white);
+  border: none; border-radius: 8px;
+  font-family: var(--sans); font-size: 15px;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  cursor: pointer; transition: opacity 0.2s;
+}
+.confirm-btn:hover { opacity: 0.8; }
+.confirm-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.form-note { font-size: 13px; color: var(--gray-400); text-align: center; margin-top: 12px; line-height: 1.7; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: var(--black); color: var(--white);
+  padding: 10px 22px; border-radius: 30px;
+  font-size: 12px; letter-spacing: 1px;
+  opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 400; white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><img src="logo.png" alt="Celures"></div>
+    <a class="nav-whatsapp" href="https://wa.me/message/UDULI5NP36Q4L1" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.103 1.508 5.836L.057 23.625a.75.75 0 00.921.918l5.884-1.536A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.695 9.695 0 01-4.949-1.355l-.355-.211-3.668.957.986-3.587-.231-.368A9.698 9.698 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+      <span class="wa-text">Chat on WhatsApp</span>
+    </a>
+  </div>
+</nav>
+
+<div class="page-body">
+<div class="product-layout">
+
+  <!-- ── LEFT COL ── -->
+  <div class="left-col">
+    <div class="desktop-image-grid" id="desktopImageGrid"></div>
+    <div style="border-bottom: 1px solid var(--gray-200); padding: 4px 0;">
+      <div class="mobile-image-grid" id="mobileImageGrid"></div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT COL ── -->
+  <div class="right-col">
+
+    <!-- Product Info -->
+    <div class="product-info">
+      <div class="badge-row">
+        <span class="badge badge-sale">Limited Offer 🔥</span>
+      </div>
+
+      <h1 class="product-title">Phantom Elixir <span class="ml-label">(30ml)</span><span class="plus-sign"> + </span>Executive Bleu <span class="ml-label">(30ml)</span></h1>
+
+      <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 16px; font-style: italic;">Inspired by Dior Sauvage Elixir & Bleu de Chanel</div>
+
+      <hr class="divider-line">
+
+      <div class="price-row">
+        <div class="price-new" id="dynamicPrice">৳১,৪৯০</div>
+      </div>
+
+      <div class="cod-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Cash on Delivery — পণ্য পেয়ে টাকা দিন
+      </div>
+      <div class="delivery-row" id="deliveryPills">
+        <div class="delivery-pill" style="color:#1a7a40; border-color:#b6e2c8; font-weight:600;">🚚 Free Delivery সারা বাংলাদেশে 🎁</div>
+      </div>
+    </div>
+
+    <!-- ── EXTRA PERFUME ADD-ONS ── -->
+    <div class="option-tabs-section">
+      <div class="option-tabs-label">আপনার Extra Perfume বেছে নিন</div>
+      <div style="font-size:13px; color:var(--gray-600); margin-top:-6px; margin-bottom:14px;">প্রতিটি মাত্র ৳৩৯০ এ add করুন (normal price ৳৮৯০)</div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+
+        <div class="order-bump" style="margin-top:0;" id="bump-sport">
+          <div class="order-bump-top">
+            <div class="order-bump-img">
+              <img src="../images/products/sport-homme-1.webp" alt="Sport Homme" onerror="this.parentElement.innerHTML='SH'">
+            </div>
+            <div class="order-bump-text">
+              <div class="order-bump-title">Sport Homme <span style="font-weight:400; color:var(--gray-600);">— Inspired by Chanel Allure Homme Sport</span></div>
+              <div class="order-bump-desc">Fresh, athletic, effortless। যারা daily active lifestyle এর জন্য একটা fresh scent চান — এটা আপনার collection এ add করার জন্য দারুণ সুযোগ। Normal price ৳৮৯০।</div>
+            </div>
+          </div>
+          <div class="order-bump-bottom">
+            <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৩৯০</div>
+            <button type="button" class="order-bump-btn" id="bumpBtn-sport" onclick="toggleBump('sport')">Add</button>
+          </div>
+        </div>
+
+        <div class="order-bump" style="margin-top:0;" id="bump-marine">
+          <div class="order-bump-top">
+            <div class="order-bump-img">
+              <img src="../images/products/marine-cucumber-1.webp" alt="Marine Cucumber" onerror="this.parentElement.innerHTML='MC'">
+            </div>
+            <div class="order-bump-text">
+              <div class="order-bump-title">Marine Cucumber <span style="font-weight:400; color:var(--gray-600);">— Inspired by Nautica Voyage</span></div>
+              <div class="order-bump-desc">Breezy, fresh, made for summer। যারা হালকা ও fresh aquatic scent পছন্দ করেন, তাদের জন্য perfect। Normal price ৳৮৯০।</div>
+            </div>
+          </div>
+          <div class="order-bump-bottom">
+            <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৩৯০</div>
+            <button type="button" class="order-bump-btn" id="bumpBtn-marine" onclick="toggleBump('marine')">Add</button>
+          </div>
+        </div>
+
+        <div class="order-bump" style="margin-top:0;" id="bump-arctic">
+          <div class="order-bump-top">
+            <div class="order-bump-img">
+              <img src="../images/products/arctic-splash-1.webp" alt="Arctic Splash" onerror="this.parentElement.innerHTML='AS'">
+            </div>
+            <div class="order-bump-text">
+              <div class="order-bump-title">Arctic Splash <span style="font-weight:400; color:var(--gray-600);">— Inspired by Davidoff Cool Water</span></div>
+              <div class="order-bump-desc">The original clean aquatic classic। Office, casual — যেকোনো occasion এ মানিয়ে যায়। Normal price ৳৮৯০।</div>
+            </div>
+          </div>
+          <div class="order-bump-bottom">
+            <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৩৯০</div>
+            <button type="button" class="order-bump-btn" id="bumpBtn-arctic" onclick="toggleBump('arctic')">Add</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCROLL TO ORDER BUTTON -->
+    <div style="padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
+      <button onclick="document.getElementById('orderFormBlock').scrollIntoView({behavior:'smooth', block:'start'})"
+        style="width:100%; height:52px; background:var(--black); color:var(--white); border:none; border-radius:8px; font-family:var(--sans); font-size:16px; font-weight:500; cursor:pointer; transition:opacity 0.2s;">
+        এখনই অর্ডার করতে চাই →
+      </button>
+    </div>
+
+    <!-- ORDER FORM -->
+    <div class="section" id="orderFormBlock">
+      <div class="form-title">নাম ও ঠিকানা দিয়ে অর্ডার confirm করুন</div>
+
+      <div class="form-group">
+        <label>Full Name — পুরো নাম</label>
+        <input type="text" id="fieldName" placeholder="আপনার নাম লিখুন" autocomplete="name">
+        <div class="error-msg" id="errName">Please enter your name.</div>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number — ফোন নম্বর</label>
+        <input type="tel" id="fieldPhone" placeholder="01XXXXXXXXX" autocomplete="tel" maxlength="11" inputmode="numeric">
+        <div class="error-msg" id="errPhone">Please enter a valid 11-digit number (01XXXXXXXXX).</div>
+      </div>
+
+      <div class="form-group">
+        <label>District — জেলা</label>
+        <div class="district-wrapper">
+          <div class="district-input-wrap">
+            <input type="text" id="districtInput" placeholder="জেলার নাম লিখুন..." autocomplete="off">
+            <span class="district-arrow">▾</span>
+          </div>
+          <div class="district-dropdown" id="districtDropdown"></div>
+        </div>
+        <div class="error-msg" id="errDistrict">Please select your district.</div>
+      </div>
+
+      <div class="form-group">
+        <label>Full Address — পুরো ঠিকানা</label>
+        <textarea id="fieldAddress" placeholder="বাসা নম্বর, রোড, এলাকা, থানা..."></textarea>
+        <div class="error-msg" id="errAddress">Please enter your delivery address.</div>
+      </div>
+
+      <div class="order-total-box">
+        <div class="total-label">Order Summary</div>
+        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,490</span></span></div>
+        <div id="summaryBumpRows"></div>
+        <div class="total-row free-row"><span>Delivery</span><span>FREE 🎁</span></div>
+        <hr class="total-divider">
+        <div class="total-final" id="totalFinal">
+          <span>Total (Cash on Delivery)</span>
+          <span class="amount" id="totalAmt">Tk 1,490</span>
+        </div>
+      </div>
+
+      <button class="confirm-btn" id="confirmBtn" onclick="submitOrder()">অর্ডার নিশ্চিত করুন →</button>
+      <div class="form-note">
+        আমরা আপনাকে কল করে অর্ডারটি নিশ্চিত করবো।<br>
+        We will call you to confirm before dispatch.
+      </div>
+
+      <!-- RETURN POLICY -->
+      <div style="padding: 16px 18px; background: #c0392b; border-radius: 10px; margin-top: 20px;">
+        <div style="font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.85;">
+          <span style="font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; display: block; margin-bottom: 7px;">◼️ Return Policy</span>
+          ডেলিভারিম্যান থাকা অবস্থায় প্রোডাক্ট খুলে চেক করে নিতে পারবেন। আমরা সারা দেশে ক্যাশ অন হোম ডেলিভারি দিয়ে থাকি। সঠিক প্রোডাক্ট পাওয়ার পরে পছন্দ না হলে সেক্ষেত্রে ডেলিভারি চার্জ দিয়ে রিটার্ন করতে পারবেন। ডেলিভারিম্যান চলে যাওয়ার পর কোনো অভিযোগ গ্রহনযোগ্য হবেনা। কম্বোর প্রাইস সিংগেল প্রাইসের তুলনায় অনেকটাই ডিস্কাউন্টেড থাকে তাই একটা রেখে আরেকটা ফেরত দেয়ার অপশন নেই।
+        </div>
+      </div>
+    </div>
+
+    <!-- PERFUME DESCRIPTIONS -->
+    <div style="padding: 28px 20px 24px; border-bottom: 1px solid var(--gray-200);">
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Phantom Elixir <span style="font-weight: 400; color: var(--gray-600);">— Inspired by Dior Sauvage Elixir</span></div>
+        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">এটা masculine একটা scent। Fresh, spicy আর woody — তিনটা মিলিয়ে একটা scent যেটা পরলে room এ enter করার সাথে সাথেই আশেপাশের সবাই আপনাকে notice করবে।</div>
+        <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 8+ hours</div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Executive Bleu <span style="font-weight: 400; color: var(--gray-600);">— Inspired by Bleu de Chanel</span></div>
+        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">Clean, fresh, এবং effortlessly classy। Office থেকে dinner, সব জায়গায় এটা মানিয়ে যায়। যারা everyday wear হিসেবে এমন কিছু চান যেটা always appropriate এবং always impressive — then this is the best choice.</div>
+        <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 4–5 hours</div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Sport Homme <span style="font-weight: 400; color: var(--gray-600);">— Inspired by Chanel Allure Homme Sport</span></div>
+        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">Fresh, athletic একটা scent। Orange, mandarin আর sea notes দিয়ে শুরু, তারপর peppery-cedar heart, শেষে soft vanilla-tonka-musk base। Active lifestyle বা daily wear এর জন্য একদম perfect।</div>
+        <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 4–5 hours</div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Marine Cucumber <span style="font-weight: 400; color: var(--gray-600);">— Inspired by Nautica Voyage</span></div>
+        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">Breezy, fresh, গরমের জন্য বানানো একটা scent। Green apple আর crisp leaves দিয়ে শুরু, তারপর watery lotus-mimosa heart, শেষে cedar, musk আর amber base। গরম আফটারনুনের জন্য একদম cucumber-fresh signature।</div>
+        <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 4–5 hours</div>
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Arctic Splash <span style="font-weight: 400; color: var(--gray-600);">— Inspired by Davidoff Cool Water</span></div>
+        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">Clean aquatic classic। Sea water, mint আর lavender দিয়ে শুরু, তারপর geranium, jasmine, neroli heart, শেষে cedar, musk আর হালকা amber base। এটাই সেই original clean aquatic scent যেটা দিয়ে পুরো trend শুরু হয়েছিল।</div>
+        <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 4–5 hours</div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section" style="border-bottom:none; padding-bottom:60px;">
+      <div class="section-title">Frequently Asked Questions</div>
+
+      <div class="faq-item">
+        <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="faq-q">এই offer এ কী পাবো?</div>
+          <div class="faq-a">Combo নিলে Phantom Elixir (30ml) + Executive Bleu (30ml) — দুটো premium perfume, মাত্র ১,৪৯০ টাকায়, সাথে সারা বাংলাদেশে ফ্রি ডেলিভারি!</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="faq-q">এগুলো কি original নাকি inspired?</div>
+          <div class="faq-a">এগুলো inspired version — বিশ্বখ্যাত luxury brands এর inspiration এ তৈরি। Same scent, same feel — তবে অনেক সাশ্রয়ী দামে।<br><br>আমরা শুধুমাত্র বিশ্বের সেরা fragrance company — <strong>LUZI</strong> — এর perfume oil ব্যবহার করি। এই কোম্পানি Chanel, Dior, Armani সহ বিশ্বের বড় বড় brands এর perfume তৈরিতেও raw material সরবরাহ করে।</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="faq-q">Projection ও lasting কেমন?</div>
+          <div class="faq-a">Projection: ৪–৬ ফুট দূর থেকে ঘ্রাণ পাওয়া যাবে। Lasting: ৪–৫ ঘন্টা।<br><br>💡 Tip: Clothes এ ১২–১৫টি spray দিলে lasting ও projection অনেক ভালো হয়।</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="faq-q">Spray নাকি roll-on?</div>
+          <div class="faq-a">দুটোই spray bottle।</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="faq-q">30ml কতদিন চলবে?</div>
+          <div class="faq-a">প্রতিদিন ১২–১৫টি spray করলে ১–১.৫ মাস আরামে চলবে।</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="faq-q">Delivery charge ও সময়?</div>
+          <div class="faq-a">সারা বাংলাদেশে ডেলিভারি সম্পূর্ণ ফ্রি! Order confirm হওয়ার পর ৪৮–৭২ ঘন্টায় পৌঁছে যাবে।</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <div class="faq-q">Payment কিভাবে?</div>
+          <div class="faq-a">সম্পূর্ণ Cash on Delivery। Product হাতে পাওয়ার পর টাকা দেবেন — আগে কোনো payment নেই।</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end right-col -->
+</div><!-- end product-layout -->
+</div><!-- end page-body -->
+
+<!-- IMAGE LIGHTBOX SLIDER -->
+<div class="img-lightbox" id="imgLightbox" onclick="closeLightboxOnBg(event)">
+  <button class="img-lightbox-close" onclick="closeLightbox()">✕</button>
+  <div class="img-lightbox-viewport">
+    <div class="img-lightbox-track" id="lightboxTrack"></div>
+  </div>
+  <div class="img-lightbox-nav">
+    <button class="img-lightbox-btn" onclick="lightboxNav(-1)">‹</button>
+    <button class="img-lightbox-btn" onclick="lightboxNav(1)">›</button>
+  </div>
+  <div class="img-lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../js/supabase-config.js"></script>
+<script>
+// ── V2: single fixed product (combo), delivery always free ──
+const COMBO_PRICE = 1490;
+const COMBO_NORMAL_PRICE = 1780;
+const COMBO_ITEMS_LABEL = "Phantom Elixir & Executive Bleu Combo x1";
+
+// Extra perfume add-ons — each independently toggle-able, ৳390 vs normal ৳890.
+const BUMP_ITEMS = {
+  sport:  { name: 'Sport Homme',     price: 390, normalPrice: 890, itemsLabel: 'Sport Homme (Bump Offer) x1' },
+  marine: { name: 'Marine Cucumber', price: 390, normalPrice: 890, itemsLabel: 'Marine Cucumber (Bump Offer) x1' },
+  arctic: { name: 'Arctic Splash',   price: 390, normalPrice: 890, itemsLabel: 'Arctic Splash (Bump Offer) x1' }
+};
+let addedBumps = new Set();
+
+let selectedDistrict = "";
+
+function toggleBump(key) {
+  const btn = document.getElementById('bumpBtn-' + key);
+  if (addedBumps.has(key)) {
+    addedBumps.delete(key);
+    btn.textContent = 'Add';
+    btn.classList.remove('added');
+  } else {
+    addedBumps.add(key);
+    btn.textContent = 'Remove';
+    btn.classList.add('added');
+  }
+  updateTotal();
+}
+
+// ── IMAGE GRID ──
+const GALLERY_IMAGES = Array.from({length: 6}, (_, i) => `images/gallery${i+1}.png`);
+let validImages = [], lightboxIdx = 0;
+
+function initImageGrids() {
+  const mobileGrid  = document.getElementById('mobileImageGrid');
+  const desktopGrid = document.getElementById('desktopImageGrid');
+  const lbTrack     = document.getElementById('lightboxTrack');
+
+  GALLERY_IMAGES.forEach((src) => {
+    const probe = new Image();
+    probe.onload = () => {
+      validImages.push(src);
+      const lbSlide = document.createElement('div');
+      lbSlide.className = 'img-lightbox-slide';
+      lbSlide.innerHTML = `<img src="${src}" alt="Product photo">`;
+      lbTrack.appendChild(lbSlide);
+
+      const mThumb = document.createElement('div');
+      mThumb.className = 'grid-thumb';
+      mThumb.innerHTML = `<img src="${src}" alt="Product">`;
+      mThumb.onclick = () => openLightbox(validImages.indexOf(src));
+      mobileGrid.appendChild(mThumb);
+
+      const dThumb = document.createElement('div');
+      dThumb.className = 'grid-thumb';
+      dThumb.innerHTML = `<img src="${src}" alt="Product">`;
+      dThumb.onclick = () => openLightbox(validImages.indexOf(src));
+      desktopGrid.appendChild(dThumb);
+    };
+    probe.src = src;
+  });
+}
+
+initImageGrids();
+
+updateTotal();
+
+// ── LIGHTBOX ──
+function openLightbox(idx) {
+  lightboxIdx = idx; updateLightbox();
+  document.getElementById('imgLightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('imgLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeLightboxOnBg(e) {
+  if (e.target === document.getElementById('imgLightbox')) closeLightbox();
+}
+function updateLightbox() {
+  document.getElementById('lightboxTrack').style.transform = `translateX(-${lightboxIdx * 100}%)`;
+  document.getElementById('lightboxCounter').textContent = (lightboxIdx + 1) + ' / ' + validImages.length;
+}
+function lightboxNav(dir) {
+  lightboxIdx = Math.max(0, Math.min(validImages.length - 1, lightboxIdx + dir));
+  updateLightbox();
+}
+let lbTouchX = 0;
+document.getElementById('imgLightbox').addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+document.getElementById('imgLightbox').addEventListener('touchend', e => {
+  const diff = lbTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) lightboxNav(diff > 0 ? 1 : -1);
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('imgLightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'ArrowLeft')  lightboxNav(-1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+// ── DISTRICTS ──
+const DISTRICTS = ["Bagerhat","Bandarban","Barguna","Barishal","Bhola","Bogura","Brahmanbaria","Chandpur","Chattogram","Chuadanga","Cox's Bazar","Cumilla","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jashore","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"];
+
+const districtInput    = document.getElementById('districtInput');
+const districtDropdown = document.getElementById('districtDropdown');
+
+districtInput.addEventListener('input', function() {
+  selectedDistrict = "";
+  const q = this.value.toLowerCase().trim();
+  renderDistricts(q ? DISTRICTS.filter(d => d.toLowerCase().includes(q)) : DISTRICTS);
+  districtDropdown.classList.add('open');
+  updateTotal();
+});
+districtInput.addEventListener('focus', function() {
+  const q = this.value.toLowerCase().trim();
+  renderDistricts(q ? DISTRICTS.filter(d => d.toLowerCase().includes(q)) : DISTRICTS);
+  districtDropdown.classList.add('open');
+});
+document.addEventListener('click', e => { if (!e.target.closest('.district-wrapper')) districtDropdown.classList.remove('open'); });
+
+function renderDistricts(list) {
+  districtDropdown.innerHTML = list.length
+    ? list.map(d => `<div class="district-option" data-name="${d.replace(/"/g,'&quot;')}">${d}</div>`).join('')
+    : '<div class="district-option no-results">No district found</div>';
+  districtDropdown.querySelectorAll('.district-option[data-name]').forEach(el => {
+    el.addEventListener('click', () => pickDistrict(el.dataset.name));
+  });
+}
+function pickDistrict(name) {
+  selectedDistrict = name; districtInput.value = name;
+  districtDropdown.classList.remove('open'); updateTotal();
+}
+
+function updateTotal() {
+  let bumpTotal = 0;
+  let rowsHtml = '';
+  addedBumps.forEach(key => {
+    const b = BUMP_ITEMS[key];
+    bumpTotal += b.price;
+    rowsHtml += `<div class="total-row"><span>+ ${b.name} (Bonus)</span><span>Tk ${b.price}</span></div>`;
+  });
+  document.getElementById('summaryBumpRows').innerHTML = rowsHtml;
+  document.getElementById('totalAmt').textContent = 'Tk ' + (COMBO_PRICE + bumpTotal);
+}
+
+document.getElementById('fieldPhone').addEventListener('input', function() {
+  this.value = this.value.replace(/[^0-9]/g,'').slice(0,11);
+});
+
+function submitOrder() {
+  let valid = true;
+  const name    = document.getElementById('fieldName').value.trim();
+  const phone   = document.getElementById('fieldPhone').value.trim();
+  const address = document.getElementById('fieldAddress').value.trim();
+
+  if (!name)    { showErr('fieldName',   'errName');   valid = false; } else clearErr('fieldName',   'errName');
+  const pc = phone.replace(/\D/g,'');
+  if (pc.length !== 11 || !pc.startsWith('01')) { showErr('fieldPhone','errPhone'); valid = false; } else clearErr('fieldPhone','errPhone');
+
+  // District is ALWAYS required now — every order needs a real delivery
+  // address, regardless of which option was picked.
+  if (!selectedDistrict) { document.getElementById('errDistrict').classList.add('show'); valid = false; }
+  else document.getElementById('errDistrict').classList.remove('show');
+
+  if (!address) { showErr('fieldAddress','errAddress'); valid = false; } else clearErr('fieldAddress','errAddress');
+  if (!valid) { document.getElementById('orderFormBlock').scrollIntoView({ behavior:'smooth', block:'start' }); return; }
+
+  const delivery = 0;
+  let subtotal = COMBO_PRICE;
+  let normal = COMBO_NORMAL_PRICE;
+  let items = COMBO_ITEMS_LABEL;
+  addedBumps.forEach(key => {
+    const b = BUMP_ITEMS[key];
+    subtotal += b.price;
+    normal += b.normalPrice;
+    items += ", " + b.itemsLabel;
+  });
+  const discount = normal - subtotal;
+  const total = subtotal + delivery;
+  const orderId = 'CELV2' + Date.now();
+
+  const btn = document.getElementById('confirmBtn');
+  btn.disabled = true; btn.textContent = 'Submitting...';
+
+  const payload = {
+    order_id: orderId,
+    name: name,
+    phone: phone,
+    district: selectedDistrict,
+    address: address,
+    items: items,
+    normal_price: normal,
+    discount: discount,
+    subtotal: subtotal,
+    delivery: delivery,
+    total: total
+  };
+
+  supabaseClient.from('orders').insert(payload).then(function (res) {
+    if (res.error) {
+      btn.disabled = false;
+      btn.textContent = 'অর্ডার নিশ্চিত করুন →';
+      alert('Something went wrong. Please try again.');
+      console.error(res.error);
+      return;
+    }
+    const params = new URLSearchParams({
+      orderId: orderId,
+      name: name,
+      phone: phone,
+      district: selectedDistrict,
+      address: address,
+      items: items,
+      normal: normal,
+      discount: discount,
+      subtotal: subtotal,
+      delivery: delivery,
+      total: total
+    });
+    window.location.href = 'thank-you.html?' + params.toString();
+  });
+}
+
+function showErr(fId, eId) { document.getElementById(fId).classList.add('error'); document.getElementById(eId).classList.add('show'); }
+function clearErr(fId, eId) { document.getElementById(fId).classList.remove('error'); document.getElementById(eId).classList.remove('show'); }
+
+/* If someone hits the browser's back button after ordering, some browsers
+   restore a frozen snapshot of this page — showing the submit button stuck
+   on "Submitting..." even though the order already went through. Reloading
+   fresh avoids that confusion. */
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) window.location.reload();
+});
+</script>
+</body>
+</html>
