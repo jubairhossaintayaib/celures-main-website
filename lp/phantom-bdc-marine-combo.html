@@ -195,8 +195,7 @@ nav {
 .divider-line { border: none; border-top: 1px solid var(--gray-200); margin: 0 0 18px; }
 
 .price-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-.price-new { font-family: var(--sans); font-size: 30px; font-weight: 500; color: var(--black); line-height: 1.2; }
-.price-note { font-size: 0.4em; font-weight: 400; color: var(--gray-600); margin-left: 4px; }
+.price-new { font-family: var(--serif); font-size: 40px; font-weight: 400; color: var(--black); line-height: 1; }
 
 .cod-badge {
   display: inline-flex; align-items: center; gap: 7px;
@@ -206,109 +205,109 @@ nav {
 }
 .cod-badge svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-/* ── PICK TILES (mix & match, tiered pricing) ── */
-.pick-section {
+/* ── OPTION TABS ── */
+.option-tabs-section {
   padding: 20px 20px 24px;
   border-bottom: 1px solid var(--gray-200);
 }
-@media (min-width: 900px) { .pick-section { padding: 24px 40px 28px; } }
+@media (min-width: 900px) { .option-tabs-section { padding: 24px 40px 28px; } }
 
-.pick-label {
+.option-tabs-label {
   font-size: 22px; font-weight: 600;
-  color: var(--black); margin-bottom: 6px;
-}
-.pick-sublabel {
-  font-size: 13px; color: var(--gray-600); margin-bottom: 14px;
+  color: var(--black); margin-bottom: 12px;
 }
 
-.pick-tiers-strip {
-  background: #1a7a40;
-  color: #fff;
-  font-size: 12.5px;
-  font-weight: 600;
-  text-align: center;
-  padding: 9px 12px;
-  border-radius: 8px;
-  margin-bottom: 14px;
-  line-height: 1.6;
-}
-
-.pick-tabs {
+.option-tabs {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.pick-hook {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--gray-600);
-  line-height: 1.5;
-  margin-top: 6px;
-}
-
-.pick-tab {
-  padding: 12px 14px;
-  background: #fff9e6;
-  border: 1.5px dashed #d4a017;
+.option-tab {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--gray-200);
   border-radius: 10px;
+  cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
+  background: var(--white);
+  user-select: none;
+  position: relative;
 }
-.pick-tab.added {
-  border-style: solid;
-  border-color: var(--black);
+.option-tab:hover { border-color: var(--gray-400); }
+.option-tab.selected {
+  border: 2px solid var(--black);
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
 }
 
-.pick-tab-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  width: 100%;
+.option-radio {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--gray-400);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.option-tab.selected .option-radio {
+  border-color: var(--black);
+  background: var(--black);
+}
+.option-radio svg { display: none; }
+.option-tab.selected .option-radio svg { display: block; }
+
+.option-text { flex: 1; }
+.option-name { font-size: 15px; font-weight: 500; color: var(--black); line-height: 1.3; }
+.option-desc { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
+.option-selected-label {
+  display: none;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--black); margin-top: 4px;
+}
+.option-tab.selected .option-selected-label { display: block; }
+
+.option-price-col { text-align: right; flex-shrink: 0; }
+.option-price { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--black); line-height: 1; }
+.option-price-sub { font-size: 12px; color: var(--gray-600); margin-top: 2px; }
+.option-tab.selected .option-price-sub { color: var(--black); font-weight: 500; }
+
+.option-best-tag {
+  position: absolute;
+  top: -11px; right: 14px;
+  background: var(--black); color: var(--white);
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 11px; border-radius: 20px;
 }
 
-.pick-info { flex: 1; min-width: 0; }
-.pick-name { font-size: 15px; font-weight: 600; color: var(--black); line-height: 1.3; }
-.pick-desc { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
-
-.pick-media {
+.option-tab.combo-with-strip {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 8px;
-  flex-shrink: 0;
+  gap: 0;
+  padding: 14px 16px 0;
 }
-
-.pick-img {
-  width: 92px;
-  aspect-ratio: 1 / 1;
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--gray-100);
+.combo-tab-toprow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
 }
-.pick-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.pick-add-btn {
-  background: var(--black); color: #fff;
-  border: none; border-radius: 20px;
-  padding: 8px 0;
-  text-align: center;
-  font-family: var(--sans); font-size: 13px; font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
+.combo-price-old {
+  text-decoration: line-through;
+  color: var(--gray-400);
+  font-weight: 400;
+  font-size: 0.65em;
+  margin-right: 6px;
 }
-.pick-add-btn.added { background: #b94040; }
-
-.pick-incentive {
-  margin-top: 14px;
-  background: #fff9e6;
-  border: 1.5px dashed #d4a017;
-  border-radius: 10px;
-  padding: 11px 14px;
+.combo-discount-strip {
+  background: #1a7a40;
+  color: #fff;
   font-size: 13px;
-  color: var(--black);
+  font-weight: 600;
   text-align: center;
-  line-height: 1.6;
+  padding: 9px 14px;
+  margin: 0 -16px;
+  border-radius: 0 0 8px 8px;
 }
 
 .section {
@@ -378,6 +377,7 @@ nav {
   background: var(--gray-100); border: 1px solid var(--gray-200);
   border-radius: 10px; padding: 16px 18px; margin: 20px 0 14px;
 }
+
 .total-label { font-size: 11px; letter-spacing: 2px; color: var(--gray-600); text-transform: uppercase; margin-bottom: 12px; }
 .total-row { display: flex; justify-content: space-between; font-size: 15px; color: var(--gray-600); margin-bottom: 6px; }
 .total-row.main { color: var(--black); }
@@ -408,25 +408,6 @@ nav {
   opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 400; white-space: nowrap;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ── MOBILE STICKY TOTAL/DISCOUNT BAR ── */
-.mobile-sticky-bar {
-  display: none;
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 250;
-  background: var(--black); color: #fff;
-  padding: 10px 16px;
-  flex-direction: column;
-  align-items: center; justify-content: center;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.18);
-  cursor: pointer;
-}
-@media (max-width: 899px) {
-  .mobile-sticky-bar.visible { display: flex; }
-  .page-body { padding-bottom: 74px; }
-}
-.msb-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 3px; text-align: center; }
-.msb-equation { font-family: var(--sans); font-size: 17px; font-weight: 600; color: #fff; line-height: 1.3; text-align: center; }
-.msb-equation .msb-sum { color: #4ade80; }
 </style>
 </head>
 <body>
@@ -457,17 +438,17 @@ nav {
 
     <div class="product-info">
       <div class="badge-row">
-        <span class="badge badge-sale">🎁 ৳১,০০০+ অর্ডারে ফ্রি ডেলিভারি</span>
+        <span class="badge badge-sale">Limited Offer 🔥</span>
       </div>
 
-      <h1 class="product-title">Phantom Elixir <span class="plus-sign">+</span> Executive Bleu <span class="plus-sign">+</span> Marine Cucumber <span class="ml-label">(30ml each)</span></h1>
+      <h1 class="product-title" id="productTitle">Phantom Elixir <span class="plus-sign">+</span> Executive Bleu <span class="plus-sign">+</span> Marine Cucumber <span class="ml-label">(30ml each)</span></h1>
 
-      <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 16px; font-style: italic;">Inspired by Dior Sauvage Elixir, Bleu de Chanel & Nautica Voyage</div>
+      <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 16px; font-style: italic;" id="inspiredByLine">Inspired by Dior Sauvage Elixir, Bleu de Chanel & Nautica Voyage</div>
 
       <hr class="divider-line">
 
       <div class="price-row">
-        <div class="price-new" id="dynamicPrice">৳৮৯০ <span class="price-note">each perfume</span></div>
+        <div class="price-new" id="heroPrice">৳১,৮৮০</div>
       </div>
 
       <div class="cod-badge">
@@ -476,62 +457,67 @@ nav {
       </div>
     </div>
 
-    <div class="pick-section">
-      <div class="pick-label">আপনার পছন্দের Perfume বেছে নিন</div>
-      <div class="pick-sublabel">একটি, দুটি, অথবা তিনটিই নিতে পারবেন — যত বেশি নিবেন, তত বেশি discount!</div>
+    <div class="option-tabs-section">
+      <div class="option-tabs-label">আপনার কম্বো বেছে নিন</div>
+      <div class="option-tabs">
 
-      <div class="pick-tiers-strip">
-        ১ম টি ৳৮৯০ &nbsp;•&nbsp; ২য় টি মাত্র ৳৫৯০ &nbsp;•&nbsp; ৩য় টি মাত্র ৳৩৯০
+        <div class="option-tab" id="tab-phantom-bdc" onclick="selectCombo('phantom-bdc')">
+          <div class="option-radio"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="option-text">
+            <div class="option-name">Phantom Elixir + Executive Bleu</div>
+            <div class="option-desc">30ml each · Both bottles · 2 × ৳890 = ৳1,780</div>
+            <div class="option-selected-label">✓ Selected</div>
+          </div>
+          <div class="option-price-col">
+            <div class="option-price"><span class="combo-price-old">৳১,৭৮০</span> ৳১,৪৯০</div>
+            <div class="option-price-sub" style="color:#1a7a40; font-weight:600;">Free delivery</div>
+          </div>
+        </div>
+
+        <div class="option-tab" id="tab-phantom-marine" onclick="selectCombo('phantom-marine')">
+          <div class="option-radio"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="option-text">
+            <div class="option-name">Phantom Elixir + Marine Cucumber</div>
+            <div class="option-desc">30ml each · Both bottles · 2 × ৳890 = ৳1,780</div>
+            <div class="option-selected-label">✓ Selected</div>
+          </div>
+          <div class="option-price-col">
+            <div class="option-price"><span class="combo-price-old">৳১,৭৮০</span> ৳১,৪৯০</div>
+            <div class="option-price-sub" style="color:#1a7a40; font-weight:600;">Free delivery</div>
+          </div>
+        </div>
+
+        <div class="option-tab" id="tab-bdc-marine" onclick="selectCombo('bdc-marine')">
+          <div class="option-radio"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="option-text">
+            <div class="option-name">Executive Bleu + Marine Cucumber</div>
+            <div class="option-desc">30ml each · Both bottles · 2 × ৳890 = ৳1,780</div>
+            <div class="option-selected-label">✓ Selected</div>
+          </div>
+          <div class="option-price-col">
+            <div class="option-price"><span class="combo-price-old">৳১,৭৮০</span> ৳১,৪৯০</div>
+            <div class="option-price-sub" style="color:#1a7a40; font-weight:600;">Free delivery</div>
+          </div>
+        </div>
+
+        <div class="option-tab combo-with-strip selected" id="tab-all-three" onclick="selectCombo('all-three')">
+          <div class="option-best-tag">🔥 Best Deal</div>
+          <div class="combo-tab-toprow">
+            <div class="option-radio"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="option-text">
+              <div class="option-name">Phantom Elixir + Executive Bleu + Marine Cucumber</div>
+              <div class="option-desc">30ml each · All three bottles · 3 × ৳890 = ৳2,670</div>
+              <div class="option-selected-label">✓ Selected</div>
+            </div>
+            <div class="option-price-col">
+              <div class="option-price"><span class="combo-price-old">৳২,৬৭০</span> ৳১,৮৮০</div>
+              <div class="option-price-sub" style="color:#1a7a40; font-weight:600;">Free delivery</div>
+            </div>
+          </div>
+          <div class="combo-discount-strip">🎉 ৳৭৯০ discount + FREE Delivery সারা বাংলাদেশে!</div>
+        </div>
+
       </div>
-
-      <div class="pick-tabs">
-
-        <div class="pick-tab" id="tile-phantom">
-          <div class="pick-tab-top">
-            <div class="pick-info">
-              <div class="pick-name">Phantom Elixir</div>
-              <div class="pick-desc">30ml · Inspired by Dior Sauvage Elixir</div>
-              <div class="pick-hook">👑 Manly fragrance যেটা exceptional longevity দেয় — সব occasion আর weather এর জন্য perfect।</div>
-            </div>
-            <div class="pick-media">
-              <div class="pick-img"><img src="../images/phantom-bdc-marine/phantom.webp" alt="Phantom Elixir"></div>
-              <button type="button" class="pick-add-btn" id="btn-phantom" onclick="toggleItem('phantom')">Add</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="pick-tab" id="tile-bdc">
-          <div class="pick-tab-top">
-            <div class="pick-info">
-              <div class="pick-name">Executive Bleu</div>
-              <div class="pick-desc">30ml · Inspired by Bleu de Chanel</div>
-              <div class="pick-hook">💼 Fresh citrusy scent — যেকোনো professional জায়গায় use করা যায়, মানুষ আপনাকে notice করবে।</div>
-            </div>
-            <div class="pick-media">
-              <div class="pick-img"><img src="../images/phantom-bdc-marine/bdc.webp" alt="Executive Bleu"></div>
-              <button type="button" class="pick-add-btn" id="btn-bdc" onclick="toggleItem('bdc')">Add</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="pick-tab" id="tile-marine">
-          <div class="pick-tab-top">
-            <div class="pick-info">
-              <div class="pick-name">Marine Cucumber</div>
-              <div class="pick-desc">30ml · Inspired by Nautica Voyage</div>
-              <div class="pick-hook">🌊 Fresh, clean, oceanic vibe — একটা sophisticated persona তৈরি করার জন্য perfect choice।</div>
-            </div>
-            <div class="pick-media">
-              <div class="pick-img"><img src="../images/phantom-bdc-marine/marine.webp" alt="Marine Cucumber"></div>
-              <button type="button" class="pick-add-btn" id="btn-marine" onclick="toggleItem('marine')">Add</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="pick-incentive" id="pickIncentive"></div>
-      <div class="error-msg" id="errPick">অন্তত ১টি perfume সিলেক্ট করুন।</div>
     </div>
 
     <div style="padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
@@ -544,7 +530,7 @@ nav {
     <div style="padding: 16px 20px; background: #c0392b; border-bottom: 1px solid #a93226;">
       <div style="font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.85;">
         <span style="font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; display: block; margin-bottom: 7px;">◼️ Return Policy</span>
-        ডেলিভারিম্যান থাকা অবস্থায় প্রোডাক্ট খুলে চেক করে নিতে পারবেন। আমরা সারা দেশে ক্যাশ অন হোম ডেলিভারি দিয়ে থাকি। সঠিক প্রোডাক্ট পাওয়ার পরে পছন্দ না হলে সেক্ষেত্রে ডেলিভারি চার্জ দিয়ে রিটার্ন করতে পারবেন। ডেলিভারিম্যান চলে যাওয়ার পর কোনো অভিযোগ গ্রহনযোগ্য হবেনা। একাধিক perfume একসাথে নেওয়ার কারণে ২য়/৩য়টির দাম discounted থাকে, তাই একটি রেখে বাকিগুলো ফেরত দেওয়ার অপশন নেই।
+        ডেলিভারিম্যান থাকা অবস্থায় প্রোডাক্ট খুলে চেক করে নিতে পারবেন। আমরা সারা দেশে ক্যাশ অন হোম ডেলিভারি দিয়ে থাকি। সঠিক প্রোডাক্ট পাওয়ার পরে পছন্দ না হলে সেক্ষেত্রে ডেলিভারি চার্জ দিয়ে রিটার্ন করতে পারবেন। ডেলিভারিম্যান চলে যাওয়ার পর কোনো অভিযোগ গ্রহনযোগ্য হবেনা। কম্বোর প্রাইস সিংগেল প্রাইসের তুলনায় অনেকটাই ডিস্কাউন্টেড থাকে তাই একটা রেখে আরেকটা ফেরত দেয়ার অপশন নেই।
       </div>
     </div>
 
@@ -583,15 +569,13 @@ nav {
 
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
-        <div id="summaryItems"></div>
-        <div class="total-row free-row" id="summaryFreeRow" style="display:none"><span>Delivery</span><span>FREE 🎁</span></div>
-        <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
+        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu + Marine Cucumber (Combo)</span><span>Tk <span id="summaryBasePrice">1,880</span></span></div>
+        <div class="total-row free-row"><span>Delivery</span><span>FREE 🎁</span></div>
         <hr class="total-divider">
-        <div class="total-final" id="totalFinal" style="display:none">
+        <div class="total-final">
           <span>Total (Cash on Delivery)</span>
-          <span class="amount" id="totalAmt"></span>
+          <span class="amount" id="totalAmt">Tk 1,880</span>
         </div>
-        <div class="total-pending" id="totalPending">উপরে থেকে perfume সিলেক্ট করুন</div>
       </div>
 
       <button class="confirm-btn" id="confirmBtn" onclick="submitOrder()">অর্ডার নিশ্চিত করুন →</button>
@@ -608,7 +592,7 @@ nav {
         <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div>
           <div class="faq-q">এই offer এ কী পাবো?</div>
-          <div class="faq-a">Phantom Elixir, Executive Bleu, এবং Marine Cucumber — এই তিনটি premium perfume থেকে যেকোনো কয়েকটি বেছে নিতে পারবেন। ১টি নিলে ৳৮৯০, ২টি নিলে ২য়টি মাত্র ৳৫৯০, আর ৩টিই নিলে ৩য়টি মাত্র ৳৩৯০ — যত বেশি নিবেন, তত বেশি discount!</div>
+          <div class="faq-a">Phantom Elixir, Executive Bleu, এবং Marine Cucumber — এই তিনটি perfume থেকে যেকোনো দুটির কম্বো নিতে পারবেন মাত্র ১,৪৯০ টাকায় (৩০ml প্রতিটি), অথবা তিনটিই একসাথে নিতে পারবেন মাত্র ১,৮৮০ টাকায় — সাথে সারা বাংলাদেশে ফ্রি ডেলিভারি!</div>
         </div>
       </div>
 
@@ -648,7 +632,7 @@ nav {
         <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div>
           <div class="faq-q">Delivery charge ও সময়?</div>
-          <div class="faq-a">৳১,০০০ এর নিচে অর্ডারে (১টি perfume) ঢাকার ভেতরে ৳৭০, বাইরে ৳১১০। তবে ২টি বা ৩টি perfume একসাথে নিলে (৳১,০০০+) সারা বাংলাদেশে ডেলিভারি সম্পূর্ণ ফ্রি! Order confirm হওয়ার পর ৪৮–৭২ ঘন্টায় পৌঁছে যাবে।</div>
+          <div class="faq-a">যেকোনো কম্বো অর্ডারেই (২টি বা ৩টি perfume) সারা বাংলাদেশে ডেলিভারি সম্পূর্ণ ফ্রি! Order confirm হওয়ার পর ৪৮–৭২ ঘন্টায় পৌঁছে যাবে।</div>
         </div>
       </div>
 
@@ -666,101 +650,48 @@ nav {
 </div>
 
 
-<div class="mobile-sticky-bar" id="mobileStickyBar" onclick="document.getElementById('orderFormBlock').scrollIntoView({behavior:'smooth', block:'start'})">
-  <div class="msb-label">Total</div>
-  <div class="msb-equation" id="msbEquation">৳৮৯০</div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script src="../js/supabase-config.js"></script>
 <script>
-// ── TIERED PRICING: 1st item ৳890, 2nd item ৳590, 3rd item ৳390 ──
-const TIERS = [890, 590, 390];
-const ITEM_KEYS = ['phantom', 'bdc', 'marine'];
-const ITEM_INFO = {
-  phantom: { name: 'Phantom Elixir' },
-  bdc:     { name: 'Executive Bleu' },
-  marine:  { name: 'Marine Cucumber' }
+// ── PERFUME DATA ──
+const PERFUMES = {
+  phantom: { name: 'Phantom Elixir',   inspiredBy: 'Dior Sauvage Elixir' },
+  bdc:     { name: 'Executive Bleu',   inspiredBy: 'Bleu de Chanel' },
+  marine:  { name: 'Marine Cucumber',  inspiredBy: 'Nautica Voyage' }
 };
 
-let selectedOrder = []; // slugs, in the order they were added
+// ── COMBO DATA: 3 two-perfume combos at ৳1,490, plus all three at ৳1,880 ──
+const COMBOS = {
+  'phantom-bdc':    { perfumes: ['phantom', 'bdc'],            price: 1490, normal: 1780, priceDisplay: '৳১,৪৯০' },
+  'phantom-marine': { perfumes: ['phantom', 'marine'],         price: 1490, normal: 1780, priceDisplay: '৳১,৪৯০' },
+  'bdc-marine':     { perfumes: ['bdc', 'marine'],             price: 1490, normal: 1780, priceDisplay: '৳১,৪৯০' },
+  'all-three':      { perfumes: ['phantom', 'bdc', 'marine'],  price: 1880, normal: 2670, priceDisplay: '৳১,৮৮০' }
+};
+
+let selectedCombo = 'all-three';
 let selectedDistrict = "";
 
-// Bengali-numeral formatting — mixing "৳" with Latin digits looks broken in the
-// serif font, so every computed price on this page renders in Bengali digits.
-const BN_DIGITS = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
-function toBn(num) {
-  return String(num).replace(/[0-9]/g, d => BN_DIGITS[d]);
-}
-function formatTk(num) {
-  return '৳' + toBn(num.toLocaleString('en-US'));
-}
+function selectCombo(key) {
+  selectedCombo = key;
 
-function toggleItem(key) {
-  const idx = selectedOrder.indexOf(key);
-  if (idx > -1) {
-    selectedOrder.splice(idx, 1);
-  } else {
-    if (selectedOrder.length >= ITEM_KEYS.length) return;
-    selectedOrder.push(key);
-  }
-  render();
-}
-
-function getSubtotal() {
-  return selectedOrder.reduce((sum, key, i) => sum + TIERS[i], 0);
-}
-
-function render() {
-  ITEM_KEYS.forEach((key) => {
-    const tile = document.getElementById('tile-' + key);
-    const btn  = document.getElementById('btn-' + key);
-    const pos = selectedOrder.indexOf(key);
-
-    tile.classList.toggle('added', pos > -1);
-    btn.textContent = pos > -1 ? 'Remove' : 'Add';
-    btn.classList.toggle('added', pos > -1);
+  Object.keys(COMBOS).forEach((k) => {
+    document.getElementById('tab-' + k).classList.toggle('selected', k === key);
   });
 
-  if (selectedOrder.length > 0) {
-    document.getElementById('errPick').classList.remove('show');
-  }
+  const combo = COMBOS[key];
+  const names = combo.perfumes.map(p => PERFUMES[p].name);
+  const inspiredBys = combo.perfumes.map(p => PERFUMES[p].inspiredBy);
 
-  updateIncentive();
-  updateHeroPrice();
+  document.getElementById('productTitle').innerHTML =
+    names.join(' <span class="plus-sign">+</span> ') + ' <span class="ml-label">(30ml each)</span>';
+  document.getElementById('inspiredByLine').textContent =
+    'Inspired by ' + (inspiredBys.length > 1
+      ? inspiredBys.slice(0, -1).join(', ') + ' & ' + inspiredBys[inspiredBys.length - 1]
+      : inspiredBys[0]);
+  document.getElementById('heroPrice').textContent = combo.priceDisplay;
+
   updateTotal();
-  updateStickyBar();
-}
-
-function updateIncentive() {
-  const el = document.getElementById('pickIncentive');
-  const n = selectedOrder.length;
-  if (n === 0)      el.innerHTML = '🎁 ১টি যোগ করলেই ২য়টি মাত্র ৳৫৯০ এ পাবেন, আর ৩য়টি মাত্র ৳৩৯০ এ!';
-  else if (n === 1) el.innerHTML = '🔥 আরেকটি যোগ করুন — মাত্র ৳৫৯০ এ! (Normal Price ৳৮৯০)';
-  else if (n === 2) el.innerHTML = '🔥 শেষ একটিও যোগ করুন — মাত্র ৳৩৯০ এ! Very Limited Time Offer!';
-  else              el.innerHTML = '✅ তিনটিই যোগ হয়েছে — আপনি সর্বোচ্চ ৳৮০০ discount পেয়েছেন!';
-}
-
-function updateHeroPrice() {
-  const priceEl = document.getElementById('dynamicPrice');
-  priceEl.innerHTML = selectedOrder.length === 0
-    ? '৳৮৯০ <span class="price-note">each perfume</span>'
-    : formatTk(getSubtotal());
-}
-
-function updateStickyBar() {
-  const bar = document.getElementById('mobileStickyBar');
-  if (selectedOrder.length === 0) {
-    bar.classList.remove('visible');
-    return;
-  }
-  const parts = selectedOrder.map((_, i) => TIERS[i]);
-  const equation = parts.length === 1
-    ? formatTk(parts[0])
-    : parts.map(formatTk).join(' + ') + ' = <span class="msb-sum">' + formatTk(getSubtotal()) + '</span>';
-  document.getElementById('msbEquation').innerHTML = equation;
-  bar.classList.add('visible');
 }
 
 // ── GALLERY: main image + thumbnail strip ──
@@ -822,7 +753,7 @@ mainImageWrap.addEventListener('touchend', e => {
 });
 
 initGallery();
-render();
+selectCombo('all-three');
 
 // ── DISTRICTS ──
 const DISTRICTS = ["Bagerhat","Bandarban","Barguna","Barishal","Bhola","Bogura","Brahmanbaria","Chandpur","Chattogram","Chuadanga","Cox's Bazar","Cumilla","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jashore","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"];
@@ -835,7 +766,6 @@ districtInput.addEventListener('input', function() {
   const q = this.value.toLowerCase().trim();
   renderDistricts(q ? DISTRICTS.filter(d => d.toLowerCase().includes(q)) : DISTRICTS);
   districtDropdown.classList.add('open');
-  updateTotal();
 });
 districtInput.addEventListener('focus', function() {
   const q = this.value.toLowerCase().trim();
@@ -854,59 +784,18 @@ function renderDistricts(list) {
 }
 function pickDistrict(name) {
   selectedDistrict = name; districtInput.value = name;
-  districtDropdown.classList.remove('open'); updateTotal();
+  districtDropdown.classList.remove('open');
 }
 
-function calcDelivery(district) {
-  return district.trim().toLowerCase() === 'dhaka' ? 70 : 110;
-}
-
+// Every combo (2-perfume or all-three) is free delivery nationwide — no
+// per-district delivery calculation needed here.
 function updateTotal() {
-  const summaryItems   = document.getElementById('summaryItems');
-  const freeRow        = document.getElementById('summaryFreeRow');
-  const deliveryRow    = document.getElementById('summaryDeliveryRow');
-  const totalFinal     = document.getElementById('totalFinal');
-  const totalPending   = document.getElementById('totalPending');
+  const combo = COMBOS[selectedCombo];
+  const names = combo.perfumes.map(p => PERFUMES[p].name);
 
-  if (selectedOrder.length === 0) {
-    summaryItems.innerHTML = '';
-    freeRow.style.display = 'none';
-    deliveryRow.style.display = 'none';
-    totalFinal.style.display = 'none';
-    totalPending.textContent = 'উপরে থেকে perfume সিলেক্ট করুন';
-    totalPending.style.display = 'block';
-    return;
-  }
-
-  const subtotal = getSubtotal();
-  summaryItems.innerHTML = selectedOrder.map((key, i) =>
-    `<div class="total-row main"><span>${ITEM_INFO[key].name}</span><span>Tk ${TIERS[i]}</span></div>`
-  ).join('');
-
-  const freeDelivery = subtotal >= 1000;
-  freeRow.style.display     = freeDelivery ? 'flex' : 'none';
-  deliveryRow.style.display = freeDelivery ? 'none' : '';
-
-  if (freeDelivery) {
-    document.getElementById('totalAmt').textContent = 'Tk ' + subtotal;
-    totalFinal.style.display   = 'flex';
-    totalPending.style.display = 'none';
-    return;
-  }
-
-  if (!selectedDistrict) {
-    document.getElementById('deliveryAmt').textContent = '—';
-    totalFinal.style.display = 'none';
-    totalPending.textContent = 'জেলা সিলেক্ট করলে মোট মূল্য দেখাবে';
-    totalPending.style.display = 'block';
-    return;
-  }
-
-  const delivery = freeDelivery ? 0 : calcDelivery(selectedDistrict);
-  document.getElementById('deliveryAmt').textContent = 'Tk ' + delivery;
-  document.getElementById('totalAmt').textContent    = 'Tk ' + (subtotal + delivery);
-  totalFinal.style.display   = 'flex';
-  totalPending.style.display = 'none';
+  document.getElementById('summaryProduct').textContent = names.join(' + ') + ' (Combo)';
+  document.getElementById('summaryBasePrice').textContent = combo.price.toLocaleString('en-US');
+  document.getElementById('totalAmt').textContent = 'Tk ' + combo.price.toLocaleString('en-US');
 }
 
 document.getElementById('fieldPhone').addEventListener('input', function() {
@@ -919,9 +808,6 @@ function submitOrder() {
   const phone   = document.getElementById('fieldPhone').value.trim();
   const address = document.getElementById('fieldAddress').value.trim();
 
-  if (selectedOrder.length === 0) { document.getElementById('errPick').classList.add('show'); valid = false; }
-  else document.getElementById('errPick').classList.remove('show');
-
   if (!name)    { showErr('fieldName',   'errName');   valid = false; } else clearErr('fieldName',   'errName');
   const pc = phone.replace(/\D/g,'');
   if (pc.length !== 11 || !pc.startsWith('01')) { showErr('fieldPhone','errPhone'); valid = false; } else clearErr('fieldPhone','errPhone');
@@ -930,19 +816,16 @@ function submitOrder() {
   else document.getElementById('errDistrict').classList.remove('show');
 
   if (!address) { showErr('fieldAddress','errAddress'); valid = false; } else clearErr('fieldAddress','errAddress');
+  if (!valid) { document.getElementById('orderFormBlock').scrollIntoView({ behavior:'smooth', block:'start' }); return; }
 
-  if (!valid) {
-    const target = selectedOrder.length === 0 ? document.querySelector('.pick-section') : document.getElementById('orderFormBlock');
-    target.scrollIntoView({ behavior:'smooth', block:'start' });
-    return;
-  }
+  const combo = COMBOS[selectedCombo];
+  const names = combo.perfumes.map(p => PERFUMES[p].name);
 
-  const subtotal = getSubtotal();
-  const normal = selectedOrder.length * 890;
+  const subtotal = combo.price;
+  const normal = combo.normal;
+  const items = names.join(' & ') + ' Combo x1';
   const discount = normal - subtotal;
-  const freeDelivery = subtotal >= 1000;
-  const delivery = freeDelivery ? 0 : calcDelivery(selectedDistrict);
-  const items = selectedOrder.map(key => ITEM_INFO[key].name + ' x1').join(', ');
+  const delivery = 0;
   const total = subtotal + delivery;
   const orderId = 'CEL' + Date.now();
 
