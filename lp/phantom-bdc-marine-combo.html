@@ -246,7 +246,7 @@ nav {
 }
 
 .pick-hook {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--gray-600);
   line-height: 1.5;
@@ -254,10 +254,6 @@ nav {
 }
 
 .pick-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
   padding: 12px 14px;
   background: #fff9e6;
   border: 1.5px dashed #d4a017;
@@ -281,13 +277,19 @@ nav {
 .pick-name { font-size: 15px; font-weight: 600; color: var(--black); line-height: 1.3; }
 .pick-desc { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
 
+.pick-media {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .pick-img {
-  width: 32%;
-  max-width: 100px;
+  width: 92px;
   aspect-ratio: 1 / 1;
   border-radius: 8px;
   overflow: hidden;
-  flex-shrink: 0;
   background: var(--gray-100);
 }
 .pick-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -295,7 +297,8 @@ nav {
 .pick-add-btn {
   background: var(--black); color: #fff;
   border: none; border-radius: 20px;
-  padding: 9px 20px;
+  padding: 8px 0;
+  text-align: center;
   font-family: var(--sans); font-size: 13px; font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
@@ -499,9 +502,11 @@ nav {
               <div class="pick-desc">30ml · Inspired by Dior Sauvage Elixir</div>
               <div class="pick-hook">👑 Manly fragrance যেটা exceptional longevity দেয় — সব occasion আর weather এর জন্য perfect।</div>
             </div>
-            <div class="pick-img"><img src="../images/phantom-bdc-marine/phantom.webp" alt="Phantom Elixir"></div>
+            <div class="pick-media">
+              <div class="pick-img"><img src="../images/phantom-bdc-marine/phantom.webp" alt="Phantom Elixir"></div>
+              <button type="button" class="pick-add-btn" id="btn-phantom" onclick="toggleItem('phantom')">Add</button>
+            </div>
           </div>
-          <button type="button" class="pick-add-btn" id="btn-phantom" onclick="toggleItem('phantom')">Add</button>
         </div>
 
         <div class="pick-tab" id="tile-bdc">
@@ -511,9 +516,11 @@ nav {
               <div class="pick-desc">30ml · Inspired by Bleu de Chanel</div>
               <div class="pick-hook">💼 Fresh citrusy scent — যেকোনো professional জায়গায় use করা যায়, মানুষ আপনাকে notice করবে।</div>
             </div>
-            <div class="pick-img"><img src="../images/phantom-bdc-marine/bdc.webp" alt="Executive Bleu"></div>
+            <div class="pick-media">
+              <div class="pick-img"><img src="../images/phantom-bdc-marine/bdc.webp" alt="Executive Bleu"></div>
+              <button type="button" class="pick-add-btn" id="btn-bdc" onclick="toggleItem('bdc')">Add</button>
+            </div>
           </div>
-          <button type="button" class="pick-add-btn" id="btn-bdc" onclick="toggleItem('bdc')">Add</button>
         </div>
 
         <div class="pick-tab" id="tile-marine">
@@ -523,9 +530,11 @@ nav {
               <div class="pick-desc">30ml · Inspired by Nautica Voyage</div>
               <div class="pick-hook">🌊 Fresh, clean, oceanic vibe — একটা sophisticated persona তৈরি করার জন্য perfect choice।</div>
             </div>
-            <div class="pick-img"><img src="../images/phantom-bdc-marine/marine.webp" alt="Marine Cucumber"></div>
+            <div class="pick-media">
+              <div class="pick-img"><img src="../images/phantom-bdc-marine/marine.webp" alt="Marine Cucumber"></div>
+              <button type="button" class="pick-add-btn" id="btn-marine" onclick="toggleItem('marine')">Add</button>
+            </div>
           </div>
-          <button type="button" class="pick-add-btn" id="btn-marine" onclick="toggleItem('marine')">Add</button>
         </div>
 
       </div>
