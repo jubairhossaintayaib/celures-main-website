@@ -183,7 +183,7 @@ const CELURES_PRODUCTS = [
     slug: "kingsmen",
     name: "Kingsmen",
     inspiredBy: "Inspired by Creed Aventus",
-    price: 890,
+    price: 1090,
     addonPrice: 590,
     tagline: "Powerful, fruity, built for success.",
     description: "Pineapple, blackcurrant, bergamot and apple open bright and fruity, into a smoky birch, patchouli and jasmine heart, resting on oakmoss, musk, ambergris and vanilla. The iconic confident signature for people who walk in like they own the room.",

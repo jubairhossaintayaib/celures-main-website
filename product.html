@@ -282,7 +282,7 @@ fbq('track', 'PageView');
     document.getElementById('sticky-total').textContent = '৳' + total;
     document.getElementById('addons-sub').textContent = cartHasMainItem()
       ? 'Add as many more as you like, each just ৳590.'
-      : 'Add this perfume first at ৳890 — then add more, each just ৳590.';
+      : 'Add this perfume first at ৳' + product.price + ' — then add more, each just ৳590.';
     updateFreeDeliveryProgress(total);
   }
 
