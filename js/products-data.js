@@ -178,6 +178,42 @@ const CELURES_PRODUCTS = [
       "images/products/arctic-splash-1.webp",
       "images/products/arctic-splash-2.webp"
     ]
+  },
+  {
+    slug: "kingsmen",
+    name: "Kingsmen",
+    inspiredBy: "Inspired by Creed Aventus",
+    price: 890,
+    addonPrice: 590,
+    tagline: "Powerful, fruity, built for success.",
+    description: "Pineapple, blackcurrant, bergamot and apple open bright and fruity, into a smoky birch, patchouli and jasmine heart, resting on oakmoss, musk, ambergris and vanilla. The iconic confident signature for people who walk in like they own the room.",
+    notes: {
+      top: "Pineapple, Blackcurrant, Bergamot, Apple",
+      middle: "Birch, Patchouli, Jasmine",
+      base: "Oakmoss, Musk, Ambergris, Vanilla"
+    },
+    images: [
+      "images/products/kingsmen-1.webp",
+      "images/products/kingsmen-2.webp"
+    ]
+  },
+  {
+    slug: "evening-escape",
+    name: "Evening Escape",
+    inspiredBy: "Inspired by Emporio Armani Stronger With You",
+    price: 890,
+    addonPrice: 590,
+    tagline: "Warm, sweet, made for evenings out.",
+    description: "Cardamom, pink pepper and violet leaf open spicy and fresh, into a soft sage heart, settling on warm chestnut, vanilla, cedar and amber. A cozy, sweet-spiced scent that's perfect for evenings and date nights.",
+    notes: {
+      top: "Cardamom, Pink Pepper, Violet Leaf",
+      middle: "Sage",
+      base: "Chestnut, Vanilla, Cedar, Amber"
+    },
+    images: [
+      "images/products/evening-escape-1.webp",
+      "images/products/evening-escape-2.webp"
+    ]
   }
 ];
 
