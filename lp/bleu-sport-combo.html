@@ -201,17 +201,24 @@ nav {
   margin-bottom: 14px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
-.uc-item { display: block; }
+.uc-item {
+  display: block;
+  background: var(--gray-100);
+  border-left: 3px solid var(--black);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 14px 12px;
+}
 .uc-label {
   display: block;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--gray-600);
   line-height: 1.4;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
 }
+.uc-emoji { font-size: 15px; margin-right: 5px; }
 .uc-name {
   display: block;
   font-size: clamp(20px, 3.6vw, 27px);
@@ -493,15 +500,15 @@ nav {
       <!-- Use-case headline — mirrors the ad script: one line per perfume. -->
       <h1 class="usecase-headline">
         <span class="uc-item">
-          <span class="uc-label">To smell expensive choose:</span>
+          <span class="uc-label"><span class="uc-emoji">💰</span>To smell expensive choose:</span>
           <span class="uc-name">Executive Bleu <span class="uc-brand">inspired by Bleu de Chanel</span></span>
         </span>
         <span class="uc-item">
-          <span class="uc-label">To smell sporty &amp; attractive choose:</span>
+          <span class="uc-label"><span class="uc-emoji">😎</span>To smell sporty &amp; attractive choose:</span>
           <span class="uc-name">Sport Homme <span class="uc-brand">inspired by Chanel Allure Homme Sport</span></span>
         </span>
         <span class="uc-item">
-          <span class="uc-label">To smell fresh all day choose:</span>
+          <span class="uc-label"><span class="uc-emoji">🌊</span>To smell fresh all day choose:</span>
           <span class="uc-name">Marine Cucumber <span class="uc-brand">inspired by Nautica Voyage</span></span>
         </span>
       </h1>
@@ -511,7 +518,7 @@ nav {
       <hr class="divider-line">
 
       <div class="price-row">
-        <div class="price-new" id="dynamicPrice">৳১,৯৯০</div>
+        <div class="price-new" id="dynamicPrice">৳১,৫৯০</div>
       </div>
 
       <div class="cod-badge">
@@ -526,7 +533,7 @@ nav {
       <div class="option-tabs">
 
         <!-- Option 1: Executive Bleu + Sport Homme -->
-        <div class="option-tab" id="tab-bleu_sport" onclick="selectOption('bleu_sport')">
+        <div class="option-tab selected" id="tab-bleu_sport" onclick="selectOption('bleu_sport')">
           <div class="option-radio"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="option-text">
             <div class="option-name">Executive Bleu + Sport Homme</div>
@@ -568,7 +575,7 @@ nav {
         </div>
 
         <!-- Option 4: All three -->
-        <div class="option-tab combo-with-strip selected" id="tab-all_three" onclick="selectOption('all_three')">
+        <div class="option-tab combo-with-strip" id="tab-all_three" onclick="selectOption('all_three')">
           <div class="option-best-tag">🔥 Best Value</div>
           <div class="combo-tab-toprow">
             <div class="option-radio"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -658,7 +665,7 @@ nav {
 
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
-        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">তিনটাই — Executive Bleu + Sport Homme + Marine Cucumber (Combo)</span><span>Tk <span id="summaryBasePrice">1,990</span></span></div>
+        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Executive Bleu + Sport Homme (Combo)</span><span>Tk <span id="summaryBasePrice">1,590</span></span></div>
         <div class="total-row free-row" id="summaryFreeRow" style="display:flex"><span>Delivery</span><span>FREE 🎁</span></div>
         <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
         <hr class="total-divider">
@@ -748,7 +755,7 @@ nav {
 // ── OPTION SELECTION STATE ──
 // Four combos: any 2 of the 3 perfumes at 1590, or all three at 1990.
 // Every option is free delivery — there are no single bottles here.
-let selectedOption = 'all_three';
+let selectedOption = 'bleu_sport';
 
 const OPTION_CONFIG = {
   bleu_sport:   { price: 1590, normalPrice: 1980, priceDisplay: '৳১,৫৯০', label: 'Executive Bleu + Sport Homme (Combo)',                     itemsLabel: 'Executive Bleu & Sport Homme Combo x1' },
@@ -833,8 +840,8 @@ mainImageWrap.addEventListener('touchend', e => {
 
 initGallery();
 
-// Init the three-perfume combo as selected on load
-selectOption('all_three');
+// Init the Executive Bleu + Sport Homme combo as selected on load
+selectOption('bleu_sport');
 
 // ── DISTRICTS ──
 const DISTRICTS = ["Bagerhat","Bandarban","Barguna","Barishal","Bhola","Bogura","Brahmanbaria","Chandpur","Chattogram","Chuadanga","Cox's Bazar","Cumilla","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jashore","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"];
