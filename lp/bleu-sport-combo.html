@@ -193,24 +193,36 @@ nav {
 }
 .badge-sale { background: var(--black); color: var(--white); }
 
-/* ── PRODUCT TITLE — one line, sans-serif ── */
-.product-title {
+/* ── USE-CASE HEADLINE — one "to smell X, choose Y" line per perfume ── */
+.usecase-headline {
   font-family: var(--sans);
-  font-size: clamp(22px, 4.5vw, 34px);
   font-weight: 500;
-  line-height: 1.2;
   color: var(--black);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-.product-title .ml-label {
-  font-size: 0.72em;
+.uc-item { display: block; }
+.uc-label {
+  display: block;
+  font-size: 13px;
   font-weight: 400;
   color: var(--gray-600);
+  line-height: 1.4;
+  margin-bottom: 1px;
 }
-.product-title .plus-sign {
-  font-weight: 300;
-  color: var(--gray-400);
-  margin: 0 4px;
+.uc-name {
+  display: block;
+  font-size: clamp(20px, 3.6vw, 27px);
+  font-weight: 500;
+  line-height: 1.25;
+}
+.uc-brand {
+  font-size: 0.62em;
+  font-weight: 400;
+  color: var(--gray-600);
+  white-space: nowrap;
 }
 
 .divider-line { border: none; border-top: 1px solid var(--gray-200); margin: 0 0 18px; }
@@ -478,9 +490,23 @@ nav {
         <span class="badge badge-sale">Limited Offer 🔥</span>
       </div>
 
-      <h1 class="product-title" style="margin-bottom: 10px;">Executive Bleu <span style="font-weight: 400;">(Bleu de Chanel)</span><span class="plus-sign"> + </span>Sport Homme <span style="font-weight: 400;">(Chanel Allure Homme Sport)</span><span class="plus-sign"> + </span>Marine Cucumber <span style="font-weight: 400;">(Nautica Voyage)</span></h1>
+      <!-- Use-case headline — mirrors the ad script: one line per perfume. -->
+      <h1 class="usecase-headline">
+        <span class="uc-item">
+          <span class="uc-label">To smell expensive choose:</span>
+          <span class="uc-name">Executive Bleu <span class="uc-brand">inspired by Bleu de Chanel</span></span>
+        </span>
+        <span class="uc-item">
+          <span class="uc-label">To smell sporty &amp; attractive choose:</span>
+          <span class="uc-name">Sport Homme <span class="uc-brand">inspired by Chanel Allure Homme Sport</span></span>
+        </span>
+        <span class="uc-item">
+          <span class="uc-label">To smell fresh all day choose:</span>
+          <span class="uc-name">Marine Cucumber <span class="uc-brand">inspired by Nautica Voyage</span></span>
+        </span>
+      </h1>
 
-      <div style="font-size: 16px; color: var(--gray-600); margin-bottom: 18px; line-height: 1.5;">30 ml Perfumes Inspired by Bleu de Chanel, Chanel Allure Homme Sport & Nautica Voyage — যেকোনো ২টি বা তিনটাই নিন</div>
+      <div style="font-size: 16px; color: var(--gray-600); margin-bottom: 18px; line-height: 1.5;">প্রতিটি 30 ml — যেকোনো ২টি বা তিনটাই নিন</div>
 
       <hr class="divider-line">
 
