@@ -703,16 +703,16 @@ nav {
       <div class="order-bump">
         <div class="order-bump-top">
           <div class="order-bump-img">
-            <img src="../images/products/tropical-island-1.webp" alt="Tropical Island" onerror="this.parentElement.innerHTML='TI'">
+            <img src="../images/products/marine-cucumber-1.webp" alt="Marine Cucumber" onerror="this.parentElement.innerHTML='MC'">
           </div>
           <div class="order-bump-text">
             <div class="order-bump-title">For First Time Customers!</div>
-            <div class="order-bump-desc">মাত্র ৳৩৯০ extra দিয়ে আমাদের popular JPG Le Beau Paradise Garden এর impression Tropical Island (30ml) আপনার অর্ডারে add করুন। Fresh bergamot, creamy coconut আর smooth tonka — যারা tropical, beach-ready scent চান, outing বা daily wear এর জন্য — এটা আপনার collection এ add করার জন্য দারুণ সুযোগ। Normal price ৳৮৯০।</div>
+            <div class="order-bump-desc">মাত্র ৳৩৯০ extra দিয়ে আমাদের popular Nautica Voyage এর impression Marine Cucumber (30ml) আপনার অর্ডারে add করুন। Green apple, fresh lotus আর soft cedar-musk — যারা breezy, cool, fresh scent চান, গরমের দিনে office বা daily wear এর জন্য — এটা আপনার collection এ add করার জন্য দারুণ সুযোগ। Normal price ৳৮৯০।</div>
           </div>
         </div>
         <div class="order-bump-bottom">
           <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৩৯০</div>
-          <button type="button" class="order-bump-btn" id="bumpBtn-tropical" onclick="toggleOrderBump('tropical')">Add</button>
+          <button type="button" class="order-bump-btn" id="bumpBtn-marine" onclick="toggleOrderBump('marine')">Add</button>
         </div>
       </div>
       </div>
@@ -720,7 +720,7 @@ nav {
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
         <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Kingsmen + Evening Escape (Combo)</span><span>Tk <span id="summaryBasePrice">1,590</span></span></div>
-        <div class="total-row" id="summaryBumpRow-tropical" style="display:none"><span>+ Tropical Island (Bonus)</span><span>Tk 390</span></div>
+        <div class="total-row" id="summaryBumpRow-marine" style="display:none"><span>+ Marine Cucumber (Bonus)</span><span>Tk 390</span></div>
         <div class="total-row free-row" id="summaryFreeRow" style="display:flex"><span>Delivery</span><span>FREE 🎁</span></div>
         <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
         <hr class="total-divider">
@@ -827,7 +827,7 @@ let selectedOption = 'combo'; // 'kingsmen' | 'evening' | 'combo'
 // Order bumps — each toggles independently. To add another, give it an entry
 // here plus a matching bumpBtn-<key> button and summaryBumpRow-<key> row.
 const BUMPS = {
-  tropical: { price: 390, normalPrice: 890, itemsLabel: 'Tropical Island (Bump Offer) x1', added: false }
+  marine: { price: 390, normalPrice: 890, itemsLabel: 'Marine Cucumber (Bump Offer) x1', added: false }
 };
 function addedBumps() { return Object.values(BUMPS).filter(b => b.added); }
 
