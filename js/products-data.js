@@ -90,42 +90,6 @@ const CELURES_PRODUCTS = [
     ]
   },
   {
-    slug: "pure-aura",
-    name: "Pure Aura",
-    inspiredBy: "Inspired by YSL MYSELF",
-    price: 890,
-    addonPrice: 590,
-    tagline: "Modern, floral, effortlessly clean.",
-    description: "Sparkling bergamot opens into a rich orange blossom heart, grounded by warm patchouli and soft musky woods. A modern, easy-to-wear scent that gets noticed without trying too hard.",
-    notes: {
-      top: "Bergamot",
-      middle: "Orange Blossom",
-      base: "Patchouli, Musky Woods"
-    },
-    images: [
-      "images/products/pure-aura-1.webp",
-      "images/products/pure-aura-2.webp"
-    ]
-  },
-  {
-    slug: "alpha-executive",
-    name: "Alpha Executive",
-    inspiredBy: "Inspired by YSL Y",
-    price: 890,
-    addonPrice: 590,
-    tagline: "Confident, sharp, long-lasting.",
-    description: "Green apple, ginger and bergamot open into an aromatic sage and geranium heart, deepening into cedar, vetiver, tonka bean and amberwood. Sharp, confident, and built to last the whole day.",
-    notes: {
-      top: "Apple, Ginger, Bergamot",
-      middle: "Sage, Geranium",
-      base: "Cedar, Vetiver, Tonka Bean, Amberwood"
-    },
-    images: [
-      "images/products/alpha-executive-1.webp",
-      "images/products/alpha-executive-2.webp"
-    ]
-  },
-  {
     slug: "midnight-drive",
     name: "Midnight Drive",
     inspiredBy: "Inspired by Jean Paul Gaultier Ultra Male",
@@ -252,19 +216,6 @@ const CELURES_COMBOS = [
     ]
   },
   {
-    slug: "executive-combo",
-    name: "Executive Combo",
-    price: 1490,
-    perfume1Slug: "executive-bleu",
-    perfume2Slug: "alpha-executive",
-    tagline: "Confidence, covered from every angle.",
-    description: "Two sharp, boardroom-ready signatures in one set — Executive Bleu's clean classic freshness and Alpha Executive's confident, long-lasting depth.",
-    images: [
-      "images/combos/executive-combo-1.webp",
-      "images/combos/executive-combo-2.webp"
-    ]
-  },
-  {
     slug: "dating-for-men",
     name: "Dating For Men Combo",
     price: 1490,
@@ -288,19 +239,6 @@ const CELURES_COMBOS = [
     images: [
       "images/combos/mens-outdoor-1.webp",
       "images/combos/mens-outdoor-2.webp"
-    ]
-  },
-  {
-    slug: "compliment-magnet",
-    name: "Compliment Magnet Combo",
-    price: 1490,
-    perfume1Slug: "pure-aura",
-    perfume2Slug: "sport-homme",
-    tagline: "The two most complimented scents, together.",
-    description: "Pure Aura's modern floral warmth paired with Sport Homme's fresh, energetic edge — two of our most complimented signatures in one set.",
-    images: [
-      "images/combos/compliment-magnet-1.webp",
-      "images/combos/compliment-magnet-2.webp"
     ]
   }
 ];

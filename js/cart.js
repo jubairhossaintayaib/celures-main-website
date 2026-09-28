@@ -10,10 +10,18 @@
 
 const CART_STORAGE_KEY = "celures_cart";
 
+/* Lines whose slug no longer exists in products-data.js (a discontinued
+   perfume or combo still sitting in a returning visitor's saved cart)
+   are dropped here, so they can't be shown or checked out. */
 function getCart() {
   try {
     const raw = localStorage.getItem(CART_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const cart = raw ? JSON.parse(raw) : [];
+    const valid = cart.filter(l => getItemBySlug(l.slug));
+    if (valid.length !== cart.length) {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(valid));
+    }
+    return valid;
   } catch (e) {
     return [];
   }

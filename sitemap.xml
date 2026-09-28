@@ -29,16 +29,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://celures.com/product.html?slug=pure-aura</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://celures.com/product.html?slug=alpha-executive</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://celures.com/product.html?slug=midnight-drive</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -66,22 +56,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://celures.com/combo.html?slug=executive-combo</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://celures.com/combo.html?slug=dating-for-men</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://celures.com/combo.html?slug=mens-outdoor</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://celures.com/combo.html?slug=compliment-magnet</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
