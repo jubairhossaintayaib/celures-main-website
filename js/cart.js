@@ -12,13 +12,27 @@ const CART_STORAGE_KEY = "celures_cart";
 
 /* Lines whose slug no longer exists in products-data.js (a discontinued
    perfume or combo still sitting in a returning visitor's saved cart)
-   are dropped here, so they can't be shown or checked out. */
+   are dropped here, so they can't be shown or checked out. Lines saved
+   at a price that has since changed in products-data.js are moved to
+   the current price, so an old saved cart can't check out at old prices. */
 function getCart() {
   try {
     const raw = localStorage.getItem(CART_STORAGE_KEY);
     const cart = raw ? JSON.parse(raw) : [];
-    const valid = cart.filter(l => getItemBySlug(l.slug));
-    if (valid.length !== cart.length) {
+    let changed = false;
+    const valid = [];
+    cart.forEach(l => {
+      const info = getItemBySlug(l.slug);
+      if (!info) { changed = true; return; }
+      const currentPrice = (l.tag === "Add-on" && info.type === "product") ? info.item.addonPrice : info.ownPrice;
+      if (l.unitPrice !== currentPrice) {
+        l.unitPrice = currentPrice;
+        l.key = l.slug + "-" + currentPrice;
+        changed = true;
+      }
+      valid.push(l);
+    });
+    if (changed) {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(valid));
     }
     return valid;
@@ -87,11 +101,11 @@ function cartGetCount() {
   return getCart().reduce((sum, l) => sum + l.qty, 0);
 }
 
-/* Business rule: the discounted ৳590 add-on price is only allowed once
+/* Business rule: the discounted ৳600 add-on price is only allowed once
    at least one perfume OR combo has been added at its own full/main
    price — otherwise someone could check out with only discounted
-   add-ons and no main pick. Active again now that add-ons (৳590) are
-   priced differently from a main pick (৳890 perfume / ৳1490 combo). */
+   add-ons and no main pick. Active again now that add-ons (৳600) are
+   priced differently from a main pick (৳990 perfume / ৳1490–৳1590 combo). */
 function cartHasMainItem() {
   return getCart().some(function (line) {
     var info = getItemBySlug(line.slug);

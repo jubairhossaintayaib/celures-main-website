@@ -104,7 +104,7 @@ fbq('track', 'PageView');
         </div>
 
         <div class="addons-heading">Add More, Save More</div>
-        <p class="addons-sub" id="addons-sub">Add this combo to your cart first — then add any extra perfume for just ৳590.</p>
+        <p class="addons-sub" id="addons-sub">Add this combo to your cart first — then add any extra perfume for just ৳600.</p>
         <div class="addons-grid" id="addons-list"></div>
       </div>
     </div>
@@ -254,7 +254,7 @@ fbq('track', 'PageView');
     }
   }
 
-  /* ---------- Add-ons: all perfumes at ৳590, gated behind the combo ---------- */
+  /* ---------- Add-ons: all perfumes at ৳600, gated behind the combo ---------- */
   var addonsList = document.getElementById('addons-list');
 
   function addonCardHTML(p) {
@@ -302,8 +302,8 @@ fbq('track', 'PageView');
     var total = cartGetTotal();
     document.getElementById('sticky-total').textContent = '৳' + total;
     document.getElementById('addons-sub').textContent = cartHasMainItem()
-      ? 'Add as many more as you like, each just ৳590.'
-      : 'Add this combo to your cart first — then add any extra perfume for just ৳590.';
+      ? 'Add as many more as you like, each just ৳600.'
+      : 'Add this combo to your cart first — then add any extra perfume for just ৳600.';
     updateFreeDeliveryProgress(total);
   }
 

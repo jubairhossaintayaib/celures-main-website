@@ -100,9 +100,9 @@ fbq('track', 'PageView');
           ঢাকার ভিতরে ডেলিভারি চার্জ ৳৭০, ঢাকার বাইরে ৳১১০। মোট অর্ডার ৳১০০০ বা তার বেশি হলে ডেলিভারি ফ্রি। ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে পেমেন্ট করুন।
         </div>
 
-        <!-- Add-ons unlock only after the main ৳890 perfume is in the cart -->
+        <!-- Add-ons unlock only after the main ৳990 perfume is in the cart -->
         <div class="addons-heading">Add More, Save More</div>
-        <p class="addons-sub" id="addons-sub">Add this perfume first — then add more, each just ৳590.</p>
+        <p class="addons-sub" id="addons-sub">Add this perfume first — then add more, each just ৳600.</p>
         <div class="addons-grid" id="addons-list"></div>
       </div>
     </div>
@@ -213,8 +213,8 @@ fbq('track', 'PageView');
     renderMain(null, 0);
   }
 
-  /* ---------- Add-ons: EVERY perfume (including this page's own one) at ৳590, ----------
-     gated behind the main ৳890 pick. Buying more than one of the perfume
+  /* ---------- Add-ons: EVERY perfume (including this page's own one) at ৳600, ----------
+     gated behind the main ৳990 pick. Buying more than one of the perfume
      you're already viewing happens here, not from the main button above. */
   var addonsList = document.getElementById('addons-list');
   var addonCards = CELURES_PRODUCTS;
@@ -270,7 +270,7 @@ fbq('track', 'PageView');
       });
     } else {
       /* Already added once at full price. Want more of this same perfume?
-         That happens via its own card in the grid below, same ৳890 price. */
+         That happens via its own card in the grid below, at the ৳600 add-on price. */
       el.innerHTML = '<button class="btn btn-primary btn-block" disabled>✓ Added to Cart</button>';
     }
   }
@@ -281,8 +281,8 @@ fbq('track', 'PageView');
     var total = cartGetTotal();
     document.getElementById('sticky-total').textContent = '৳' + total;
     document.getElementById('addons-sub').textContent = cartHasMainItem()
-      ? 'Add as many more as you like, each just ৳590.'
-      : 'Add this perfume first at ৳' + product.price + ' — then add more, each just ৳590.';
+      ? 'Add as many more as you like, each just ৳600.'
+      : 'Add this perfume first at ৳' + product.price + ' — then add more, each just ৳600.';
     updateFreeDeliveryProgress(total);
   }
 

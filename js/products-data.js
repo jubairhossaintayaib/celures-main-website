@@ -20,8 +20,8 @@ const CELURES_PRODUCTS = [
     slug: "phantom-elixir",                 // used in the URL: product.html?slug=phantom-elixir
     name: "Phantom Elixir",
     inspiredBy: "Inspired by Dior Sauvage Elixir",
-    price: 890,                              // main price (30ml)
-    addonPrice: 590,                         // price when added as an add-on from another product page
+    price: 990,                              // main price (30ml)
+    addonPrice: 600,                         // price when added as an add-on from another product page
     tagline: "Bold, warm, unforgettable.",
     description: "Grapefruit, cinnamon, cardamom and nutmeg open sharp and spiced, before a lavender heart settles into sweet licorice, sandalwood, amber and patchouli. Rich, warm and long-lasting — this is the one you wear when you want to be remembered.",
     notes: {
@@ -39,8 +39,8 @@ const CELURES_PRODUCTS = [
     slug: "executive-bleu",
     name: "Executive Bleu",
     inspiredBy: "Inspired by Bleu de Chanel",
-    price: 890,
-    addonPrice: 590,
+    price: 990,
+    addonPrice: 600,
     tagline: "Clean. Sharp. Boardroom to dinner.",
     description: "Crisp grapefruit, lemon and mint open into ginger and jasmine, resting on a smooth base of cedar, sandalwood and musk. A versatile everyday classic that works from the office to date night.",
     notes: {
@@ -57,8 +57,8 @@ const CELURES_PRODUCTS = [
     slug: "sport-homme",
     name: "Sport Homme",
     inspiredBy: "Inspired by Chanel Allure Homme Sport",
-    price: 890,
-    addonPrice: 590,
+    price: 990,
+    addonPrice: 600,
     tagline: "Fresh, athletic, effortless.",
     description: "Juicy orange and mandarin with a splash of sea notes open into a peppery-cedar heart, resting on a soft vanilla-tonka-musk base. Fresh, energetic, and easy to wear all day.",
     notes: {
@@ -75,8 +75,8 @@ const CELURES_PRODUCTS = [
     slug: "marine-cucumber",
     name: "Marine Cucumber",
     inspiredBy: "Inspired by Nautica Voyage",
-    price: 890,
-    addonPrice: 590,
+    price: 990,
+    addonPrice: 600,
     tagline: "Breezy. Fresh. Made for summer.",
     description: "Green apple and crisp leaves open bright and clean, into a watery lotus-mimosa heart, resting on cedar, musk and amber. A breezy, cucumber-fresh signature for hot Dhaka afternoons.",
     notes: {
@@ -93,8 +93,8 @@ const CELURES_PRODUCTS = [
     slug: "midnight-drive",
     name: "Midnight Drive",
     inspiredBy: "Inspired by Jean Paul Gaultier Ultra Male",
-    price: 890,
-    addonPrice: 590,
+    price: 990,
+    addonPrice: 600,
     tagline: "Sweet, seductive, made for the night.",
     description: "Juicy pear, lavender and mint open into warm cinnamon and clary sage, resting on black vanilla, amber and patchouli. Sweet, seductive, and built for nights out.",
     notes: {
@@ -108,29 +108,11 @@ const CELURES_PRODUCTS = [
     ]
   },
   {
-    slug: "tropical-island",
-    name: "Tropical Island",
-    inspiredBy: "Inspired by JPG Le Beau Paradise Garden",
-    price: 890,
-    addonPrice: 590,
-    tagline: "Tropical, creamy, beach-ready.",
-    description: "Zesty bergamot opens fresh and bright, into a creamy coconut heart, settling on smooth tonka bean. A tropical, beach-ready signature that feels like a holiday in a bottle.",
-    notes: {
-      top: "Bergamot",
-      middle: "Coconut",
-      base: "Tonka Bean"
-    },
-    images: [
-      "images/products/tropical-island-1.webp",
-      "images/products/tropical-island-2.webp"
-    ]
-  },
-  {
     slug: "arctic-splash",
     name: "Arctic Splash",
     inspiredBy: "Inspired by Davidoff Cool Water",
-    price: 890,
-    addonPrice: 590,
+    price: 990,
+    addonPrice: 600,
     tagline: "The original clean aquatic classic.",
     description: "Sea water, mint and lavender open crisp and cool, into a heart of geranium, jasmine and neroli, resting on cedar, musk and light amber. The clean aquatic classic that started it all.",
     notes: {
@@ -148,7 +130,7 @@ const CELURES_PRODUCTS = [
     name: "Kingsmen",
     inspiredBy: "Inspired by Creed Aventus",
     price: 1090,
-    addonPrice: 590,
+    addonPrice: 600,
     tagline: "Powerful, fruity, built for success.",
     description: "Pineapple, blackcurrant, bergamot and apple open bright and fruity, into a smoky birch, patchouli and jasmine heart, resting on oakmoss, musk, ambergris and vanilla. The iconic confident signature for people who walk in like they own the room.",
     notes: {
@@ -165,8 +147,8 @@ const CELURES_PRODUCTS = [
     slug: "evening-escape",
     name: "Evening Escape",
     inspiredBy: "Inspired by Emporio Armani Stronger With You",
-    price: 890,
-    addonPrice: 590,
+    price: 990,
+    addonPrice: 600,
     tagline: "Warm, sweet, made for evenings out.",
     description: "Cardamom, pink pepper and violet leaf open spicy and fresh, into a soft sage heart, settling on warm chestnut, vanilla, cedar and amber. A cozy, sweet-spiced scent that's perfect for evenings and date nights.",
     notes: {
@@ -205,40 +187,27 @@ const CELURES_COMBOS = [
   {
     slug: "summer-for-men",
     name: "Summer For Men Combo",
-    price: 1490,
+    price: 1590,
     perfume1Slug: "executive-bleu",
     perfume2Slug: "arctic-splash",
     tagline: "Two fresh signatures for hot days.",
     description: "Executive Bleu's crisp citrus-cedar freshness paired with Arctic Splash's clean aquatic coolness — a combo built entirely around freshness for Dhaka's summer heat.",
     images: [
-      "images/combos/summer-for-men-1.webp",
-      "images/combos/summer-for-men-2.webp"
-    ]
-  },
-  {
-    slug: "dating-for-men",
-    name: "Dating For Men Combo",
-    price: 1490,
-    perfume1Slug: "midnight-drive",
-    perfume2Slug: "tropical-island",
-    tagline: "Seductive nights, easy days.",
-    description: "Midnight Drive's warm, seductive intensity for date nights, paired with Tropical Island's creamy, easygoing freshness for daytime dates.",
-    images: [
-      "images/combos/dating-for-men-1.webp",
-      "images/combos/dating-for-men-2.webp"
+      "images/products/executive-bleu-1.webp",
+      "images/products/arctic-splash-1.webp"
     ]
   },
   {
     slug: "mens-outdoor",
     name: "Men's Outdoor Combo",
-    price: 1490,
+    price: 1590,
     perfume1Slug: "sport-homme",
     perfume2Slug: "marine-cucumber",
     tagline: "Fresh, athletic, built to move.",
     description: "Two energetic, fresh signatures made for an active lifestyle — Sport Homme's citrus-peppery energy and Marine Cucumber's breezy, cucumber-fresh coolness.",
     images: [
-      "images/combos/mens-outdoor-1.webp",
-      "images/combos/mens-outdoor-2.webp"
+      "images/products/sport-homme-1.webp",
+      "images/products/marine-cucumber-1.webp"
     ]
   }
 ];
@@ -250,9 +219,9 @@ function getComboBySlug(slug) {
 
 /* Helper: works for EITHER a perfume slug or a combo slug. Returns:
    - ownPrice: the price this item is meant to be added at
-     (890 for a perfume, 1490 for a combo).
+     (990 for a perfume, 1490 or 1590 for a combo).
    - regularReference: what it would cost bought piece-by-piece at full
-     price (890 for a perfume, 890+890=1780 for a combo) — used to show
+     price (990 for a perfume, 990+990=1980 for a combo) — used to show
      the "Normal Price" / discount breakdown at checkout (still relevant
      for combos, which are genuinely discounted vs buying separately). */
 function getItemBySlug(slug) {

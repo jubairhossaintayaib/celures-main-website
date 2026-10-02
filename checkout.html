@@ -178,7 +178,7 @@ function renderCart() {
 }
 
 /* Sum of every line item's REGULAR price if bought separately at full
-   price — ৳890 for a perfume, ৳890+৳890 for a combo — ignoring what was
+   price — ৳990 for a perfume, ৳990+৳990 for a combo — ignoring what was
    actually paid. This is the "before discount" number. */
 function cartGetNormalTotal() {
   return getCart().reduce(function (sum, line) {
