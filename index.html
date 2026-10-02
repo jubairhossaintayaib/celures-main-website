@@ -98,7 +98,7 @@ fbq('track', 'PageView');
   <div class="container">
     <div class="section-head">
       <h2 class="section-title">Shop All</h2>
-      <span class="t-caption-md">11 Perfumes · 30ml</span>
+      <span class="t-caption-md"><span id="product-count">8</span> Perfumes · 30ml</span>
     </div>
     <div class="product-grid" id="product-grid"><!-- injected by JS --></div>
   </div>
@@ -170,6 +170,7 @@ fbq('track', 'PageView');
     );
   }
   document.getElementById('product-grid').innerHTML = CELURES_PRODUCTS.map(productCardHTML).join('');
+  document.getElementById('product-count').textContent = CELURES_PRODUCTS.length;
 </script>
 </body>
 </html>
