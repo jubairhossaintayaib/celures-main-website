@@ -598,22 +598,6 @@ nav {
           </div>
         </div>
 
-        <div class="order-bump" style="margin-top:0;" id="bump-marine">
-          <div class="order-bump-top">
-            <div class="order-bump-img">
-              <img src="../images/products/marine-cucumber-1.webp" alt="Marine Cucumber" onerror="this.parentElement.innerHTML='MC'">
-            </div>
-            <div class="order-bump-text">
-              <div class="order-bump-title">Marine Cucumber <span style="font-weight:400; color:var(--gray-600);">— Inspired by Nautica Voyage</span></div>
-              <div class="order-bump-desc">Breezy, fresh, made for summer। যারা হালকা ও fresh aquatic scent পছন্দ করেন, তাদের জন্য perfect। Normal price ৳৮৯০।</div>
-            </div>
-          </div>
-          <div class="order-bump-bottom">
-            <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৩৯০</div>
-            <button type="button" class="order-bump-btn" id="bumpBtn-marine" onclick="toggleBump('marine')">Add</button>
-          </div>
-        </div>
-
         <div class="order-bump" style="margin-top:0;" id="bump-arctic">
           <div class="order-bump-top">
             <div class="order-bump-img">
@@ -719,13 +703,8 @@ nav {
         <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">Fresh, athletic একটা scent। Orange, mandarin আর sea notes দিয়ে শুরু, তারপর peppery-cedar heart, শেষে soft vanilla-tonka-musk base। Active lifestyle বা daily wear এর জন্য একদম perfect।</div>
         <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 4–5 hours</div>
       </div>
-      <div style="margin-bottom: 16px;">
-        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Marine Cucumber <span style="font-weight: 400; color: var(--gray-600);">— Inspired by Nautica Voyage</span></div>
-        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">Breezy, fresh, গরমের জন্য বানানো একটা scent। Green apple আর crisp leaves দিয়ে শুরু, তারপর watery lotus-mimosa heart, শেষে cedar, musk আর amber base। গরম আফটারনুনের জন্য একদম cucumber-fresh signature।</div>
-        <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 4–5 hours</div>
-      </div>
       <div>
-        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Arctic Splash <span style="font-weight: 400; color: var(--gray-600);">— Inspired by Davidoff Cool Water</span></div>
+        <div style="font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px;">Arctic Splash<span style="font-weight: 400; color: var(--gray-600);">— Inspired by Davidoff Cool Water</span></div>
         <div style="font-size: 13px; color: var(--gray-600); line-height: 1.7;">Clean aquatic classic। Sea water, mint আর lavender দিয়ে শুরু, তারপর geranium, jasmine, neroli heart, শেষে cedar, musk আর হালকা amber base। এটাই সেই original clean aquatic scent যেটা দিয়ে পুরো trend শুরু হয়েছিল।</div>
         <div style="font-size: 12px; color: var(--gray-400); margin-top: 5px;">⏱ Longevity: 4–5 hours</div>
       </div>
@@ -820,9 +799,8 @@ const COMBO_ITEMS_LABEL = "Phantom Elixir & Executive Bleu Combo x1";
 
 // Extra perfume add-ons — each independently toggle-able, ৳390 vs normal ৳890.
 const BUMP_ITEMS = {
-  sport:  { name: 'Sport Homme',     price: 390, normalPrice: 890, itemsLabel: 'Sport Homme (Bump Offer) x1' },
-  marine: { name: 'Marine Cucumber', price: 390, normalPrice: 890, itemsLabel: 'Marine Cucumber (Bump Offer) x1' },
-  arctic: { name: 'Arctic Splash',   price: 390, normalPrice: 890, itemsLabel: 'Arctic Splash (Bump Offer) x1' }
+  sport:  { name: 'Sport Homme',   price: 390, normalPrice: 890, itemsLabel: 'Sport Homme (Bump Offer) x1' },
+  arctic: { name: 'Arctic Splash', price: 390, normalPrice: 890, itemsLabel: 'Arctic Splash (Bump Offer) x1' }
 };
 let addedBumps = new Set();
 
