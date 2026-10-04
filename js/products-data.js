@@ -71,6 +71,9 @@ const CELURES_PRODUCTS = [
       "images/products/sport-homme-2.webp"
     ]
   },
+  /* STOCK OUT — Marine Cucumber is hidden for now. To bring it back,
+     delete this comment line and the closing one below the block
+     (and do the same for the Men's Outdoor Combo further down).
   {
     slug: "marine-cucumber",
     name: "Marine Cucumber",
@@ -89,6 +92,7 @@ const CELURES_PRODUCTS = [
       "images/products/marine-cucumber-2.webp"
     ]
   },
+  END STOCK OUT — Marine Cucumber */
   {
     slug: "midnight-drive",
     name: "Midnight Drive",
@@ -196,7 +200,11 @@ const CELURES_COMBOS = [
       "images/products/executive-bleu-1.webp",
       "images/products/arctic-splash-1.webp"
     ]
-  },
+  }
+  /* STOCK OUT — Men's Outdoor Combo is hidden for now because it
+     includes Marine Cucumber. To bring it back, delete this comment
+     line and the closing one below the block.
+  ,
   {
     slug: "mens-outdoor",
     name: "Men's Outdoor Combo",
@@ -210,6 +218,7 @@ const CELURES_COMBOS = [
       "images/products/marine-cucumber-1.webp"
     ]
   }
+  END STOCK OUT — Men's Outdoor Combo */
 ];
 
 /* Helper: find a combo by its slug */
