@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/sb/:path*",
+      "destination": "https://ilxhvchbyhvzylpadprh.supabase.co/:path*"
+    }
+  ]
+}

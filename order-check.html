@@ -30,9 +30,10 @@
 
 <div class="row"><div class="row-title">1. Order software loaded</div><div class="row-value wait" id="v-lib">Checking…</div><div class="row-detail" id="d-lib"></div></div>
 <div class="row"><div class="row-title">2. Admin login saved on this phone</div><div class="row-value wait" id="v-login">Checking…</div><div class="row-detail" id="d-login"></div></div>
-<div class="row"><div class="row-title">3. This phone can reach the order database</div><div class="row-value wait" id="v-reach">Checking…</div><div class="row-detail" id="d-reach"></div></div>
-<div class="row"><div class="row-title">4. Order save test (same way the website does it)</div><div class="row-value wait" id="v-save">Checking…</div><div class="row-detail" id="d-save"></div></div>
-<div class="row"><div class="row-title">5. Order save test (ignoring any saved admin login)</div><div class="row-value wait" id="v-clean">Checking…</div><div class="row-detail" id="d-clean"></div></div>
+<div class="row"><div class="row-title">3. This phone can reach the order database directly</div><div class="row-value wait" id="v-reach">Checking…</div><div class="row-detail" id="d-reach"></div></div>
+<div class="row"><div class="row-title">4. This phone can reach the order database through celures.com</div><div class="row-value wait" id="v-proxy">Checking…</div><div class="row-detail" id="d-proxy"></div></div>
+<div class="row"><div class="row-title">5. Order save test (same way the website does it)</div><div class="row-value wait" id="v-save">Checking…</div><div class="row-detail" id="d-save"></div></div>
+<div class="row"><div class="row-title">6. Order save test (ignoring any saved admin login)</div><div class="row-value wait" id="v-clean">Checking…</div><div class="row-detail" id="d-clean"></div></div>
 <div class="row"><div class="row-title">Device</div><div class="row-detail" id="d-device"></div></div>
 
 <script src="js/supabase-config.js"></script>
@@ -43,7 +44,7 @@
    row with no order ID, which the database always rejects (error 23502)
    — so getting that exact rejection back means saving orders works. */
 (function () {
-  var results = { lib: null, login: null, reach: null, save: null, clean: null };
+  var results = { lib: null, login: null, reach: null, proxy: null, save: null, clean: null };
 
   function set(id, ok, text, detail) {
     var v = document.getElementById('v-' + id);
@@ -110,32 +111,39 @@
   loginEl.textContent = hasLogin ? 'Yes — this phone has logged in to the admin panel' : 'No';
   document.getElementById('d-login').textContent = loginDetail;
 
-  /* 3. Raw reachability, without the library */
-  var t0 = Date.now();
-  var reach = (typeof SUPABASE_URL === 'undefined')
-    ? Promise.resolve({ threw: 'config not loaded' })
-    : withTimeout(fetch(SUPABASE_URL + '/auth/v1/health', { headers: { apikey: SUPABASE_ANON_KEY }, cache: 'no-store' }), 20000);
+  /* 3 + 4. Raw reachability without the library: straight to Supabase,
+     then through the celures.com/sb route the website now uses. */
+  function reachTest(id, base, failText) {
+    var t0 = Date.now();
+    var p = (typeof SUPABASE_ANON_KEY === 'undefined')
+      ? Promise.resolve({ threw: 'config not loaded' })
+      : withTimeout(fetch(base + '/auth/v1/health', { headers: { apikey: SUPABASE_ANON_KEY }, cache: 'no-store' }), 20000);
+    return p.then(function (r) {
+      var ok = !r.timedOut && !r.threw && r.status === 200;
+      results[id] = ok;
+      set(id, ok, ok ? 'Yes' : failText,
+          r.timedOut ? 'No answer after 20 seconds' : (r.threw ? r.threw : 'status ' + r.status + ' | ' + (Date.now() - t0) + 'ms'));
+    });
+  }
 
-  reach.then(function (r) {
-    var ok = !r.timedOut && !r.threw && r.status === 200;
-    results.reach = ok;
-    set('reach', ok, ok ? 'Yes' : 'No — the connection to the database failed',
-        r.timedOut ? 'No answer after 20 seconds' : (r.threw ? r.threw : 'status ' + r.status + ' | ' + (Date.now() - t0) + 'ms'));
-
+  reachTest('reach', (typeof SUPABASE_URL === 'undefined') ? '' : SUPABASE_URL, 'No — this network blocks the direct connection').then(function () {
+    return reachTest('proxy', '/sb', 'No — the celures.com route failed');
+  }).then(function () {
     if (!libOk) {
       set('save', false, 'Skipped — order software did not load');
       set('clean', false, 'Skipped — order software did not load');
       return finish();
     }
 
-    /* 4. Exactly what the website does */
+    /* 5. Exactly what the website does */
     return runSaveTest(supabaseClient).then(function (s) {
       results.save = s.ok;
       set('save', s.ok, s.ok ? 'Works' : 'FAILED — this is the error customers see', s.detail);
 
-      /* 5. Same test with a fresh client that ignores any saved login */
+      /* 6. Same test with a fresh client that ignores any saved login */
       var clean = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false, storageKey: 'celures-order-check' }
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false, storageKey: 'celures-order-check' },
+        global: { fetch: celuresSupabaseFetch }
       });
       return runSaveTest(clean).then(function (c) {
         results.clean = c.ok;
@@ -151,7 +159,7 @@
     if (!results.lib) msg = 'Result: the order software did not load on this phone.';
     else if (results.save) msg = 'Result: orders can be saved from this phone right now.';
     else if (results.clean) msg = 'Result: orders fail because of the admin login saved on this phone. Customers without an admin login are not affected.';
-    else if (!results.reach) msg = 'Result: this phone\'s internet connection cannot reach the order database.';
+    else if (!results.reach && !results.proxy) msg = 'Result: this phone\'s internet connection cannot reach the order database, directly or through celures.com.';
     else msg = 'Result: the database is reachable but is rejecting orders.';
     v.textContent = msg + ' Please screenshot this page.';
   }
