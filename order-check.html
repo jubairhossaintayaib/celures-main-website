@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celures — Order Check</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #111; padding: 20px 16px 40px; -webkit-font-smoothing: antialiased; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #666; margin-bottom: 16px; line-height: 1.5; }
+  .row { background: #fff; border: 1px solid #e2e2e2; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
+  .row-title { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #666; margin-bottom: 4px; }
+  .row-value { font-size: 15px; font-weight: 600; line-height: 1.45; word-break: break-word; }
+  .row-detail { font-size: 12px; color: #666; margin-top: 4px; line-height: 1.45; word-break: break-word; font-family: Consolas, Menlo, monospace; }
+  .ok { color: #1a7f37; }
+  .bad { color: #b94040; }
+  .wait { color: #888; }
+  #verdict { background: #111; color: #fff; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600; line-height: 1.5; margin-bottom: 14px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<h1>Order Check</h1>
+<p class="sub">This page tests whether this phone can save an order. Nothing is saved. Please take a screenshot of the whole page once every line has finished.</p>
+
+<div id="verdict">Running checks…</div>
+
+<div class="row"><div class="row-title">1. Order software loaded</div><div class="row-value wait" id="v-lib">Checking…</div><div class="row-detail" id="d-lib"></div></div>
+<div class="row"><div class="row-title">2. Admin login saved on this phone</div><div class="row-value wait" id="v-login">Checking…</div><div class="row-detail" id="d-login"></div></div>
+<div class="row"><div class="row-title">3. This phone can reach the order database</div><div class="row-value wait" id="v-reach">Checking…</div><div class="row-detail" id="d-reach"></div></div>
+<div class="row"><div class="row-title">4. Order save test (same way the website does it)</div><div class="row-value wait" id="v-save">Checking…</div><div class="row-detail" id="d-save"></div></div>
+<div class="row"><div class="row-title">5. Order save test (ignoring any saved admin login)</div><div class="row-value wait" id="v-clean">Checking…</div><div class="row-detail" id="d-clean"></div></div>
+<div class="row"><div class="row-title">Device</div><div class="row-detail" id="d-device"></div></div>
+
+<script src="js/supabase-config.js"></script>
+<script>
+/* Temporary diagnostic page for the "Something went wrong" order error.
+   Written in old-style JavaScript on purpose so it still runs on phones
+   where the Supabase library itself fails to load. The save tests send a
+   row with no order ID, which the database always rejects (error 23502)
+   — so getting that exact rejection back means saving orders works. */
+(function () {
+  var results = { lib: null, login: null, reach: null, save: null, clean: null };
+
+  function set(id, ok, text, detail) {
+    var v = document.getElementById('v-' + id);
+    v.className = 'row-value ' + (ok ? 'ok' : 'bad');
+    v.textContent = (ok ? '✓ ' : '✗ ') + text;
+    if (detail) document.getElementById('d-' + id).textContent = detail;
+  }
+
+  function withTimeout(promise, ms) {
+    return new Promise(function (resolve) {
+      var done = false;
+      var timer = setTimeout(function () { if (!done) { done = true; resolve({ timedOut: true }); } }, ms);
+      promise.then(function (r) { if (!done) { done = true; clearTimeout(timer); resolve(r); } },
+                   function (e) { if (!done) { done = true; clearTimeout(timer); resolve({ threw: String(e && e.message ? e.name + ': ' + e.message : e) }); } });
+    });
+  }
+
+  function describe(res, ms) {
+    if (res.timedOut) return 'No answer after 20 seconds';
+    if (res.threw) return res.threw;
+    var e = res.error || {};
+    return 'status ' + res.status + ' | code ' + (e.code || '-') + ' | ' + (e.message || 'no error') + ' | ' + ms + 'ms';
+  }
+
+  /* A save test passes only when the database itself answers with its
+     "order ID is missing" rejection. */
+  function saveWorked(res) {
+    return !res.timedOut && !res.threw && res.error && res.error.code === '23502';
+  }
+
+  function runSaveTest(client) {
+    var t0 = Date.now();
+    return withTimeout(client.from('orders').insert({ order_id: null }), 20000).then(function (res) {
+      return { ok: saveWorked(res), detail: describe(res, Date.now() - t0) };
+    });
+  }
+
+  var conn = navigator.connection || {};
+  document.getElementById('d-device').textContent =
+    new Date().toString() + ' | online: ' + navigator.onLine +
+    ' | network: ' + (conn.effectiveType || 'unknown') + (conn.type ? '/' + conn.type : '') +
+    ' | ' + navigator.userAgent;
+
+  /* 1. Library */
+  var libOk = typeof supabase !== 'undefined' && typeof supabaseClient !== 'undefined';
+  results.lib = libOk;
+  set('lib', libOk, libOk ? 'Yes' : 'No — the order software did not load on this phone',
+      'supabase: ' + (typeof supabase) + ' | client: ' + (typeof supabaseClient));
+
+  /* 2. Saved admin login (never prints the login itself) */
+  var hasLogin = false, loginDetail = '';
+  try {
+    var raw = localStorage.getItem('sb-ilxhvchbyhvzylpadprh-auth-token');
+    if (raw) {
+      hasLogin = true;
+      var parsed = JSON.parse(raw);
+      var exp = parsed && parsed.expires_at ? parsed.expires_at * 1000 : 0;
+      loginDetail = exp ? ('login ' + (exp < Date.now() ? 'EXPIRED' : 'valid') + ' — expiry ' + new Date(exp).toString()) : 'no expiry recorded';
+    }
+  } catch (e) { loginDetail = 'could not read storage: ' + e.message; }
+  results.login = hasLogin;
+  var loginEl = document.getElementById('v-login');
+  loginEl.className = 'row-value';
+  loginEl.textContent = hasLogin ? 'Yes — this phone has logged in to the admin panel' : 'No';
+  document.getElementById('d-login').textContent = loginDetail;
+
+  /* 3. Raw reachability, without the library */
+  var t0 = Date.now();
+  var reach = (typeof SUPABASE_URL === 'undefined')
+    ? Promise.resolve({ threw: 'config not loaded' })
+    : withTimeout(fetch(SUPABASE_URL + '/auth/v1/health', { headers: { apikey: SUPABASE_ANON_KEY }, cache: 'no-store' }), 20000);
+
+  reach.then(function (r) {
+    var ok = !r.timedOut && !r.threw && r.status === 200;
+    results.reach = ok;
+    set('reach', ok, ok ? 'Yes' : 'No — the connection to the database failed',
+        r.timedOut ? 'No answer after 20 seconds' : (r.threw ? r.threw : 'status ' + r.status + ' | ' + (Date.now() - t0) + 'ms'));
+
+    if (!libOk) {
+      set('save', false, 'Skipped — order software did not load');
+      set('clean', false, 'Skipped — order software did not load');
+      return finish();
+    }
+
+    /* 4. Exactly what the website does */
+    return runSaveTest(supabaseClient).then(function (s) {
+      results.save = s.ok;
+      set('save', s.ok, s.ok ? 'Works' : 'FAILED — this is the error customers see', s.detail);
+
+      /* 5. Same test with a fresh client that ignores any saved login */
+      var clean = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false, storageKey: 'celures-order-check' }
+      });
+      return runSaveTest(clean).then(function (c) {
+        results.clean = c.ok;
+        set('clean', c.ok, c.ok ? 'Works' : 'FAILED', c.detail);
+        finish();
+      });
+    });
+  });
+
+  function finish() {
+    var v = document.getElementById('verdict');
+    var msg;
+    if (!results.lib) msg = 'Result: the order software did not load on this phone.';
+    else if (results.save) msg = 'Result: orders can be saved from this phone right now.';
+    else if (results.clean) msg = 'Result: orders fail because of the admin login saved on this phone. Customers without an admin login are not affected.';
+    else if (!results.reach) msg = 'Result: this phone\'s internet connection cannot reach the order database.';
+    else msg = 'Result: the database is reachable but is rejecting orders.';
+    v.textContent = msg + ' Please screenshot this page.';
+  }
+})();
+</script>
+</body>
+</html>
