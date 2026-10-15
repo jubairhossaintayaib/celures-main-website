@@ -696,7 +696,8 @@ nav {
         <div class="error-msg" id="errAddress">Please enter your delivery address.</div>
       </div>
 
-      <div class="order-bump" id="orderBump">
+      <div id="orderBumps">
+      <div class="order-bump">
         <div class="order-bump-top">
           <div class="order-bump-img">
             <img src="../images/products/arctic-splash-1.webp" alt="Arctic Splash" onerror="this.parentElement.innerHTML='AS'">
@@ -708,14 +709,32 @@ nav {
         </div>
         <div class="order-bump-bottom">
           <div class="order-bump-price"><span class="order-bump-price-old">৳৮৯০</span> ৳৩৯০</div>
-          <button type="button" class="order-bump-btn" id="orderBumpBtn" onclick="toggleOrderBump()">Add</button>
+          <button type="button" class="order-bump-btn" id="bumpBtn-perfume" onclick="toggleOrderBump('perfume')">Add</button>
         </div>
+      </div>
+
+      <div class="order-bump">
+        <div class="order-bump-top">
+          <div class="order-bump-img">
+            <img src="../images/products/refill-bottle-5ml.webp" alt="5ml pocket refill bottle" onerror="this.parentElement.innerHTML='5ml'">
+          </div>
+          <div class="order-bump-text">
+            <div class="order-bump-title">Perfume সবসময় পকেটে রাখুন!</div>
+            <div class="order-bump-desc">মাত্র ৳১০০ extra দিয়ে ২টা 5ml pocket refill bottle নিয়ে নিন। বড় bottle থেকে perfume refill করে পকেটে রাখুন — office, class, dinner বা travel, দিনের যেকোনো সময় আবার spray করে fresh থাকুন। ২টা bottle — একটায় Phantom Elixir, আরেকটায় Executive Bleu।</div>
+          </div>
+        </div>
+        <div class="order-bump-bottom">
+          <div class="order-bump-price">৳১০০ <span style="font-family: var(--sans); font-size: 13px; color: var(--gray-600);">(২টা bottle)</span></div>
+          <button type="button" class="order-bump-btn" id="bumpBtn-refill" onclick="toggleOrderBump('refill')">Add</button>
+        </div>
+      </div>
       </div>
 
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
         <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,490</span></span></div>
-        <div class="total-row" id="summaryBumpRow" style="display:none"><span>+ Arctic Splash (Bonus)</span><span>Tk 390</span></div>
+        <div class="total-row" id="summaryBumpRow-perfume" style="display:none"><span>+ Arctic Splash (Bonus)</span><span>Tk 390</span></div>
+        <div class="total-row" id="summaryBumpRow-refill" style="display:none"><span>+ 5ml Refill Bottle ×2</span><span>Tk 100</span></div>
         <div class="total-row free-row" id="summaryFreeRow" style="display:flex"><span>Delivery</span><span>FREE 🎁</span></div>
         <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
         <hr class="total-divider">
@@ -818,10 +837,14 @@ nav {
 // ── OPTION SELECTION STATE ──
 // Default: combo selected
 let selectedOption = 'combo'; // 'phantom' | 'executive' | 'combo'
-let bumpAdded = false;
-const BUMP_PRICE = 390;
-const BUMP_NORMAL_PRICE = 890;
-const BUMP_ITEMS_LABEL = "Arctic Splash (Bump Offer) x1";
+
+// Order bumps — each toggles independently. To add another, give it an entry
+// here plus a matching bumpBtn-<key> button and summaryBumpRow-<key> row.
+const BUMPS = {
+  perfume: { price: 390, normalPrice: 890, itemsLabel: 'Arctic Splash (Bump Offer) x1', added: false },
+  refill:  { price: 100, normalPrice: 100, itemsLabel: '5ml Refill Bottle (Bump Offer) x2', added: false }
+};
+function addedBumps() { return Object.values(BUMPS).filter(b => b.added); }
 
 const OPTION_CONFIG = {
   phantom:   { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Phantom Elixir (30ml)',                   itemsLabel: 'Phantom Elixir x1', freeDelivery: false },
@@ -832,11 +855,15 @@ const OPTION_CONFIG = {
 
 let selectedDistrict = "";
 
-function toggleOrderBump() {
-  bumpAdded = !bumpAdded;
-  const btn = document.getElementById('orderBumpBtn');
-  btn.textContent = bumpAdded ? 'Remove' : 'Add';
-  btn.classList.toggle('added', bumpAdded);
+function setBump(key, added) {
+  BUMPS[key].added = added;
+  const btn = document.getElementById('bumpBtn-' + key);
+  btn.textContent = added ? 'Remove' : 'Add';
+  btn.classList.toggle('added', added);
+}
+
+function toggleOrderBump(key) {
+  setBump(key, !BUMPS[key].added);
   updateTotal();
 }
 
@@ -853,15 +880,10 @@ function selectOption(key) {
   document.getElementById('summaryProduct').textContent = cfg.label;
   document.getElementById('summaryBasePrice').textContent = cfg.price === 1490 ? '1,490' : '890';
 
-  // The bump offer is only available with the combo — switching to a
-  // single perfume hides it and clears it if it was already added.
-  document.getElementById('orderBump').style.display = (key === 'combo') ? 'block' : 'none';
-  if (key !== 'combo' && bumpAdded) {
-    bumpAdded = false;
-    const bumpBtn = document.getElementById('orderBumpBtn');
-    bumpBtn.textContent = 'Add';
-    bumpBtn.classList.remove('added');
-  }
+  // The bump offers are only available with the combo — switching to a
+  // single perfume hides them and clears any that were already added.
+  document.getElementById('orderBumps').style.display = (key === 'combo') ? 'block' : 'none';
+  if (key !== 'combo') Object.keys(BUMPS).forEach(k => setBump(k, false));
 
   updateTotal();
 }
@@ -978,9 +1000,10 @@ function calcDelivery(district) {
 
 function updateTotal() {
   const cfg = OPTION_CONFIG[selectedOption];
-  const bumpRow = document.getElementById('summaryBumpRow');
-  bumpRow.style.display = bumpAdded ? 'flex' : 'none';
-  const bumpAmount = bumpAdded ? BUMP_PRICE : 0;
+  Object.keys(BUMPS).forEach(k => {
+    document.getElementById('summaryBumpRow-' + k).style.display = BUMPS[k].added ? 'flex' : 'none';
+  });
+  const bumpAmount = addedBumps().reduce((sum, b) => sum + b.price, 0);
 
   if (cfg.freeDelivery) {
     document.getElementById('summaryFreeRow').style.display = 'flex';
@@ -1036,11 +1059,11 @@ function submitOrder() {
   let subtotal = cfg.price;
   let normal = cfg.normalPrice;
   let items = cfg.itemsLabel;
-  if (bumpAdded) {
-    subtotal += BUMP_PRICE;
-    normal += BUMP_NORMAL_PRICE;
-    items += ", " + BUMP_ITEMS_LABEL;
-  }
+  addedBumps().forEach(b => {
+    subtotal += b.price;
+    normal += b.normalPrice;
+    items += ", " + b.itemsLabel;
+  });
   const discount = normal - subtotal;
   const total = subtotal + delivery;
   const orderId = 'CEL' + Date.now();
