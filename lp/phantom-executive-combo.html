@@ -712,29 +712,12 @@ nav {
           <button type="button" class="order-bump-btn" id="bumpBtn-perfume" onclick="toggleOrderBump('perfume')">Add</button>
         </div>
       </div>
-
-      <div class="order-bump">
-        <div class="order-bump-top">
-          <div class="order-bump-img">
-            <img src="../images/products/refill-bottle-5ml.webp" alt="5ml pocket refill bottle" onerror="this.parentElement.innerHTML='5ml'">
-          </div>
-          <div class="order-bump-text">
-            <div class="order-bump-title">Perfume সবসময় পকেটে রাখুন!</div>
-            <div class="order-bump-desc">মাত্র ৳১০০ extra দিয়ে ২টা 5ml pocket refill bottle নিয়ে নিন। বড় bottle থেকে perfume refill করে পকেটে রাখুন — office, class, dinner বা travel, দিনের যেকোনো সময় আবার spray করে fresh থাকুন। ২টা bottle — একটায় Phantom Elixir, আরেকটায় Executive Bleu।</div>
-          </div>
-        </div>
-        <div class="order-bump-bottom">
-          <div class="order-bump-price">৳১০০ <span style="font-family: var(--sans); font-size: 13px; color: var(--gray-600);">(২টা bottle)</span></div>
-          <button type="button" class="order-bump-btn" id="bumpBtn-refill" onclick="toggleOrderBump('refill')">Add</button>
-        </div>
-      </div>
       </div>
 
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
         <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,490</span></span></div>
         <div class="total-row" id="summaryBumpRow-perfume" style="display:none"><span>+ Arctic Splash (Bonus)</span><span>Tk 390</span></div>
-        <div class="total-row" id="summaryBumpRow-refill" style="display:none"><span>+ 5ml Refill Bottle ×2</span><span>Tk 100</span></div>
         <div class="total-row free-row" id="summaryFreeRow" style="display:flex"><span>Delivery</span><span>FREE 🎁</span></div>
         <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
         <hr class="total-divider">
@@ -841,8 +824,7 @@ let selectedOption = 'combo'; // 'phantom' | 'executive' | 'combo'
 // Order bumps — each toggles independently. To add another, give it an entry
 // here plus a matching bumpBtn-<key> button and summaryBumpRow-<key> row.
 const BUMPS = {
-  perfume: { price: 390, normalPrice: 890, itemsLabel: 'Arctic Splash (Bump Offer) x1', added: false },
-  refill:  { price: 100, normalPrice: 100, itemsLabel: '5ml Refill Bottle (Bump Offer) x2', added: false }
+  perfume: { price: 390, normalPrice: 890, itemsLabel: 'Arctic Splash (Bump Offer) x1', added: false }
 };
 function addedBumps() { return Object.values(BUMPS).filter(b => b.added); }
 
