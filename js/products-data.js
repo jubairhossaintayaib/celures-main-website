@@ -164,6 +164,23 @@ const CELURES_PRODUCTS = [
       "images/products/evening-escape-1.webp",
       "images/products/evening-escape-2.webp"
     ]
+  },
+  {
+    slug: "men-in-wild",
+    name: "Men in Wild",
+    inspiredBy: "Inspired by Dior Sauvage",
+    price: 990,
+    addonPrice: 600,
+    tagline: "Fresh, spicy, effortlessly bold.",
+    description: "Juicy bergamot and pepper open bright and sharp, into a lavender and Sichuan pepper heart, resting on a clean, woody base of ambroxan, cedar and labdanum. One of the most loved men's scents in the world — confident and compliment-getting, from the office to daily wear.",
+    notes: {
+      top: "Bergamot, Pepper",
+      middle: "Lavender, Sichuan Pepper, Geranium",
+      base: "Ambroxan, Cedar, Labdanum"
+    },
+    images: [
+      "images/products/men-in-wild-1.jpg"
+    ]
   }
 ];
 
