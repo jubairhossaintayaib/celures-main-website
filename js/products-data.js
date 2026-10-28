@@ -125,8 +125,6 @@ const CELURES_PRODUCTS = [
       "images/products/arctic-splash-2.webp"
     ]
   },
-  /* STOCK OUT — Kingsmen is hidden for now. To bring it back,
-     delete this comment line and the closing one below the block.
   {
     slug: "kingsmen",
     name: "Kingsmen",
@@ -145,7 +143,6 @@ const CELURES_PRODUCTS = [
       "images/products/kingsmen-2.webp"
     ]
   },
-  END STOCK OUT — Kingsmen */
   {
     slug: "evening-escape",
     name: "Evening Escape",
