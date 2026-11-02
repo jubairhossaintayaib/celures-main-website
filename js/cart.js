@@ -105,7 +105,7 @@ function cartGetCount() {
    at least one perfume OR combo has been added at its own full/main
    price — otherwise someone could check out with only discounted
    add-ons and no main pick. Active again now that add-ons (৳600) are
-   priced differently from a main pick (৳990 perfume / ৳1490–৳1590 combo). */
+   priced differently from a main pick (৳990 perfume / ৳1590 combo). */
 function cartHasMainItem() {
   return getCart().some(function (line) {
     var info = getItemBySlug(line.slug);

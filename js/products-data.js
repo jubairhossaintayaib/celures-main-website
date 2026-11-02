@@ -192,7 +192,7 @@ const CELURES_COMBOS = [
   {
     slug: "mens-legacy",
     name: "Men's Legacy Combo",
-    price: 1490,
+    price: 1590,
     perfume1Slug: "executive-bleu",
     perfume2Slug: "phantom-elixir",
     tagline: "Sharp by day, bold by night.",
@@ -237,7 +237,7 @@ function getComboBySlug(slug) {
 
 /* Helper: works for EITHER a perfume slug or a combo slug. Returns:
    - ownPrice: the price this item is meant to be added at
-     (990 for a perfume, 1490 or 1590 for a combo).
+     (990 for a perfume, 1590 for a combo).
    - regularReference: what it would cost bought piece-by-piece at full
      price (990 for a perfume, 990+990=1980 for a combo) — used to show
      the "Normal Price" / discount breakdown at checkout (still relevant
