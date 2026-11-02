@@ -564,7 +564,7 @@ nav {
       <hr class="divider-line">
 
       <div class="price-row">
-        <div class="price-new" id="dynamicPrice">৳১,৪৯০</div>
+        <div class="price-new" id="dynamicPrice">৳১,৫৯০</div>
       </div>
 
       <div class="cod-badge">
@@ -620,12 +620,12 @@ nav {
               <div class="option-selected-label">✓ Selected</div>
             </div>
             <div class="option-price-col">
-              <div class="option-price"><span class="combo-price-old">৳১,৭৮০</span> ৳১,৪৯০</div>
+              <div class="option-price"><span class="combo-price-old">৳১,৭৮০</span> ৳১,৫৯০</div>
               <div class="option-price-sub" style="color:#1a7a40; font-weight:600;">Free delivery 🎁</div>
             </div>
           </div>
           <div class="combo-discount-strip">
-            🎉 ৳২৯০ discount + FREE Delivery সারা বাংলাদেশে!
+            🎉 ৳১৯০ discount + FREE Delivery সারা বাংলাদেশে!
           </div>
         </div>
 
@@ -716,7 +716,7 @@ nav {
 
       <div class="order-total-box">
         <div class="total-label">Order Summary</div>
-        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,490</span></span></div>
+        <div class="total-row main" id="summaryLine1"><span id="summaryProduct">Phantom Elixir + Executive Bleu (Combo)</span><span>Tk <span id="summaryBasePrice">1,590</span></span></div>
         <div class="total-row" id="summaryBumpRow-perfume" style="display:none"><span>+ Marine Cucumber (Bonus)</span><span>Tk 390</span></div>
         <div class="total-row free-row" id="summaryFreeRow" style="display:flex"><span>Delivery</span><span>FREE 🎁</span></div>
         <div class="total-row" id="summaryDeliveryRow" style="display:none"><span>Delivery</span><span id="deliveryAmt">—</span></div>
@@ -743,7 +743,7 @@ nav {
         <div class="faq-check"><svg viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div>
           <div class="faq-q">এই offer এ কী পাবো?</div>
-          <div class="faq-a">Combo নিলে Phantom Elixir (30ml) + Executive Bleu (30ml) — দুটো premium perfume, মাত্র ১,৪৯০ টাকায়, সাথে সারা বাংলাদেশে ফ্রি ডেলিভারি!</div>
+          <div class="faq-a">Combo নিলে Phantom Elixir (30ml) + Executive Bleu (30ml) — দুটো premium perfume, মাত্র ১,৫৯০ টাকায়, সাথে সারা বাংলাদেশে ফ্রি ডেলিভারি!</div>
         </div>
       </div>
 
@@ -831,7 +831,7 @@ function addedBumps() { return Object.values(BUMPS).filter(b => b.added); }
 const OPTION_CONFIG = {
   phantom:   { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Phantom Elixir (30ml)',                   itemsLabel: 'Phantom Elixir x1', freeDelivery: false },
   executive: { price: 890,  normalPrice: 890,  priceDisplay: '৳৮৯০',  label: 'Executive Bleu (30ml)',                   itemsLabel: 'Executive Bleu x1', freeDelivery: false },
-  combo:     { price: 1490, normalPrice: 1780, priceDisplay: '৳১,৪৯০', label: 'Phantom Elixir + Executive Bleu (Combo)', itemsLabel: 'Phantom Elixir & Executive Bleu Combo x1', freeDelivery: true }
+  combo:     { price: 1590, normalPrice: 1780, priceDisplay: '৳১,৫৯০', label: 'Phantom Elixir + Executive Bleu (Combo)', itemsLabel: 'Phantom Elixir & Executive Bleu Combo x1', freeDelivery: true }
 };
 // Only the combo is free delivery — singles still charge normally.
 
@@ -860,7 +860,7 @@ function selectOption(key) {
   const cfg = OPTION_CONFIG[key];
   document.getElementById('dynamicPrice').textContent = cfg.priceDisplay;
   document.getElementById('summaryProduct').textContent = cfg.label;
-  document.getElementById('summaryBasePrice').textContent = cfg.price === 1490 ? '1,490' : '890';
+  document.getElementById('summaryBasePrice').textContent = cfg.price === 1590 ? '1,590' : '890';
 
   // The bump offers are only available with the combo — switching to a
   // single perfume hides them and clears any that were already added.
