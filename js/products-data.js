@@ -161,6 +161,8 @@ const CELURES_PRODUCTS = [
       "images/products/evening-escape-2.webp"
     ]
   },
+  /* STOCK OUT — Men in Wild is hidden for now. To bring it back,
+     delete this comment line and the closing one below the block.
   {
     slug: "men-in-wild",
     name: "Men in Wild",
@@ -179,6 +181,7 @@ const CELURES_PRODUCTS = [
       "images/products/men-in-wild-2.webp"
     ]
   }
+  END STOCK OUT — Men in Wild */
 ];
 
 /* ============================================================
