@@ -225,10 +225,11 @@ nav {
   .badge-row      { order: 1; }
   .product-title  { order: 2; }
   .subheadline    { order: 3; margin-bottom: 18px; }
-  .divider-line   { order: 4; display: block; }
-  .price-line     { order: 5; margin: 0 0 14px; }
+  .hero-strip     { order: 4; }
+  .divider-line   { order: 5; display: block; }
+  .price-line     { order: 6; margin: 0 0 14px; }
   .cod-inline     { display: none; }
-  .cod-badge      { order: 6; display: inline-flex; align-self: flex-start; }
+  .cod-badge      { order: 7; display: inline-flex; align-self: flex-start; }
 }
 
 .delivery-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 0; }
@@ -237,7 +238,7 @@ nav {
   border: 1px solid var(--gray-200); border-radius: 20px; padding: 5px 14px;
 }
 
-/* ── MOBILE-ONLY: row of the 4 original bottles, under the subheadline ── */
+/* ── The 4 bottles in one row (mobile + desktop) ── */
 .hero-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -257,7 +258,7 @@ nav {
   object-fit: contain;
   display: block;
 }
-@media (min-width: 900px) { .hero-strip { display: none; } }
+@media (min-width: 900px) { .hero-strip { gap: 10px; margin-bottom: 20px; } }
 
 /* ── OPTION TABS ── */
 .option-tabs-section {
@@ -470,8 +471,8 @@ nav {
 .perfume-block:last-child { margin-bottom: 0; }
 /* Reference photo of the ORIGINAL bottle this scent is inspired by */
 .perfume-thumb {
-  width: 72px; height: 80px; flex-shrink: 0;
-  background: var(--gray-100);
+  width: 78px; height: 88px; flex-shrink: 0;
+  background: #fff;
   border: 1px solid var(--gray-200);
   border-radius: 8px;
   overflow: hidden;
@@ -490,10 +491,6 @@ nav {
 }
 .perfume-desc { font-size: 14px; color: var(--gray-600); line-height: 1.75; }
 .perfume-longevity { font-size: 12px; color: var(--gray-400); margin-top: 5px; }
-.section-intro {
-  font-size: 13px; color: var(--gray-600);
-  line-height: 1.7; margin: -8px 0 20px;
-}
 
 /* FAQ */
 .faq-item {
@@ -690,10 +687,9 @@ nav {
          26358, Le Male Elixir 81642). They are not photos of our product. -->
     <div class="section">
       <div class="section-title bn">কোন কোন পারফিউম পাচ্ছেন এই কম্বোতে?</div>
-      <div class="section-intro">** নিচের ছবিগুলো original brand এর bottle — আমরা এই perfume গুলোর inspired version বানাই, original product বিক্রি করি না। **</div>
 
       <div class="perfume-block">
-        <div class="perfume-thumb"><img src="images/inspired/sport-homme.jpg" alt="Chanel Allure Homme Sport bottle" loading="lazy"></div>
+        <div class="perfume-thumb"><img src="../images/products/sport-homme-1.webp" alt="Sport Homme 30ml" loading="lazy"></div>
         <div class="perfume-body">
           <div class="perfume-name">Sport Homme <span class="inspired">Impression of Chanel Allure Homme Sport</span></div>
           <div class="perfume-desc">Fresh, energetic আর effortlessly sporty। Juicy orange, mandarin আর sea notes এর clean opening, সাথে peppery-cedar এর masculine heart — সকালে office যাওয়া থেকে দিনের যেকোনো casual outing পর্যন্ত এটা সবসময় মানিয়ে যায়।</div>
@@ -702,7 +698,7 @@ nav {
       </div>
 
       <div class="perfume-block">
-        <div class="perfume-thumb"><img src="images/inspired/evening-escape.jpg" alt="Emporio Armani Stronger With You bottle" loading="lazy"></div>
+        <div class="perfume-thumb"><img src="../images/products/evening-escape-1.webp" alt="Evening Escape 30ml" loading="lazy"></div>
         <div class="perfume-body">
           <div class="perfume-name">Evening Escape <span class="inspired">Impression of Armani Stronger With You</span></div>
           <div class="perfume-desc">Warm, sweet আর cozy। Cardamom, pink pepper আর violet leaf এর spicy-fresh opening, নিচে chestnut, vanilla আর amber এর গরম sweetness — শীতের সন্ধ্যা আর date night এর জন্য specifically বানানো একটা scent।</div>
@@ -711,7 +707,7 @@ nav {
       </div>
 
       <div class="perfume-block">
-        <div class="perfume-thumb"><img src="images/inspired/alpha-executive.jpg" alt="Bvlgari Man in Black bottle" loading="lazy"></div>
+        <div class="perfume-thumb"><img src="../images/products/alpha-executive-1.webp" alt="Alpha Executive 30ml" loading="lazy"></div>
         <div class="perfume-body">
           <div class="perfume-name">Alpha Executive <span class="inspired">Impression of Bvlgari Man in Black</span></div>
           <div class="perfume-desc">Bold, spicy আর intensely masculine। Rum, leather আর tuberose এর rich opening, নিচে benzoin, tonka আর woods এর dark warmth — যারা শীতের রাতে একটা powerful statement scent চান, এটা তাদের জন্য।</div>
@@ -720,7 +716,7 @@ nav {
       </div>
 
       <div class="perfume-block">
-        <div class="perfume-thumb"><img src="images/inspired/pure-aura.jpg" alt="Jean Paul Gaultier Le Male Elixir bottle" loading="lazy"></div>
+        <div class="perfume-thumb"><img src="../images/products/pure-aura-1.webp" alt="Pure Aura 30ml" loading="lazy"></div>
         <div class="perfume-body">
           <div class="perfume-name">Pure Aura <span class="inspired">Impression of JPG Le Male Elixir</span></div>
           <div class="perfume-desc">Sweet, warm আর magnetic। Lavender আর mint এর fresh top, নিচে honey, vanilla আর tonka bean এর deep amber sweetness — শীতের সন্ধ্যায় সবচেয়ে বেশি compliment পাওয়া scent গুলোর একটা।</div>
