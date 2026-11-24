@@ -187,6 +187,25 @@ nav {
 .price-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
 .price-new { font-family: var(--serif); font-size: 40px; font-weight: 400; color: var(--black); line-height: 1; }
 
+/* Price + Cash-on-Delivery note on one line, note tucked in the corner */
+.price-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: nowrap;
+  margin: 14px 0 16px;
+}
+.cod-inline {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11px; line-height: 1.35;
+  color: #1a7a40;
+  text-align: right;
+  flex-shrink: 0;
+}
+.cod-inline svg { width: 12px; height: 12px; flex-shrink: 0; margin-top: 1px; }
+@media (max-width: 380px) { .cod-inline { font-size: 10px; } }
+
 .cod-badge {
   display: inline-flex; align-items: center; gap: 7px;
   background: #f0faf4; border: 1px solid #b6e2c8;
@@ -584,6 +603,14 @@ nav {
 
       <h1 class="product-title" style="margin-bottom: 10px;">Masculine Winter Perfume Combo<span class="h1-sep">|</span>6+ Hours Longevity<span class="h1-sep">|</span>4 pcs each 30 ml</h1>
 
+      <div class="price-line">
+        <div class="price-new" id="dynamicPrice">৳২,৪৯০</div>
+        <div class="cod-inline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Cash on Delivery — পণ্য পেয়ে টাকা দিন</span>
+        </div>
+      </div>
+
       <div style="font-size: 16px; color: var(--gray-600); margin-bottom: 18px; line-height: 1.5;">Impression of Chanel Allure Homme Sport, Armani Stronger With You, Bvlgari Man in Black, JPG Le Male Elixir</div>
 
       <!-- MOBILE ONLY: the 4 originals in one row (hidden at 900px+) -->
@@ -592,17 +619,6 @@ nav {
         <div class="hero-strip-item"><img src="images/inspired/evening-escape.jpg" alt="Armani Stronger With You" loading="lazy"></div>
         <div class="hero-strip-item"><img src="images/inspired/alpha-executive.jpg" alt="Bvlgari Man in Black" loading="lazy"></div>
         <div class="hero-strip-item"><img src="images/inspired/pure-aura.jpg" alt="JPG Le Male Elixir" loading="lazy"></div>
-      </div>
-
-      <hr class="divider-line">
-
-      <div class="price-row">
-        <div class="price-new" id="dynamicPrice">৳২,৪৯০</div>
-      </div>
-
-      <div class="cod-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Cash on Delivery — পণ্য পেয়ে টাকা দিন
       </div>
     </div>
 
