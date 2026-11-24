@@ -201,6 +201,28 @@ nav {
   border: 1px solid var(--gray-200); border-radius: 20px; padding: 5px 14px;
 }
 
+/* ── MOBILE-ONLY: row of the 4 original bottles, under the subheadline ── */
+.hero-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin: 0 0 16px;
+}
+.hero-strip .hero-strip-item {
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 4px;
+  overflow: hidden;
+}
+.hero-strip img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  display: block;
+}
+@media (min-width: 900px) { .hero-strip { display: none; } }
+
 /* ── OPTION TABS ── */
 .option-tabs-section {
   padding: 20px 20px 24px;
@@ -563,6 +585,14 @@ nav {
       <h1 class="product-title" style="margin-bottom: 10px;">Masculine Winter Perfume Combo<span class="h1-sep">|</span>6+ Hours Longevity<span class="h1-sep">|</span>4 pcs each 30 ml</h1>
 
       <div style="font-size: 16px; color: var(--gray-600); margin-bottom: 18px; line-height: 1.5;">Impression of Chanel Allure Homme Sport, Armani Stronger With You, Bvlgari Man in Black, JPG Le Male Elixir</div>
+
+      <!-- MOBILE ONLY: the 4 originals in one row (hidden at 900px+) -->
+      <div class="hero-strip">
+        <div class="hero-strip-item"><img src="images/inspired/sport-homme.jpg" alt="Chanel Allure Homme Sport" loading="lazy"></div>
+        <div class="hero-strip-item"><img src="images/inspired/evening-escape.jpg" alt="Armani Stronger With You" loading="lazy"></div>
+        <div class="hero-strip-item"><img src="images/inspired/alpha-executive.jpg" alt="Bvlgari Man in Black" loading="lazy"></div>
+        <div class="hero-strip-item"><img src="images/inspired/pure-aura.jpg" alt="JPG Le Male Elixir" loading="lazy"></div>
+      </div>
 
       <hr class="divider-line">
 
