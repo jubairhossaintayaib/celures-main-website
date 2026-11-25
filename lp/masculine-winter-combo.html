@@ -240,6 +240,15 @@ nav {
   flex-wrap: nowrap;
   margin: 14px 0 16px;
 }
+.cod-inline {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11px; line-height: 1.35;
+  color: #1a7a40;
+  text-align: right;
+  flex-shrink: 0;
+}
+.cod-inline svg { width: 12px; height: 12px; flex-shrink: 0; margin-top: 1px; }
+@media (min-width: 900px) { .cod-inline { font-size: 12px; } }
 /* Desktop order: headline → subheadline → bottle row → divider → price */
 @media (min-width: 900px) {
   .badge-row      { order: 1; }
@@ -617,13 +626,13 @@ nav {
   .gallery-main { aspect-ratio: auto; height: 26vh; min-height: 158px; max-height: 280px; }
   .gallery-nav { width: 30px; height: 30px; font-size: 15px; }
 
-  .product-info { padding: 10px 20px 12px; }
-  .badge-row { margin-bottom: 6px; }
-  .product-title { font-size: 21px; }
-  .price-line { margin: 4px 0 6px; }
-  .price-new { font-size: 36px; }
-  .subheadline { font-size: 14.5px; margin-bottom: 6px; }
-  .hero-strip { margin-bottom: 10px; }
+  .product-info { padding: 16px 20px 18px; }
+  .badge-row { margin-bottom: 10px; }
+  .product-title { font-size: 22px; }
+  .price-line { margin: 10px 0 12px; }
+  .price-new { font-size: 38px; }
+  .subheadline { font-size: 15px; margin-bottom: 10px; }
+  .hero-strip { margin-bottom: 12px; }
 }
 </style>
 </head>
@@ -668,6 +677,10 @@ nav {
 
       <div class="price-line">
         <div class="price-new" id="dynamicPrice">৳২,৪৯০</div>
+        <div class="cod-inline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Cash on Delivery — পণ্য পেয়ে টাকা দিন</span>
+        </div>
       </div>
 
       <div class="subheadline">Impression of Chanel Allure Homme Sport, Armani Stronger With You, Bvlgari Man in Black, JPG Le Male Elixir</div>
