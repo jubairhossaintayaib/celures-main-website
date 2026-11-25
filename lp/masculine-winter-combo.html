@@ -111,28 +111,75 @@ nav {
   .left-col::-webkit-scrollbar { display: none; }
 }
 
-/* Desktop image grid */
-.desktop-image-grid { display: none; }
-@media (min-width: 900px) {
-  .desktop-image-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
-    padding: 3px;
-  }
-  .desktop-image-grid .grid-thumb {
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    cursor: pointer;
-    background: var(--gray-100);
-    position: relative;
-  }
-  .desktop-image-grid .grid-thumb img {
-    width: 100%; height: 100%;
-    object-fit: cover; display: block;
-    transition: transform 0.2s;
-  }
-  .desktop-image-grid .grid-thumb:hover img { transform: scale(1.04); }
+/* ── GALLERY: thumb rail + big image ── */
+.gallery {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+.gallery-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gallery-thumb {
+  aspect-ratio: 1 / 1.08;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  background: #fff;
+  padding: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+.gallery-thumb:hover { border-color: var(--gray-400); }
+.gallery-thumb.active { border-color: #e8752a; }
+.gallery-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.gallery-main {
+  position: relative;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-main > img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+  cursor: zoom-in;
+}
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--gray-200);
+  background: rgba(255,255,255,0.92);
+  color: var(--black);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.10);
+  transition: background 0.15s;
+}
+.gallery-nav:hover { background: #fff; }
+.gallery-nav.prev { left: 8px; }
+.gallery-nav.next { right: 8px; }
+
+/* Mobile: big image first, thumbnails in a row underneath */
+@media (max-width: 899px) {
+  .gallery { grid-template-columns: 1fr; gap: 8px; }
+  .gallery-main { order: 1; }
+  .gallery-thumbs { order: 2; flex-direction: row; }
+  .gallery-thumb { flex: 1; }
 }
 
 /* ── RIGHT COL ── */
@@ -386,29 +433,6 @@ nav {
   .option-tab.combo-with-strip .option-price-sub { margin-top: 0; }
 }
 
-/* ── MOBILE IMAGE GRID ── */
-.mobile-image-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
-  padding: 3px;
-  border-bottom: 1px solid var(--gray-200);
-}
-@media (min-width: 900px) { .mobile-image-grid { display: none; } }
-.grid-thumb {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--gray-100);
-  position: relative;
-}
-.grid-thumb img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-  transition: transform 0.2s;
-}
-.grid-thumb:hover img { transform: scale(1.04); }
-
 /* ── IMAGE LIGHTBOX ── */
 .img-lightbox {
   display: none; position: fixed; inset: 0;
@@ -628,9 +652,13 @@ nav {
 
   <!-- ── LEFT COL ── -->
   <div class="left-col">
-    <div class="desktop-image-grid" id="desktopImageGrid"></div>
-    <div style="border-bottom: 1px solid var(--gray-200); padding: 4px 0;">
-      <div class="mobile-image-grid" id="mobileImageGrid"></div>
+    <div class="gallery">
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+      <div class="gallery-main">
+        <img id="galleryMain" src="images/winter-combo/gallery1.webp" alt="Masculine Winter Perfume Combo" onclick="openLightbox(galleryIndex)">
+        <button class="gallery-nav prev" aria-label="Previous photo" onclick="galleryStep(-1)">‹</button>
+        <button class="gallery-nav next" aria-label="Next photo" onclick="galleryStep(1)">›</button>
+      </div>
     </div>
   </div>
 
@@ -952,43 +980,46 @@ function selectOption(key) {
   updateTotal();
 }
 
-// ── IMAGE GRID ──
-// PLACEHOLDER: still using the Phantom + Executive Bleu gallery images.
-// Replace these with this combo's own photos when they're ready.
-const GALLERY_IMAGES = Array.from({length: 6}, (_, i) => `images/gallery${i+1}.png`);
-let validImages = [], lightboxIdx = 0;
+// ── GALLERY: big image + thumbnail rail ──
+const GALLERY_IMAGES = [
+  'images/winter-combo/gallery1.webp',
+  'images/winter-combo/gallery2.webp',
+  'images/winter-combo/gallery3.webp'
+];
+let galleryIndex = 0, lightboxIdx = 0;
 
-function initImageGrids() {
-  const mobileGrid  = document.getElementById('mobileImageGrid');
-  const desktopGrid = document.getElementById('desktopImageGrid');
-  const lbTrack     = document.getElementById('lightboxTrack');
+function initGallery() {
+  const rail   = document.getElementById('galleryThumbs');
+  const lbTrack = document.getElementById('lightboxTrack');
 
-  GALLERY_IMAGES.forEach((src) => {
-    const probe = new Image();
-    probe.onload = () => {
-      validImages.push(src);
-      const lbSlide = document.createElement('div');
-      lbSlide.className = 'img-lightbox-slide';
-      lbSlide.innerHTML = `<img src="${src}" alt="Product photo">`;
-      lbTrack.appendChild(lbSlide);
+  GALLERY_IMAGES.forEach((src, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+    thumb.innerHTML = `<img src="${src}" alt="Product photo ${i + 1}">`;
+    thumb.onclick = () => setGallery(i);
+    rail.appendChild(thumb);
 
-      const mThumb = document.createElement('div');
-      mThumb.className = 'grid-thumb';
-      mThumb.innerHTML = `<img src="${src}" alt="Product">`;
-      mThumb.onclick = () => openLightbox(validImages.indexOf(src));
-      mobileGrid.appendChild(mThumb);
+    const slide = document.createElement('div');
+    slide.className = 'img-lightbox-slide';
+    slide.innerHTML = `<img src="${src}" alt="Product photo">`;
+    lbTrack.appendChild(slide);
+  });
 
-      const dThumb = document.createElement('div');
-      dThumb.className = 'grid-thumb';
-      dThumb.innerHTML = `<img src="${src}" alt="Product">`;
-      dThumb.onclick = () => openLightbox(validImages.indexOf(src));
-      desktopGrid.appendChild(dThumb);
-    };
-    probe.src = src;
+  setGallery(0);
+}
+
+function setGallery(i) {
+  // wraps around, so the arrows never dead-end
+  galleryIndex = (i + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+  document.getElementById('galleryMain').src = GALLERY_IMAGES[galleryIndex];
+  document.querySelectorAll('.gallery-thumb').forEach((t, n) => {
+    t.classList.toggle('active', n === galleryIndex);
   });
 }
 
-initImageGrids();
+function galleryStep(dir) { setGallery(galleryIndex + dir); }
+
+initGallery();
 
 // Init combo as selected on load
 selectOption('combo');
@@ -1008,10 +1039,10 @@ function closeLightboxOnBg(e) {
 }
 function updateLightbox() {
   document.getElementById('lightboxTrack').style.transform = `translateX(-${lightboxIdx * 100}%)`;
-  document.getElementById('lightboxCounter').textContent = (lightboxIdx + 1) + ' / ' + validImages.length;
+  document.getElementById('lightboxCounter').textContent = (lightboxIdx + 1) + ' / ' + GALLERY_IMAGES.length;
 }
 function lightboxNav(dir) {
-  lightboxIdx = Math.max(0, Math.min(validImages.length - 1, lightboxIdx + dir));
+  lightboxIdx = Math.max(0, Math.min(GALLERY_IMAGES.length - 1, lightboxIdx + dir));
   updateLightbox();
 }
 let lbTouchX = 0;
