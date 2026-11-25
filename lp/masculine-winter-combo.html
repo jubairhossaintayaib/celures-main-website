@@ -240,26 +240,7 @@ nav {
   flex-wrap: nowrap;
   margin: 14px 0 16px;
 }
-.cod-inline {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 11px; line-height: 1.35;
-  color: #1a7a40;
-  text-align: right;
-  flex-shrink: 0;
-}
-.cod-inline svg { width: 12px; height: 12px; flex-shrink: 0; margin-top: 1px; }
-@media (max-width: 380px) { .cod-inline { font-size: 10px; } }
-
-.cod-badge {
-  display: none;
-  align-items: center; gap: 7px;
-  background: #f0faf4; border: 1px solid #b6e2c8;
-  color: #1a7a40; border-radius: 6px;
-  padding: 8px 16px; font-size: 14px; font-weight: 500; margin-bottom: 10px;
-}
-.cod-badge svg { width: 15px; height: 15px; flex-shrink: 0; }
-
-/* Desktop keeps the original layout: headline → subheadline → divider → price → COD badge */
+/* Desktop order: headline → subheadline → bottle row → divider → price */
 @media (min-width: 900px) {
   .badge-row      { order: 1; }
   .product-title  { order: 2; }
@@ -267,8 +248,6 @@ nav {
   .hero-strip     { order: 4; }
   .divider-line   { order: 5; display: block; }
   .price-line     { order: 6; margin: 0 0 14px; }
-  .cod-inline     { display: none; }
-  .cod-badge      { order: 7; display: inline-flex; align-self: flex-start; }
 }
 
 .delivery-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 0; }
@@ -689,10 +668,6 @@ nav {
 
       <div class="price-line">
         <div class="price-new" id="dynamicPrice">৳২,৪৯০</div>
-        <div class="cod-inline">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span>Cash on Delivery — পণ্য পেয়ে টাকা দিন</span>
-        </div>
       </div>
 
       <div class="subheadline">Impression of Chanel Allure Homme Sport, Armani Stronger With You, Bvlgari Man in Black, JPG Le Male Elixir</div>
@@ -705,13 +680,8 @@ nav {
         <div class="hero-strip-item"><img src="images/inspired/pure-aura.jpg" alt="JPG Le Male Elixir" loading="lazy"></div>
       </div>
 
-      <!-- DESKTOP ONLY: divider + COD badge below the price (shown at 900px+) -->
+      <!-- DESKTOP ONLY: divider below the subheadline/bottle row (shown at 900px+) -->
       <hr class="divider-line">
-
-      <div class="cod-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Cash on Delivery — পণ্য পেয়ে টাকা দিন
-      </div>
     </div>
 
     <!-- ── OPTION CONFIRMATION ── -->
