@@ -174,24 +174,6 @@ nav {
 .gallery-nav.prev { left: 8px; }
 .gallery-nav.next { right: 8px; }
 
-/* Mobile: same rail layout, sized so the price + bottle row stay above the fold */
-@media (max-width: 899px) {
-  .gallery { grid-template-columns: 52px 1fr; gap: 8px; padding: 8px; }
-  .gallery-thumbs { gap: 5px; }
-  .gallery-thumb { aspect-ratio: 1 / 1; }
-  .gallery-main { aspect-ratio: auto; height: 26vh; min-height: 158px; max-height: 280px; }
-  .gallery-nav { width: 30px; height: 30px; font-size: 15px; }
-
-  .product-info { padding: 12px 20px 12px; }
-  .badge-row { margin-bottom: 8px; }
-  .product-title { font-size: 21px; }
-  .price-line { margin: 6px 0 8px; }
-  .price-new { font-size: 36px; }
-  .subheadline { font-size: 14.5px; margin-bottom: 8px; }
-  .hero-strip { gap: 6px; margin-bottom: 8px; }
-  .hero-strip img { height: 46px; aspect-ratio: auto; }
-}
-
 /* ── RIGHT COL ── */
 .right-col { width: 100%; }
 @media (min-width: 900px) { .right-col { width: 50%; } }
@@ -643,6 +625,27 @@ nav {
   opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 400; white-space: nowrap;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============================================================
+   MOBILE OVERRIDES — kept last so they win over the base rules.
+   Goal: gallery + headline + price + the 4-bottle row all fit
+   above the fold on a phone. Bottle row keeps its natural size.
+   ============================================================ */
+@media (max-width: 899px) {
+  .gallery { grid-template-columns: 52px 1fr; gap: 8px; padding: 8px; }
+  .gallery-thumbs { gap: 5px; }
+  .gallery-thumb { aspect-ratio: 1 / 1; }
+  .gallery-main { aspect-ratio: auto; height: 26vh; min-height: 158px; max-height: 280px; }
+  .gallery-nav { width: 30px; height: 30px; font-size: 15px; }
+
+  .product-info { padding: 10px 20px 12px; }
+  .badge-row { margin-bottom: 6px; }
+  .product-title { font-size: 21px; }
+  .price-line { margin: 4px 0 6px; }
+  .price-new { font-size: 36px; }
+  .subheadline { font-size: 14.5px; margin-bottom: 6px; }
+  .hero-strip { margin-bottom: 10px; }
+}
 </style>
 </head>
 <body>
