@@ -174,12 +174,22 @@ nav {
 .gallery-nav.prev { left: 8px; }
 .gallery-nav.next { right: 8px; }
 
-/* Mobile: big image first, thumbnails in a row underneath */
+/* Mobile: same rail layout, sized so the price + bottle row stay above the fold */
 @media (max-width: 899px) {
-  .gallery { grid-template-columns: 1fr; gap: 8px; }
-  .gallery-main { order: 1; }
-  .gallery-thumbs { order: 2; flex-direction: row; }
-  .gallery-thumb { flex: 1; }
+  .gallery { grid-template-columns: 52px 1fr; gap: 8px; padding: 8px; }
+  .gallery-thumbs { gap: 5px; }
+  .gallery-thumb { aspect-ratio: 1 / 1; }
+  .gallery-main { aspect-ratio: auto; height: 26vh; min-height: 158px; max-height: 280px; }
+  .gallery-nav { width: 30px; height: 30px; font-size: 15px; }
+
+  .product-info { padding: 12px 20px 12px; }
+  .badge-row { margin-bottom: 8px; }
+  .product-title { font-size: 21px; }
+  .price-line { margin: 6px 0 8px; }
+  .price-new { font-size: 36px; }
+  .subheadline { font-size: 14.5px; margin-bottom: 8px; }
+  .hero-strip { gap: 6px; margin-bottom: 8px; }
+  .hero-strip img { height: 46px; aspect-ratio: auto; }
 }
 
 /* ── RIGHT COL ── */
@@ -196,7 +206,7 @@ nav {
 @media (min-width: 900px) { .product-info { padding: 32px 40px 28px; } }
 
 /* Subheadline sits in the natural flow on mobile; reordered on desktop */
-.subheadline { font-size: 16px; color: var(--gray-600); line-height: 1.5; }
+.subheadline { font-size: 16px; color: var(--gray-600); line-height: 1.5; margin-bottom: 14px; }
 
 .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
 .badge {
@@ -682,7 +692,7 @@ nav {
         </div>
       </div>
 
-      <div class="subheadline" style="margin-bottom: 18px;">Impression of Chanel Allure Homme Sport, Armani Stronger With You, Bvlgari Man in Black, JPG Le Male Elixir</div>
+      <div class="subheadline">Impression of Chanel Allure Homme Sport, Armani Stronger With You, Bvlgari Man in Black, JPG Le Male Elixir</div>
 
       <!-- MOBILE ONLY: the 4 originals in one row (hidden at 900px+) -->
       <div class="hero-strip">
